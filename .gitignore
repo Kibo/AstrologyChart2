@@ -1,5 +1,6 @@
 .project
 node_modules/*
+doc/*
 logs/*
 .grunt/*
 package-lock.json

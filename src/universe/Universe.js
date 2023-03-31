@@ -1,11 +1,9 @@
 /**
- * Universe class
- * An SVG wrapper for the other parts of graph.
- *
  * @class
+ * @classdesc An SVG wrapper for the other parts of graph.
  * @public
  */
-export default class Universe {
+class Universe {
 
   /**
   * @constructs
@@ -13,6 +11,8 @@ export default class Universe {
   * @param {Object} [settings] - An object that overrides the default settings values
   */
   constructor( htmlElementID, settings ) {
-    console.log( htmlElementID )  
+    console.log( htmlElementID )
   }
 }
+
+export { Universe as default }
