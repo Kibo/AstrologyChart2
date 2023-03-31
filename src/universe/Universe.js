@@ -13,7 +13,6 @@ export default class Universe {
   * @param {Object} [settings] - An object that overrides the default settings values
   */
   constructor( htmlElementID, settings ) {
-    console.log( htmlElementID )
-    console.log( htmlElementID )
+    console.log( htmlElementID )  
   }
 }

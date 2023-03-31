@@ -21,7 +21,7 @@ export default class Utils {
 	 * @return {Number}
 	 */
   static degreeToRadian = function(degree) {
-    return degrees * Math.PI / 180;
+    return degree * Math.PI / 180;
   }
 
   /**
