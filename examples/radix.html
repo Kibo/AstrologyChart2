@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Radix</title>
+  </head>
+  <body>
+    <div id="paper"></div>
+
+    <script src="../dist/astrochart2.js"></script>  
+    <script defer>
+      // fetch from server
+      let data = {
+      	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}],
+      	"cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+      }
+
+      let chart = new astrology.Chart('paper', {width:"600px", height:"600px"})
+      //chart.radix( data )
+    </script>
+  </body>
+</html>
