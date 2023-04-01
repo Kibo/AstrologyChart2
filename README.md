@@ -1,9 +1,12 @@
 # AstroChart
-A JavaScript library for generating SVG charts to display planets in astrology. It does not calculate any positions of the planets in Universe.
+A JavaScript library with clean API and zero dependencies for generating astrology charts.
+
+It does not calculate any positions of the planets in Universe.
 
 **Version**: 0.0.1
 
 - Pure Javascript implementation without dependencies.
+- OOP style
 - SVG graphics.
 - Tested code.
 
@@ -21,8 +24,8 @@ A JavaScript library for generating SVG charts to display planets in astrology. 
 <script src="js/astrochart2.min.js"></script>
 <script>
 	window.onload = function(){
-		var chart = new astrology.Chart( 'paper', 800, 800);
-		chart.radix( data );					
+		const chart = new astrology.Chart( 'paper' );
+		chart.setRadixData( data );					
 	};			
 </script>
 ```
@@ -38,11 +41,12 @@ A JavaScript library for generating SVG charts to display planets in astrology. 
 Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron, Lilith, NNode.
 
 ### Chart settings
-Look into the [settings.js](#)
+Look into the [settings.json](#)
 ```
-var settings = {SYMBOL_SCALE:2};
-var chart = new astrology.Chart( 'paper', 800, 800, settings);
+const settings = {SYMBOL_SCALE:2};
+const chart = new astrology.Chart( 'paper',settings);
 ```
+Note: All keys are uppercase.
 
 ### Namespace
  - default namespace for this library is *astrology*

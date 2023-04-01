@@ -1,5 +1,6 @@
+const webpack = require('webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const package = require("./package.json");
 
 module.exports = {
   mode: 'development',
@@ -11,5 +12,16 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     library: "astrology",
     libraryTarget: 'umd'
-  }
+  },
+  plugins: [
+    new webpack.BannerPlugin({
+      banner: `
+      ${package.name}
+      ${package.description}
+      Version: ${package.version}
+      Author: ${package.author.name} (${package.author.email})
+      Licence: GNUv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
+    `
+    })
+  ]
 }
