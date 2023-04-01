@@ -6,7 +6,7 @@
  * @hideconstructor
  */
 class Utils {
-  
+
   constructor() {
     if (this instanceof Utils) {
       throw Error('Sorry, this is a static class and cannot be instantiated.');

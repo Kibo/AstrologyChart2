@@ -1,4 +1,4 @@
-import defaultSettings from '../settings/settings.json';
+import * as defaultSettings from '../settings/DefaultSettings.js';
 
 /**
  * @class
@@ -27,7 +27,8 @@ class Universe {
       throw new Error('Canot find a HTML element with ID ' + htmlElementID)
     }
 
-    this.#settings = Object.assign({}, defaultSettings, options);
+    this.#settings = Object.assign({}, options);
+    this.#settings = Object.assign({}, {...defaultSettings }, options);
     this.#paper = this.#createSVGDocument(htmlElementID, this.#settings.WIDTH, this.#settings.HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#paper);
 
@@ -44,7 +45,7 @@ class Universe {
    * @return {RadixChart}
    */
   setRadixData(data) {
-    //this.#radixChart = new Radix()
+    console.log(data)
   }
 
   /**
@@ -62,20 +63,24 @@ class Universe {
    * Get Radix chart
    * @return {RadixChart}
    */
-  getRadix() {}
+  getRadix() {
+    return this.#radixChart
+  }
 
   /**
    * Get Transit chart
    * @return {TransitChart}
    */
-  getTransit() {}
+  getTransit() {
+    return this.#transitChart
+  }
 
   /**
-   * Get current settings as JSON
-   * @return {String} - JSON
+   * Get current settings
+   * @return {Object} 
    */
   getSettings() {
-    return JSON.stringify(this.#settings)
+    return this.#settings
   }
 
   // ## PRIVATE ##############################
