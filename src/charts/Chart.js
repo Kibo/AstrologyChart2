@@ -19,6 +19,26 @@ class Chart {
   }
 
   /**
+   * Create a SVG group element
+   *
+   * @param {String} namespace
+   * @param {String} elementID
+   * @return {SVGGroupElement}
+   */
+  createSVGGroup(elementID) {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    svg.setAttribute('id', elementID);
+    return svg
+  }
+
+  /**
+  * @abstract
+  */
+  setData( data ){
+    throw new Error("Must be implemented by subclass.");
+  }
+
+  /**
   * @abstract
   */
   getPoints(){

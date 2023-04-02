@@ -1,4 +1,5 @@
 import * as defaultSettings from '../settings/DefaultSettings.js';
+import RadixChart from '../charts/RadixChart.js';
 
 /**
  * @class
@@ -7,10 +8,10 @@ import * as defaultSettings from '../settings/DefaultSettings.js';
  */
 class Universe {
 
-  #radixChart
-  #transitChart
+  #radix
+  #transit
   #settings
-  #paper
+  #SVGDocument
 
   /**
    * @constructs
@@ -27,10 +28,11 @@ class Universe {
       throw new Error('Canot find a HTML element with ID ' + htmlElementID)
     }
 
-    this.#settings = Object.assign({}, options);
-    this.#settings = Object.assign({}, {...defaultSettings }, options);
-    this.#paper = this.#createSVGDocument(htmlElementID, this.#settings.WIDTH, this.#settings.HEIGHT)
-    document.getElementById(htmlElementID).appendChild(this.#paper);
+    this.#settings = Object.assign({}, {...defaultSettings }, options, {HTML_ELEMENT_ID:htmlElementID});
+    this.#SVGDocument = this.#createSVGDocument(this.#settings.WIDTH, this.#settings.HEIGHT)
+    document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
+
+    this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
 
     return this
   }
@@ -38,46 +40,24 @@ class Universe {
   // ## PUBLIC ##############################
 
   /**
-   * Set data for radix chart
-   *
-   * @throws {Error} - Data is not valid.
-   * @param {Object} data
-   * @return {RadixChart}
-   */
-  setRadixData(data) {
-    console.log(data)
-  }
-
-  /**
-   * Set data for transit chart
-   *
-   * @throws {Error} - Data is not valid.
-   * @param {Object} data
-   * @return {TransitChart}
-   */
-  setTransitData(data) {
-
-  }
-
-  /**
    * Get Radix chart
    * @return {RadixChart}
    */
-  getRadix() {
-    return this.#radixChart
+  radix() {
+    return this.#radix
   }
 
   /**
    * Get Transit chart
    * @return {TransitChart}
    */
-  getTransit() {
-    return this.#transitChart
+  transit() {
+    return this.#transit
   }
 
   /**
    * Get current settings
-   * @return {Object} 
+   * @return {Object}
    */
   getSettings() {
     return this.#settings
@@ -89,12 +69,11 @@ class Universe {
    * Create a SVG document
    *
    * @private
-   * @param {String} htmlElementID
    * @param {Number} width
    * @param {Number} height
    * @return {SVGDocument}
    */
-  #createSVGDocument(htmlElementID, width, height) {
+  #createSVGDocument(width, height) {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute('xmlns', "http://www.w3.org/2000/xmlns/");
     svg.setAttribute('version', "1.1");

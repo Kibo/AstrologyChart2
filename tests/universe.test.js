@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom' //@see https://www.npmjs.com/package/@testing-library/jest-dom
 import Universe from '../src/universe/Universe.js'
 import * as defaultSettings from '../src/settings/DefaultSettings.js';
 
@@ -12,9 +11,12 @@ test('Universe.constructor()', () => {
     HEIGHT: 480
   })
 
-  let paperElement = document.getElementById('paper')
+  let svgElement = document.querySelector("#paper svg")
 
-  expect(paperElement.innerHTML).toBe('<svg xmlns=\"http://www.w3.org/2000/xmlns/\" version=\"1.1\" viewBox=\"0 0 640 480\" style=\"position: relative; overflow: hidden;\"></svg>')
+  expect(svgElement).toBeDefined()
+  expect(svgElement instanceof SVGElement).toBeTruthy()
+  expect(svgElement.getAttribute("xmlns")).toBe('http://www.w3.org/2000/xmlns/')
+  expect(svgElement.getAttribute("viewBox")).toBe('0 0 640 480')
 });
 
 test('Universe.getSettings()', () => {
@@ -26,6 +28,7 @@ test('Universe.getSettings()', () => {
   let settings = universe.getSettings()
   expect(settings.WIDTH).toBe(defaultSettings.WIDTH);
   expect(settings.HEIGHT).toBe(defaultSettings.HEIGHT);
+  expect(settings.HTML_ELEMENT_ID).toBe('paper');
 
   let WIDTH = 640
   let HEIGHT = 480
