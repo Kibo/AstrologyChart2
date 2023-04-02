@@ -23,9 +23,9 @@ export const HEIGHT = 800
 export const RADIX_ID = "radix"
 
 /**
-* SVG Namespace
+* Transit chart element ID
 * @constant
 * @type {String}
-* @default http://www.w3.org/2000/xmlns/
+* @default transit
 */
-export const SVG_NAMESPACE = "http://www.w3.org/2000/xmlns/"
+export const TRANSIT_ID = "transit"

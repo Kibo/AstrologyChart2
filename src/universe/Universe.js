@@ -1,5 +1,6 @@
 import * as defaultSettings from '../settings/DefaultSettings.js';
 import RadixChart from '../charts/RadixChart.js';
+import TransitChart from '../charts/TransitChart.js';
 
 /**
  * @class
@@ -8,10 +9,10 @@ import RadixChart from '../charts/RadixChart.js';
  */
 class Universe {
 
+  #SVGDocument
+  #settings
   #radix
   #transit
-  #settings
-  #SVGDocument
 
   /**
    * @constructs
@@ -33,6 +34,7 @@ class Universe {
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
 
     this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
+    this.#transit = new TransitChart(this.#SVGDocument, this.#settings)
 
     return this
   }

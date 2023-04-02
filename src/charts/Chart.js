@@ -21,11 +21,13 @@ class Chart {
   /**
    * Create a SVG group element
    *
-   * @param {String} namespace
    * @param {String} elementID
    * @return {SVGGroupElement}
    */
   createSVGGroup(elementID) {
+    if(!elementID){
+      throw new Error("Mising param elementID")
+    }
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "g");
     svg.setAttribute('id', elementID);
     return svg
