@@ -10,12 +10,46 @@ class Chart {
 
   /**
   * Check if the data is valid
-  *
+  * @throws {Error} - if the data is undefined.
   * @param {Object} data
-  * @return {boolean}
+  * @return {Object} - {isValid:boolean, message:String}
   */
-  isDataValid( data ){
-    return true
+  validateData( data ){
+    if(!data){
+      throw new Error("Mising param data.")
+    }
+
+    if( !Array.isArray(data.points) ){
+      return {isValid:false, message:"points is not Array."}
+    }
+
+    if( !Array.isArray(data.cusps) ){
+      return {isValid:false, message:"cups is not Array."}
+    }
+
+    if( data.cusps.length !== 12){
+      return {isValid:false, message:"cusps.length !== 12"}
+    }
+
+    for(let point of data.points){
+      if(typeof point.name !== 'string'){
+        return {isValid:false, message:"point.name !== 'string'"}
+      }
+      if(point.name.length === 0){
+        return {isValid:false, message:"point.name.length == 0"}
+      }
+      if(typeof point.position !== 'number'){
+        return {isValid:false, message:"point.position !== 'number'"}
+      }
+    }
+
+    for(let cusp of data.cusps){
+      if(typeof cusp.position !== 'number'){
+        return {isValid:false, message:"cusp.position !== 'number'"}
+      }
+    }
+
+    return {isValid:true, message:""}
   }
 
   /**
