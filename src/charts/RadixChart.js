@@ -67,18 +67,24 @@ class RadixChart extends Chart {
    * Draw  background
    */
   #drawBackground() {
+
+    //TODO - circle + mask
     const centerX = this.#settings.CHART_WIDTH / 2
     const centerY = this.#settings.CHART_HEIGHT / 2
     const radius = Math.min(centerX, centerY) - this.#settings.CHART_PADDING
-    const start = 0; //degree
-    const end = 359.99; //degree
 
-    const LARGE_ARC_FLAG = 1
-    const a1 = ((this.#settings.CHART_ROTATION - start) % 360) * Math.PI / 180;
-    const a2 = ((this.#settings.CHART_ROTATION - end) % 360) * Math.PI / 180;
-    const hemisphere = SVGUtils.SVGSegment(centerX, centerY, radius - radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO, a1, a2, radius / this.#settings.RADIX_OUTER_CIRCLE_RADIUS_RATIO, LARGE_ARC_FLAG);
-    hemisphere.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.RADIX_BACKGROUND_COLOR);
-    this.#root.appendChild(hemisphere);
+    const circle = SVGUtils.SVGCircle( centerX, centerY, radius )
+    circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.RADIX_BACKGROUND_COLOR);
+    this.#root.appendChild(circle)
+
+    // const start = 0; //degree
+    // const end = 359.99; //degree
+    // const LARGE_ARC_FLAG = 1
+    // const a1 = ((this.#settings.CHART_ROTATION - start) % 360) * Math.PI / 180;
+    // const a2 = ((this.#settings.CHART_ROTATION - end) % 360) * Math.PI / 180;
+    // const hemisphere = SVGUtils.SVGSegment(centerX, centerY, radius - radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO, a1, a2, radius / this.#settings.RADIX_OUTER_CIRCLE_RADIUS_RATIO, LARGE_ARC_FLAG);
+    // hemisphere.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.RADIX_BACKGROUND_COLOR);
+    // this.#root.appendChild(hemisphere);
   }
 
   #drawUniverse(){

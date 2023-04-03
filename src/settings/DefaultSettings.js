@@ -1,5 +1,3 @@
-
-
 /**
 * Chart width
 * @constant
@@ -49,7 +47,7 @@ export const CHART_STROKE_ONLY = false;
 export const RADIX_ID = "radix"
 
 /**
-* Chart background color
+* Radix background color
 * @constant
 * @type {String}
 * @default #fff
