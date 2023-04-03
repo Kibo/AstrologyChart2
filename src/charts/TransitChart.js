@@ -26,7 +26,7 @@ class TransitChart extends Chart {
       throw new Error('Bad param settings.')
     }
 
-    super()
+    super(settings)
 
     this.#settings = settings
     this.#root = this.createSVGGroup(`${this.#settings.HTML_ELEMENT_ID}-${this.#settings.TRANSIT_ID}`)

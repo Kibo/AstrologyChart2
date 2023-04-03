@@ -79,7 +79,7 @@ class Universe {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute('xmlns', "http://www.w3.org/2000/xmlns/");
     svg.setAttribute('version', "1.1");
-    svg.setAttribute('viewBox', "0 0 " + this.#settings.WIDTH + " " + this.#settings.HEIGHT);
+    svg.setAttribute('viewBox', "0 0 " + this.#settings.CHART_WIDTH + " " + this.#settings.CHART_HEIGHT);
     svg.setAttribute('style', "position: relative; overflow: hidden;");
     return svg
   }

@@ -7,8 +7,8 @@ test('Universe.constructor()', () => {
   `;
 
   let universe = new Universe("paper", {
-    WIDTH: 640,
-    HEIGHT: 480
+    CHART_WIDTH: 640,
+    CHART_HEIGHT: 480
   })
 
   let svgElement = document.querySelector("#paper svg")
@@ -26,20 +26,20 @@ test('Universe.getSettings()', () => {
 
   let universe = new Universe("paper")
   let settings = universe.getSettings()
-  expect(settings.WIDTH).toBe(defaultSettings.WIDTH);
-  expect(settings.HEIGHT).toBe(defaultSettings.HEIGHT);
+  expect(settings.CHART_WIDTH).toBe(defaultSettings.CHART_WIDTH);
+  expect(settings.CHART_HEIGHT).toBe(defaultSettings.CHART_HEIGHT);
   expect(settings.HTML_ELEMENT_ID).toBe('paper');
 
-  let WIDTH = 640
-  let HEIGHT = 480
+  let CHART_WIDTH = 640
+  let CHART_HEIGHT = 480
   let MY_VAR = "abc"
   universe = new Universe("paper", {
-    WIDTH,
-    HEIGHT,
+    CHART_WIDTH,
+    CHART_HEIGHT,
     MY_VAR
   })
   settings = universe.getSettings()
-  expect(settings.WIDTH).toBe(WIDTH);
-  expect(settings.HEIGHT).toBe(HEIGHT);
+  expect(settings.CHART_WIDTH).toBe(CHART_WIDTH);
+  expect(settings.CHART_HEIGHT).toBe(CHART_HEIGHT);
   expect(settings.MY_VAR).toBe(MY_VAR);
 });
