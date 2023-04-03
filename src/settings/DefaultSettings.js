@@ -1,10 +1,4 @@
-/**
-* Chart background color
-* @constant
-* @type {String}
-* @default #fff
-*/
-export const CHART_BACKGROUND_COLOR = "#fff";
+
 
 /**
 * Chart width
@@ -53,6 +47,14 @@ export const CHART_STROKE_ONLY = false;
 * @default radix
 */
 export const RADIX_ID = "radix"
+
+/**
+* Chart background color
+* @constant
+* @type {String}
+* @default #fff
+*/
+export const RADIX_BACKGROUND_COLOR = "#fff";
 
 // radius / OUTER_CIRCLE_RADIUS_RATIO
 export const RADIX_OUTER_CIRCLE_RADIUS_RATIO = 2;

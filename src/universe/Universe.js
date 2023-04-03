@@ -1,4 +1,5 @@
 import * as defaultSettings from '../settings/DefaultSettings.js';
+import SVGUtils from '../utils/SVGUtils.js';
 import RadixChart from '../charts/RadixChart.js';
 import TransitChart from '../charts/TransitChart.js';
 
@@ -30,7 +31,7 @@ class Universe {
     }
 
     this.#settings = Object.assign({}, {...defaultSettings }, options, {HTML_ELEMENT_ID:htmlElementID});
-    this.#SVGDocument = this.#createSVGDocument(this.#settings.WIDTH, this.#settings.HEIGHT)
+    this.#SVGDocument = SVGUtils.SVGDocument(this.#settings.CHART_WIDTH, this.#settings.CHART_HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
 
     this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
@@ -67,22 +68,6 @@ class Universe {
 
   // ## PRIVATE ##############################
 
-  /*
-   * Create a SVG document
-   *
-   * @private
-   * @param {Number} width
-   * @param {Number} height
-   * @return {SVGDocument}
-   */
-  #createSVGDocument(width, height) {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute('xmlns', "http://www.w3.org/2000/xmlns/");
-    svg.setAttribute('version', "1.1");
-    svg.setAttribute('viewBox', "0 0 " + this.#settings.CHART_WIDTH + " " + this.#settings.CHART_HEIGHT);
-    svg.setAttribute('style', "position: relative; overflow: hidden;");
-    return svg
-  }
 }
 
 export {

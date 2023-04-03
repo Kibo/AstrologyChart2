@@ -1,3 +1,4 @@
+import SVGUtils from '../utils/SVGUtils.js';
 import Chart from './Chart.js'
 
 /**
@@ -28,8 +29,10 @@ class TransitChart extends Chart {
 
     super(settings)
 
+
     this.#settings = settings
-    this.#root = this.createSVGGroup(`${this.#settings.HTML_ELEMENT_ID}-${this.#settings.TRANSIT_ID}`)
+    this.#root = SVGUtils.SVGGroup()
+    this.#root.setAttribute("id", `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.TRANSIT_ID}`)
     SVGDocument.appendChild(this.#root);
   }
 
