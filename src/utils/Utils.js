@@ -19,11 +19,12 @@ class Utils {
    * Converts degree to radian
    * @static
    *
-   * @param {Number} degree
+   * @param {Number} angleIndegree
+   * @param {Number} shiftInDegree
    * @return {Number}
    */
-  static degreeToRadian = function(degree) {
-    return degree * Math.PI / 180;
+  static degreeToRadian = function(angleInDegree, shiftInDegree = 0) {
+    return ((angleInDegree + shiftInDegree) % 360) * Math.PI / 180
   }
 
   /**
@@ -34,23 +35,25 @@ class Utils {
    * @return {Number}
    */
   static radianToDegree = function(radian) {
-    return radian * 180 / Math.PI;
+    return (radian * 180 / Math.PI) % 360
   }
 
   /**
-   * Calculate angle with the chart shifts
-   * @static
+   * Calculate a position of the point on the circle.
    *
-   * @param {Number} angle
-   * @param {Number} shift
+   * @param {Number} cx - center x
+   * @param {Number} cy - center y
+   * @param {Number} radius - circle radius
+   * @param {Number} angleInRadians
    *
-   * @return {Number} degree
+   * @return {Object} - {x:Number, y:Number}
    */
-  static angleWithShifts(angle, shift = 0){
-      return ((shift - angle) % 360) * Math.PI / 180
+  static positionOnCircle(cx, cy, radius, angleInRadians) {
+    return {
+      x: Number.parseInt(radius * Math.cos(angleInRadians) + cx, 10),
+      y: Number.parseInt(radius * Math.sin(angleInRadians) + cy, 10),
+    };
   }
-
-
 }
 
 export {

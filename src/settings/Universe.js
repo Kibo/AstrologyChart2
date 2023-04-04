@@ -26,7 +26,7 @@ export const CHART_PADDING = 10
 * Rotation of the chart in degree. (0 degree is on the West.)
 * @constant
 * @type {Number}
-* @default 180
+* @default 90
 */
 export const CHART_ROTATION = 180;
 

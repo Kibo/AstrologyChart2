@@ -1,5 +1,5 @@
 import Universe from '../src/universe/Universe.js'
-import * as defaultSettings from '../src/settings/DefaultSettings.js';
+import DefaultSettings from '../src/settings/DefaultSettings.js';
 
 test('Universe.constructor()', () => {
   document.body.innerHTML = `
@@ -26,8 +26,8 @@ test('Universe.getSettings()', () => {
 
   let universe = new Universe("paper")
   let settings = universe.getSettings()
-  expect(settings.CHART_WIDTH).toBe(defaultSettings.CHART_WIDTH);
-  expect(settings.CHART_HEIGHT).toBe(defaultSettings.CHART_HEIGHT);
+  expect(settings.CHART_WIDTH).toBe(DefaultSettings.CHART_WIDTH);
+  expect(settings.CHART_HEIGHT).toBe(DefaultSettings.CHART_HEIGHT);
   expect(settings.HTML_ELEMENT_ID).toBe('paper');
 
   let CHART_WIDTH = 640

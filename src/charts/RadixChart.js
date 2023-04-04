@@ -84,13 +84,20 @@ class RadixChart extends Chart {
   }
 
   #drawAstrologicalSigns() {
-    const NUMBER_OF_ASTROLOGICAL_SIGNS = 12
+    const NUMBER_OF_ASTROLOGICAL_SIGNS = 11
     const STEP = 30 //degree
     const COLORS_SIGNS = [this.#settings.COLOR_ARIES, this.#settings.COLOR_TAURUS, this.#settings.COLOR_GEMINI, this.#settings.COLOR_CANCER, this.#settings.COLOR_LEO, this.#settings.COLOR_VIRGO, this.#settings.COLOR_LIBRA, this.#settings.COLOR_SCORPIO, this.#settings.COLOR_SAGITTARIUS, this.#settings.COLOR_CAPRICORN, this.#settings.COLOR_AQUARIUS, this.#settings.COLOR_PISCES]
-    let start = Utils.angleWithShifts(this.#anscendantShift, this.#settings.CHART_ROTATION)
+
+    let start = this.#anscendantShift
+    let end = start + STEP
+
     const wrapper = SVGUtils.SVGGroup()
-    for (let i = 0; i < 4; i++) {
-      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, start, start + STEP, this.#radius - this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO);
+    for (let i = 0; i < NUMBER_OF_ASTROLOGICAL_SIGNS; i++) {
+
+      let a1 = Utils.degreeToRadian(end, this.#settings.CHART_ROTATION)
+      let a2 = Utils.degreeToRadian(start, this.#settings.CHART_ROTATION)
+
+      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#radius - this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO);
 
       segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[i]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
@@ -99,7 +106,19 @@ class RadixChart extends Chart {
       wrapper.appendChild(segment);
 
       start += STEP;
+      end = start + STEP
     }
+
+    start = 15 + this.#anscendantShift
+    for( let i = 0; i < NUMBER_OF_ASTROLOGICAL_SIGNS; i++ ){
+      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO)/2, Utils.degreeToRadian(start,this.#settings.CHART_ROTATION))
+      let point = SVGUtils.SVGCircle( position.x, position.y, 8 )
+      point.setAttribute("stroke", "#333");
+      point.setAttribute("stroke-width", 1);
+      wrapper.appendChild( point );
+			start += STEP;
+    }
+
 
     this.#root.appendChild(wrapper)
   }
