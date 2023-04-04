@@ -80,7 +80,7 @@ class SVGUtils {
    *
    * @return {SVGElement} circle
    */
-  static SVGCircle = function circle(cx, cy, radius) {
+  static SVGCircle(cx, cy, radius) {
     const circle = document.createElementNS(SVGUtils.SVG_NAMESPACE, "circle");
     circle.setAttribute("cx", cx);
     circle.setAttribute("cy", cy);

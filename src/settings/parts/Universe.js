@@ -44,4 +44,4 @@ export const CHART_STROKE_ONLY = true;
 * @type {Number}
 * @default 1
 */
-export const STROKE = 1
+export const CHART_STROKE = 1
