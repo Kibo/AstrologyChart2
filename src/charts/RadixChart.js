@@ -1,4 +1,5 @@
 import SVGUtils from '../utils/SVGUtils.js';
+import Utils from '../utils/Utils.js';
 import Chart from './Chart.js'
 
 /**
@@ -11,6 +12,14 @@ class RadixChart extends Chart {
 
   #settings
   #root
+
+  /*
+   * Shift the Ascendant to the 0 degree on The Chart
+   */
+  #anscendantShift
+  #centerX
+  #centerY
+  #radius
 
   /**
    * @constructs
@@ -30,6 +39,9 @@ class RadixChart extends Chart {
     super(settings)
 
     this.#settings = settings
+    this.#centerX = this.#settings.CHART_WIDTH / 2
+    this.#centerY = this.#settings.CHART_HEIGHT / 2
+    this.#radius = Math.min(this.#centerX, this.#centerY) - this.#settings.CHART_PADDING
     this.#root = SVGUtils.SVGGroup()
     this.#root.setAttribute("id", `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.RADIX_ID}`)
     SVGDocument.appendChild(this.#root);
@@ -47,6 +59,7 @@ class RadixChart extends Chart {
       throw new Error(status.messages)
     }
 
+    this.#anscendantShift = Utils.DEG_360 - data.cusps[0].position
     this.#draw(data)
   }
 
@@ -60,36 +73,37 @@ class RadixChart extends Chart {
    */
   #draw(data) {
     this.#drawBackground()
-    this.#drawUniverse()
+    this.#drawAstrologicalSigns()
   }
 
-  /*
-   * Draw  background
-   */
   #drawBackground() {
-
-    //TODO - circle + mask
-    const centerX = this.#settings.CHART_WIDTH / 2
-    const centerY = this.#settings.CHART_HEIGHT / 2
-    const radius = Math.min(centerX, centerY) - this.#settings.CHART_PADDING
-
-    const circle = SVGUtils.SVGCircle( centerX, centerY, radius )
+    //TODO - circle + mask (transparent inner circle)
+    const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius)
     circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.RADIX_BACKGROUND_COLOR);
     this.#root.appendChild(circle)
-
-    // const start = 0; //degree
-    // const end = 359.99; //degree
-    // const LARGE_ARC_FLAG = 1
-    // const a1 = ((this.#settings.CHART_ROTATION - start) % 360) * Math.PI / 180;
-    // const a2 = ((this.#settings.CHART_ROTATION - end) % 360) * Math.PI / 180;
-    // const hemisphere = SVGUtils.SVGSegment(centerX, centerY, radius - radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO, a1, a2, radius / this.#settings.RADIX_OUTER_CIRCLE_RADIUS_RATIO, LARGE_ARC_FLAG);
-    // hemisphere.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.RADIX_BACKGROUND_COLOR);
-    // this.#root.appendChild(hemisphere);
   }
 
-  #drawUniverse(){
+  #drawAstrologicalSigns() {
+    const NUMBER_OF_ASTROLOGICAL_SIGNS = 12
+    const STEP = 30 //degree
+    const COLORS_SIGNS = [this.#settings.COLOR_ARIES, this.#settings.COLOR_TAURUS, this.#settings.COLOR_GEMINI, this.#settings.COLOR_CANCER, this.#settings.COLOR_LEO, this.#settings.COLOR_VIRGO, this.#settings.COLOR_LIBRA, this.#settings.COLOR_SCORPIO, this.#settings.COLOR_SAGITTARIUS, this.#settings.COLOR_CAPRICORN, this.#settings.COLOR_AQUARIUS, this.#settings.COLOR_PISCES]
+    let start = Utils.angleWithShifts(this.#anscendantShift, this.#settings.CHART_ROTATION)
+    const wrapper = SVGUtils.SVGGroup()
+    for (let i = 0; i < 4; i++) {
+      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, start, start + STEP, this.#radius - this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO);
 
+      segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[i]);
+      segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
+      segment.setAttribute("stroke-width", this.#settings.CHART_STROKE_ONLY ? this.#settings.STROKE : 0);
+
+      wrapper.appendChild(segment);
+
+      start += STEP;
+    }
+
+    this.#root.appendChild(wrapper)
   }
+
 
 }
 

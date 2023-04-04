@@ -1,4 +1,4 @@
-import * as defaultSettings from '../settings/DefaultSettings.js';
+import DefaultSettings from '../settings/DefaultSettings.js';
 import SVGUtils from '../utils/SVGUtils.js';
 import RadixChart from '../charts/RadixChart.js';
 import TransitChart from '../charts/TransitChart.js';
@@ -30,7 +30,7 @@ class Universe {
       throw new Error('Canot find a HTML element with ID ' + htmlElementID)
     }
 
-    this.#settings = Object.assign({}, {...defaultSettings }, options, {HTML_ELEMENT_ID:htmlElementID});
+    this.#settings = Object.assign({}, DefaultSettings, options, {HTML_ELEMENT_ID:htmlElementID});
     this.#SVGDocument = SVGUtils.SVGDocument(this.#settings.CHART_WIDTH, this.#settings.CHART_HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
 

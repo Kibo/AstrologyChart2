@@ -13,6 +13,8 @@ class Utils {
     }
   }
 
+  static DEG_360 = 360
+
   /**
    * Converts degree to radian
    * @static
@@ -34,6 +36,21 @@ class Utils {
   static radianToDegree = function(radian) {
     return radian * 180 / Math.PI;
   }
+
+  /**
+   * Calculate angle with the chart shifts
+   * @static
+   *
+   * @param {Number} angle
+   * @param {Number} shift
+   *
+   * @return {Number} degree
+   */
+  static angleWithShifts(angle, shift = 0){
+      return ((shift - angle) % 360) * Math.PI / 180
+  }
+
+
 }
 
 export {

@@ -59,8 +59,7 @@ class SVGUtils {
    *
    * @see SVG Path arc: https://www.w3.org/TR/SVG/paths.html#PathData
    */
-  static SVGSegment(x, y, radius, a1, a2, thickness, lFlag, sFlag) {
-
+  static SVGSegment(x, y, radius, a1, a2, thickness, lFlag, sFlag) {    
     // @see SVG Path arc: https://www.w3.org/TR/SVG/paths.html#PathData
     const LARGE_ARC_FLAG = lFlag || 0;
     const SWEET_FLAG = sFlag || 0;

@@ -14,3 +14,8 @@ test('Utils.degreeToRadianToDegree', () => {
   expect(Number(Utils.radianToDegree(2.5).toFixed(4))).toBe(143.2394);
   expect(Number(Utils.radianToDegree( Math.PI/3 ).toFixed(0))).toBe(60);
 });
+
+
+test('Utils.angleWithShifts', () => {
+  expect( Utils.angleWithShifts(0,0)).toBe(57.2958);  
+});

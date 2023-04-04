@@ -7,14 +7,14 @@
  */
 class Chart {
 
-  #settings
+  //#settings
 
   /**
    * @constructs
    * @param {Object} settings
    */
   constructor(settings) {
-    this.#settings = settings
+    //this.#settings = settings
   }
 
   /**
@@ -121,8 +121,7 @@ class Chart {
   }
 
   // ## PROTECTED ##############################
-
-
+      
 }
 
 export {
