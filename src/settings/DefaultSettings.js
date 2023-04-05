@@ -1,8 +1,8 @@
-import * as Universe from "./parts/Universe.js"
-import * as Radix from "./parts/Radix.js"
-import * as Transit from "./parts/Transit.js"
-import * as Colors from "./parts/Colors.js"
-import * as Symbols from "./parts/Symbols.js"
+import * as Universe from "./constants/Universe.js"
+import * as Radix from "./constants/Radix.js"
+import * as Transit from "./constants/Transit.js"
+import * as Colors from "./constants/Colors.js"
+import * as Symbols from "./constants/Symbols.js"
 
 const SETTINGS = Object.assign({}, Universe, Radix, Transit, Colors, Symbols);
 

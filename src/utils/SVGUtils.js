@@ -26,10 +26,9 @@ class SVGUtils {
    */
   static SVGDocument(width, height) {
     const svg = document.createElementNS(SVGUtils.SVG_NAMESPACE, "svg");
-    svg.setAttribute('xmlns', "http://www.w3.org/2000/xmlns/");
+    svg.setAttribute('xmlns', SVGUtils.SVG_NAMESPACE);
     svg.setAttribute('version', "1.1");
-    svg.setAttribute('viewBox', "0 0 " + width + " " + height);
-    svg.setAttribute('style', "position: relative; overflow: hidden;");
+    svg.setAttribute('viewBox', "0 0 " + width + " " + height);    
     return svg
   }
 

@@ -39,8 +39,8 @@ class RadixChart extends Chart {
     super(settings)
 
     this.#settings = settings
-    this.#centerX = this.#settings.CHART_WIDTH / 2
-    this.#centerY = this.#settings.CHART_HEIGHT / 2
+    this.#centerX = this.#settings.CHART_VIEWBOX_WIDTH / 2
+    this.#centerY = this.#settings.CHART_VIEWBOX_HEIGHT / 2
     this.#radius = Math.min(this.#centerX, this.#centerY) - this.#settings.CHART_PADDING
     this.#root = SVGUtils.SVGGroup()
     this.#root.setAttribute("id", `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.RADIX_ID}`)
@@ -77,7 +77,7 @@ class RadixChart extends Chart {
   #drawBackground() {
     //TODO - circle + mask (transparent inner circle)
     const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius)
-    circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.RADIX_BACKGROUND_COLOR);
+    circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.CHART_BACKGROUND_COLOR);
     this.#root.appendChild(circle)
   }
 

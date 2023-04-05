@@ -6,8 +6,8 @@
     <style>
       #paper{
         background-color:#eee;
-        width:800px;
-        height:800px;
+        width:1024px;
+        height:1024px;
       }
     </style>
   </head>
@@ -22,7 +22,7 @@
       	"cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
       }
 
-      const chart = new astrology.Chart('paper', {CHART_WIDTH:800, CHART_HEIGHT:800})
+      const chart = new astrology.Chart('paper')
       chart.radix().setData( data )
     </script>
   </body>

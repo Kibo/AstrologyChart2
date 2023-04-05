@@ -1,4 +1,4 @@
-/**
+/*
 * Transit chart element ID
 * @constant
 * @type {String}

@@ -27,14 +27,3 @@ test('Utils.positionOnCircle', () => {
   expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(360)) ).toMatchObject( {x:1, y:0} )
   expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(720)) ).toMatchObject( {x:1, y:0} )
 });
-
-
-
-// test( "getPointPosition", function( ) {
-// 					deepEqual(astrology.utils.getPointPosition(10,10,10,0), {x:0, y:10});
-// 					deepEqual(astrology.utils.getPointPosition(10,10,10,90), {x:10, y:20});
-// 					deepEqual(astrology.utils.getPointPosition(10,10,10,180), {x:20, y:10});
-// 					deepEqual(astrology.utils.getPointPosition(10,10,10,270), {x:10, y:0});
-// 					deepEqual(astrology.utils.getPointPosition(10,10,10,360), {x:0, y:10});
-// 					deepEqual(astrology.utils.getPointPosition(10,10,10,450), {x:10, y:20});
-// 				});

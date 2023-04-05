@@ -30,8 +30,8 @@ class Universe {
       throw new Error('Canot find a HTML element with ID ' + htmlElementID)
     }
 
-    this.#settings = Object.assign({}, DefaultSettings, options, {HTML_ELEMENT_ID:htmlElementID});    
-    this.#SVGDocument = SVGUtils.SVGDocument(this.#settings.CHART_WIDTH, this.#settings.CHART_HEIGHT)
+    this.#settings = Object.assign({}, DefaultSettings, options, {HTML_ELEMENT_ID:htmlElementID});
+    this.#SVGDocument = SVGUtils.SVGDocument(this.#settings.CHART_VIEWBOX_WIDTH, this.#settings.CHART_VIEWBOX_HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
 
     this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
