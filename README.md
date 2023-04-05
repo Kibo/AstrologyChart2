@@ -13,20 +13,18 @@ It does not calculate any positions of the planets in Universe.
 ### Examples
 - [Radix chart](#)
 - [More charts on page](#)
-- [Radix collision](#)
-- [Transit chart](#)
+- [Radix collision](#) TODO
+- [Transit chart](#) TODO
 - [Stroke only](#)
-- [Animation](#)
+- [Animation](#) TODO
 - [Calibration](#)
 
 ### How to use
 ```
-<script src="js/astrochart2.min.js"></script>
+<script src="../dist/astrochart2.js"></script>
 <script>
-	window.onload = function(){
-		const chart = new astrology.Chart( 'paper' );
-		chart.setRadixData( data );					
-	};			
+	const chart = new astrology.Chart('paper')
+	chart.radix().setData( data )
 </script>
 ```
 ### Data example
@@ -41,10 +39,10 @@ It does not calculate any positions of the planets in Universe.
 Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron, Lilith, NNode.
 
 ### Chart settings
-Look into the [settings.json](#)
+Look into the [settings](#)
 ```
 const settings = {SYMBOL_SCALE:2};
-const chart = new astrology.Chart( 'paper',settings);
+const chart = new astrology.Chart('paper', settings);
 ```
 Note: All keys are uppercase.
 

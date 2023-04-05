@@ -75,10 +75,26 @@ class RadixChart extends Chart {
   }
 
   #drawBackground() {
-    //TODO - circle + mask (transparent inner circle)
+    const MASK_ID = `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.RADIX_ID}-background-mask-1`
+
+    const wrapper = SVGUtils.SVGGroup()
+
+    const mask = SVGUtils.SVGMask(MASK_ID)
+    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius)
+    outerCircle.setAttribute('fill', "white")
+    mask.appendChild(outerCircle)
+
+    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius / this.#settings.RADIX_OUTER_CIRCLE_RADIUS_RATIO)
+    innerCircle.setAttribute('fill', "black")
+    mask.appendChild(innerCircle)
+    wrapper.appendChild(mask)
+
     const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius)
     circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.CHART_BACKGROUND_COLOR);
-    this.#root.appendChild(circle)
+    circle.setAttribute("mask", this.#settings.CHART_STROKE_ONLY ? "none" : `url(#${MASK_ID})`);
+    wrapper.appendChild(circle)
+
+    this.#root.appendChild(wrapper)
   }
 
   #drawAstrologicalSigns() {
@@ -95,11 +111,11 @@ class RadixChart extends Chart {
       return point
     }
 
-    const makeSegment = (angleFromInDegree, angleToInDegree) => {
+    const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
       let a1 = Utils.degreeToRadian(angleToInDegree, this.#settings.CHART_ROTATION)
       let a2 = Utils.degreeToRadian(angleFromInDegree, this.#settings.CHART_ROTATION)
       let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#radius - this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO);
-      segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[i]);
+      segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[symbolIndex]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
       segment.setAttribute("stroke-width", this.#settings.CHART_STROKE_ONLY ? this.#settings.CHART_STROKE : 0);
       return segment
@@ -112,7 +128,7 @@ class RadixChart extends Chart {
 
     for (let i = 0; i < NUMBER_OF_ASTROLOGICAL_SIGNS; i++) {
 
-      let segment = makeSegment(startAngle, endAngle)
+      let segment = makeSegment(i, startAngle, endAngle)
       wrapper.appendChild(segment);
 
       let symbol = makeSymbol(i, startAngle)

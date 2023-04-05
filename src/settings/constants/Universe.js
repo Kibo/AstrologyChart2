@@ -12,25 +12,25 @@ export const CHART_PADDING = 10
 * @type {boolean}
 * @default false
 */
-export const CHART_STROKE_ONLY = true;
+export const CHART_STROKE_ONLY = false;
 
 /**
 * SVG viewBox width
 * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox
 * @constant
 * @type {Number}
-* @default 1024
+* @default 800
 */
-export const CHART_VIEWBOX_WIDTH = 1024
+export const CHART_VIEWBOX_WIDTH = 800
 
 /**
 * SVG viewBox height
 * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox
 * @constant
 * @type {Number}
-* @default 1024
+* @default 800
 */
-export const CHART_VIEWBOX_HEIGHT = 1024
+export const CHART_VIEWBOX_HEIGHT = 800
 
 /*
 * Rotation of the chart in degree. (0 degree is on the West.)
