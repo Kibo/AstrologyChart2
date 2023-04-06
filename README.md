@@ -1,18 +1,18 @@
 # AstroChart
-A JavaScript library with clean API and zero dependencies for generating astrology charts.
+A JavaScript library with clean API and zero dependencies ***for generating astrology charts***.
 
 It does not calculate any positions of the planets in Universe.
 
 **Version**: 0.0.1 (in progress)
 
-- Pure Javascript implementation without dependencies.
+- Pure Javascript implementation without dependencies
 - OOP style
-- SVG graphics.
-- Tested code.
+- SVG graphics
+- Tested code
 
-There is updated version of [AstroChart](https://github.com/Kibo/AstroChart). A completely rewritten code with modern JavaScript features, new API and new bugs ;)
+This is updated version of [AstroChart](https://github.com/Kibo/AstroChart). A completely rewritten code with modern JavaScript features, new API and new bugs ;)
 
-Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) for questons, new ideas or open [new issues](https://github.com/Kibo/AstrologyChart2/issues) for bug report.
+Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) for questons, new ideas or open [new Issue](https://github.com/Kibo/AstrologyChart2/issues) for bug report.
 
 ### Examples
 - [Radix chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radix.html)
@@ -43,7 +43,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron, Lilith, NNode.
 
 ### Chart settings
-Look into the [settings](https://github.com/Kibo/AstrologyChart2/tree/master/src/settings/constants)
+Look into the [settings](https://github.com/Kibo/AstrologyChart2/tree/master/src/settings/constants).
 ```
 const settings = {SYMBOL_SCALE:2};
 const chart = new astrology.Chart('paper', settings);
@@ -59,4 +59,4 @@ Note: All keys are uppercase.
 - Build a public open source astrology application full of new ideas and modern approaches to astrology.
 - Design a computer system for interpreting astrological charts.
 
-Are you interested? Are you a graphic designer, business manager, marketing guru? Let me know.
+**Are you interested? Are you a graphic designer, business manager, marketing guru? Let me know.**
