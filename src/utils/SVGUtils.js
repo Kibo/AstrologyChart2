@@ -99,6 +99,26 @@ class SVGUtils {
     circle.setAttribute("fill", "none");
     return circle;
   }
+
+  /**
+   * SVG line
+   *
+   * @param {Number} x1
+   * @param {Number} y2
+   * @param {Number} x2
+   * @param {Number} y2
+   *
+   * @return {SVGElement} line
+   */
+  static SVGLine(x1, y1, x2, y2) {
+    const line = document.createElementNS(SVGUtils.SVG_NAMESPACE, "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    return line;
+  }
+
 }
 
 export {

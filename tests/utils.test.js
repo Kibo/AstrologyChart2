@@ -22,8 +22,9 @@ test('Utils.radianToDegree', () => {
 
 test('Utils.positionOnCircle', () => {
   expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(0)) ).toMatchObject( {x:1, y:0} )
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(60)) ).toMatchObject( {x:0, y:0} )
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(180)) ).toMatchObject( {x:-1, y:1})
+  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(60)) ).toMatchObject( {x:1, y:1} )
+  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(90)) ).toMatchObject( {x:0, y:1})
+  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(180)) ).toMatchObject( {x:-1, y:0})
   expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(360)) ).toMatchObject( {x:1, y:0} )
   expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(720)) ).toMatchObject( {x:1, y:0} )
 });

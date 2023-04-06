@@ -7,6 +7,22 @@
 export const CHART_BACKGROUND_COLOR = "#fff";
 
 /*
+* Default color of circles in charts
+* @constant
+* @type {String}
+* @default #333
+*/
+export const CHART_CIRCLE_COLOR = "#333";
+
+/*
+* Default color of lines in charts
+* @constant
+* @type {String}
+* @default #333
+*/
+export const CHART_LINE_COLOR = "#333";
+
+/*
 * Aries color
 * @constant
 * @type {String}

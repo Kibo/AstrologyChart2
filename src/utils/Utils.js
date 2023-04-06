@@ -50,8 +50,8 @@ class Utils {
    */
   static positionOnCircle(cx, cy, radius, angleInRadians) {
     return {
-      x: Number.parseInt(radius * Math.cos(angleInRadians) + cx, 10),
-      y: Number.parseInt(radius * Math.sin(angleInRadians) + cy, 10),
+      x: Math.round(radius * Math.cos(angleInRadians) + cx),
+      y: Math.round(radius * Math.sin(angleInRadians) + cy)
     };
   }
 }
