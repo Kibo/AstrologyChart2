@@ -59,4 +59,4 @@ Note: All keys are uppercase.
 - Build a public open source astrology application full of new ideas and modern approaches to astrology.
 - Design a computer system for interpreting astrological charts.
 
-*Are you interested? Are you a graphic designer, business manager, marketing guru? Let me know.*
+*Are you interested? Are you a graphic designer, business manager, marketing or astrologer guru? Let me know.*
