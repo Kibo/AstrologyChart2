@@ -65,7 +65,7 @@ npm run doc
 ```
 
 ### Future plans
-- Build a public astrology API.
+- Build and publish a public astrology API server (Ephemetris).
 - Build a public open source astrology application full of new ideas and modern approaches to astrology.
 - Design a computer system for interpreting astrological charts.
 
