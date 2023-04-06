@@ -1,5 +1,5 @@
 # AstroChart
-A JavaScript library with clean API and zero dependencies ***for generating astrology charts***.
+A JavaScript library with clean API and zero dependencies **for generating astrology charts**.
 
 It does not calculate any positions of the planets in Universe.
 
@@ -59,4 +59,4 @@ Note: All keys are uppercase.
 - Build a public open source astrology application full of new ideas and modern approaches to astrology.
 - Design a computer system for interpreting astrological charts.
 
-**Are you interested? Are you a graphic designer, business manager, marketing guru? Let me know.**
+*Are you interested? Are you a graphic designer, business manager, marketing guru? Let me know.*
