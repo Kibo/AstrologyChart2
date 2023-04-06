@@ -54,6 +54,11 @@ Note: All keys are uppercase.
  - default namespace for this library is *astrology*
  - you can change it in [webpack.config.js](https://webpack.js.org/configuration/output/#outputlibrary)
 
+### JSDoc
+```
+npm run doc
+```
+
 ### Future plans
 - Build a public astrology API.
 - Build a public open source astrology application full of new ideas and modern approaches to astrology.
