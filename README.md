@@ -3,21 +3,25 @@ A JavaScript library with clean API and zero dependencies for generating astrolo
 
 It does not calculate any positions of the planets in Universe.
 
-**Version**: 0.0.1
+**Version**: 0.0.1 (in progress)
 
 - Pure Javascript implementation without dependencies.
 - OOP style
 - SVG graphics.
 - Tested code.
 
+There is updated version of [AstroChart](#). A completely rewritten code with modern JavaScript features, new API and new bugs ;)
+
+Please open [new issue](#) for questons, bug report, new ideas.
+
 ### Examples
 - [Radix chart](#)
-- [More charts on page](#)
+- [More charts on page](#) TODO
 - [Radix collision](#) TODO
 - [Transit chart](#) TODO
-- [Stroke only](#)
+- [Stroke only](#) TODO
 - [Animation](#) TODO
-- [Calibration](#)
+- [Calibration](#) TODO
 
 ### How to use
 ```
@@ -50,7 +54,9 @@ Note: All keys are uppercase.
  - default namespace for this library is *astrology*
  - you can change it in [webpack.config.js](https://webpack.js.org/configuration/output/#outputlibrary)
 
-### It might interest you
-- [The Swiss Ephemeris](http://www.astro.com/swisseph/swephinfo_e.htm)
-- [AstroWebService](https://github.com/Kibo/AstroWebService)
-- [AstroAPI](https://github.com/Kibo/AstroAPI)
+### Future plans
+- Build a public astrology API.
+- Build a public open source astrology application full of new ideas and modern approaches to astrology.
+- Design a computer system for interpreting astrological charts.
+
+Are you interested? Are you a graphic designer, business manager, marketing guru?

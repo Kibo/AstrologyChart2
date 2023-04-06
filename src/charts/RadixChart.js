@@ -73,6 +73,7 @@ class RadixChart extends Chart {
     this.#drawBackground()
     this.#drawAstrologicalSigns()
     this.#drawRuler()
+    this.#drawMainAxis()
   }
 
   #drawBackground() {
@@ -148,18 +149,19 @@ class RadixChart extends Chart {
     const STEP = 5
 
     const wrapper = SVGUtils.SVGGroup()
+
     const rulerRadius = (this.#radius - (this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO + RULER_STRENGHT));
 
     let startAngle = this.#anscendantShift
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
-      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius,  Utils.degreeToRadian(startAngle, this.#settings.CHART_ROTATION))
+      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius, Utils.degreeToRadian(startAngle, this.#settings.CHART_ROTATION))
 
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius + RULER_STRENGHT/(i%2+1), Utils.degreeToRadian(startAngle, this.#settings.CHART_ROTATION))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius + RULER_STRENGHT / (i % 2 + 1), Utils.degreeToRadian(startAngle, this.#settings.CHART_ROTATION))
 
-      const line = SVGUtils.SVGLine( startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-			line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
-			line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
-			wrapper.appendChild( line );
+      const line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+      line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+      wrapper.appendChild(line);
 
       startAngle += STEP
     }
@@ -170,6 +172,10 @@ class RadixChart extends Chart {
     wrapper.appendChild(circle);
 
     this.#root.appendChild(wrapper)
+  }
+
+  #drawMainAxis(){
+
   }
 }
 
