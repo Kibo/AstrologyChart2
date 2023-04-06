@@ -1,4 +1,4 @@
-# AstrogyChart2
+# AstrologyChart2
 A JavaScript library with clean API and zero dependencies **for generating astrology charts**.
 
 It does not calculate any positions of the planets in Universe.
