@@ -139,7 +139,7 @@ class RadixChart extends Chart {
     const SYMBOL_SIGNS = [SVGUtils.SYMBOL_ARIES, SVGUtils.SYMBOL_TAURUS, SVGUtils.SYMBOL_GEMINI, SVGUtils.SYMBOL_CANCER, SVGUtils.SYMBOL_LEO, SVGUtils.SYMBOL_VIRGO, SVGUtils.SYMBOL_LIBRA, SVGUtils.SYMBOL_SCORPIO, SVGUtils.SYMBOL_SAGITTARIUS, SVGUtils.SYMBOL_CAPRICORN, SVGUtils.SYMBOL_AQUARIUS, SVGUtils.SYMBOL_PISCES]
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
-      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2))
+      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#anscendantShift))
       let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y, 8)
       symbol.setAttribute("stroke", this.#settings.CHART_SIGNS_COLOR);
       symbol.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -147,8 +147,8 @@ class RadixChart extends Chart {
     }
 
     const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
-      let a1 = Utils.degreeToRadian(angleFromInDegree)
-      let a2 = Utils.degreeToRadian(angleToInDegree)
+      let a1 = Utils.degreeToRadian(angleFromInDegree, this.#anscendantShift)
+      let a2 = Utils.degreeToRadian(angleToInDegree, this.#anscendantShift)
       let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO);
       segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[symbolIndex]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
@@ -156,7 +156,7 @@ class RadixChart extends Chart {
       return segment
     }
 
-    let startAngle = this.#anscendantShift
+    let startAngle = 0
     let endAngle = startAngle + STEP
 
     const wrapper = SVGUtils.SVGGroup()

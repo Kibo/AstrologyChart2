@@ -34,9 +34,9 @@ export const CHART_TEXT_COLOR = "#333";
 * Default color of signs in charts (arise symbol, taurus symbol, ...)
 * @constant
 * @type {String}
-* @default #eee
+* @default #000
 */
-export const CHART_SIGNS_COLOR = "#eee";
+export const CHART_SIGNS_COLOR = "#000";
 
 /*
 * Aries color
