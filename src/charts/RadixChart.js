@@ -107,6 +107,7 @@ class RadixChart extends Chart {
         position: data.cusps[9].position
       },
     ])
+    this.#drawBorders()
   }
 
   #drawBackground() {
@@ -233,6 +234,27 @@ class RadixChart extends Chart {
       wrapper.appendChild(path);
 
     }
+
+    this.#root.appendChild(wrapper)
+  }
+
+  #drawBorders() {
+    const wrapper = SVGUtils.SVGGroup()
+
+    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO)
+    innerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
+    innerCircle.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+    wrapper.appendChild(innerCircle)
+
+    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius)
+    outerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
+    outerCircle.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+    wrapper.appendChild(outerCircle)
+
+    const centerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius/RadixChart.OUTER_CIRCLE_RADIUS_RATIO)
+    centerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
+    centerCircle.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+    wrapper.appendChild(centerCircle)
 
     this.#root.appendChild(wrapper)
   }

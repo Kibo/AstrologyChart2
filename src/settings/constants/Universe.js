@@ -7,14 +7,6 @@
 export const CHART_PADDING = 40
 
 /**
-* No fill, only stroke
-* @constant
-* @type {boolean}
-* @default false
-*/
-export const CHART_STROKE_ONLY = false;
-
-/**
 * SVG viewBox width
 * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox
 * @constant
@@ -47,3 +39,11 @@ export const CHART_STROKE = 1
 * @default 1
 */
 export const CHART_MAIN_STROKE = 2
+
+/**
+* No fill, only stroke
+* @constant
+* @type {boolean}
+* @default false
+*/
+export const CHART_STROKE_ONLY = false;

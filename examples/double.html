@@ -2,33 +2,37 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Radix</title>
+    <title>2 Radix</title>
     <style>
-      #paper{
+      #paper1, #paper2{
         background-color:#eee;
-        width:800px;
-        height:800px;
+        width:600px;
+        height:600px;
+        float:left;
       }
     </style>
   </head>
   <body>
-    <div id="paper"></div>
+    <div id="paper1"></div>
+    <div id="paper2"></div>
 
     <script src="../dist/astrochart2.js"></script>
     <script>
-      // fetch from server
-      let data = {
+      let data1 = {
       	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}],
       	"cusps":[{position:296}, {position:350}, {position:30}, {position:56}, {position:75}, {position:94}, {position:116}, {position:170}, {position:210}, {position:236}, {position:255}, {position:274}]
       }
 
-      let dataTesta = {
+      const chart1 = new astrology.Chart('paper1')
+      chart1.radix().setData( data1 )
+
+      let data2 = {
       	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}],
       	"cusps":[{position:0}, {position:30}, {position:60}, {position:90}, {position:120}, {position:150}, {position:180}, {position:210}, {position:240}, {position:270}, {position:300}, {position:330}]
       }
 
-      const chart = new astrology.Chart('paper')
-      chart.radix().setData( data )
+      const chart2 = new astrology.Chart('paper2', {CHART_SIGNS_COLOR:"#fff"})
+      chart2.radix().setData( data2 )
     </script>
   </body>
 </html>
