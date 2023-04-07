@@ -23,6 +23,14 @@ export const CHART_CIRCLE_COLOR = "#333";
 export const CHART_LINE_COLOR = "#333";
 
 /*
+* Default color of text in charts
+* @constant
+* @type {String}
+* @default #333
+*/
+export const CHART_TEXT_COLOR = "#333";
+
+/*
 * Aries color
 * @constant
 * @type {String}

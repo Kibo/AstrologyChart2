@@ -121,7 +121,7 @@ class Chart {
   }
 
   // ## PROTECTED ##############################
-      
+
 }
 
 export {

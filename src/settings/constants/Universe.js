@@ -4,7 +4,7 @@
 * @type {Number}
 * @default 10px
 */
-export const CHART_PADDING = 10
+export const CHART_PADDING = 40
 
 /**
 * No fill, only stroke
@@ -33,17 +33,17 @@ export const CHART_VIEWBOX_WIDTH = 800
 export const CHART_VIEWBOX_HEIGHT = 800
 
 /*
-* Rotation of the chart in degree. (0 degree is on the West.)
-* @constant
-* @type {Number}
-* @default 180
-*/
-export const CHART_ROTATION = 180;
-
-/*
 * Line strength
 * @constant
 * @type {Number}
 * @default 1
 */
 export const CHART_STROKE = 1
+
+/*
+* Line strength of the main lines. For instance main axis, main circles
+* @constant
+* @type {Number}
+* @default 1
+*/
+export const CHART_MAIN_STROKE = 2

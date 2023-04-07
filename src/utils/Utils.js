@@ -14,6 +14,7 @@ class Utils {
   }
 
   static DEG_360 = 360
+  static DEG_180 = 180
 
   /**
    * Converts degree to radian

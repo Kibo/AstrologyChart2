@@ -9,6 +9,7 @@ It does not calculate any positions of the planets in Universe.
 - OOP style
 - SVG graphics
 - Tested code
+- Fully configurable
 
 This is updated version of [AstroChart](https://github.com/Kibo/AstroChart). A completely rewritten code with modern JavaScript features, new API and new bugs ;)
 

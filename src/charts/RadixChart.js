@@ -10,6 +10,23 @@ import Chart from './Chart.js'
  */
 class RadixChart extends Chart {
 
+  /*
+  * Inner circle radius ratio
+  * @constant
+  * @type {Number}
+  * @default 8
+  */
+  static INNER_CIRCLE_RADIUS_RATIO = 8;
+
+  /*
+  * Outer circle radius ratio
+  * @constant
+  * @type {Number}
+  * @default 2
+  */
+  static OUTER_CIRCLE_RADIUS_RATIO = 2;
+
+
   #settings
   #root
 
@@ -59,7 +76,7 @@ class RadixChart extends Chart {
       throw new Error(status.messages)
     }
 
-    this.#anscendantShift = Utils.DEG_360 - data.cusps[0].position
+    this.#anscendantShift = Utils.DEG_180 - data.cusps[0].position
     this.#draw(data)
   }
 
@@ -73,7 +90,23 @@ class RadixChart extends Chart {
     this.#drawBackground()
     this.#drawAstrologicalSigns()
     this.#drawRuler()
-    this.#drawMainAxis()
+    this.#drawMainAxis([{
+        name: SVGUtils.SYMBOL_AS,
+        position: data.cusps[0].position
+      },
+      {
+        name: SVGUtils.SYMBOL_IC,
+        position: data.cusps[3].position
+      },
+      {
+        name: SVGUtils.SYMBOL_DS,
+        position: data.cusps[6].position
+      },
+      {
+        name: SVGUtils.SYMBOL_MC,
+        position: data.cusps[9].position
+      },
+    ])
   }
 
   #drawBackground() {
@@ -86,7 +119,7 @@ class RadixChart extends Chart {
     outerCircle.setAttribute('fill', "white")
     mask.appendChild(outerCircle)
 
-    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius / this.#settings.RADIX_OUTER_CIRCLE_RADIUS_RATIO)
+    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO)
     innerCircle.setAttribute('fill', "black")
     mask.appendChild(innerCircle)
     wrapper.appendChild(mask)
@@ -106,7 +139,7 @@ class RadixChart extends Chart {
     const SYMBOL_SIGNS = [this.#settings.SYMBOL_ARIES, this.#settings.SYMBOL_TAURUS, this.#settings.SYMBOL_GEMINI, this.#settings.SYMBOL_CANCER, this.#settings.SYMBOL_LEO, this.#settings.SYMBOL_VIRGO, this.#settings.SYMBOL_LIBRA, this.#settings.SYMBOL_SCORPIO, this.#settings.SYMBOL_SAGITTARIUS, this.#settings.SYMBOL_CAPRICORN, this.#settings.SYMBOL_AQUARIUS, this.#settings.SYMBOL_PISCES]
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
-      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#settings.CHART_ROTATION))
+      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2))
       let point = SVGUtils.SVGCircle(position.x, position.y, 8)
       point.setAttribute("stroke", "#333");
       point.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -114,9 +147,9 @@ class RadixChart extends Chart {
     }
 
     const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
-      let a1 = Utils.degreeToRadian(angleToInDegree, this.#settings.CHART_ROTATION)
-      let a2 = Utils.degreeToRadian(angleFromInDegree, this.#settings.CHART_ROTATION)
-      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#radius - this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO);
+      let a1 = Utils.degreeToRadian(angleToInDegree)
+      let a2 = Utils.degreeToRadian(angleFromInDegree)
+      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO);
       segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[symbolIndex]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
       segment.setAttribute("stroke-width", this.#settings.CHART_STROKE_ONLY ? this.#settings.CHART_STROKE : 0);
@@ -150,13 +183,13 @@ class RadixChart extends Chart {
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const rulerRadius = (this.#radius - (this.#radius / this.#settings.RADIX_INNER_CIRCLE_RADIUS_RATIO + RULER_STRENGHT));
+    const rulerRadius = (this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + RULER_STRENGHT));
 
     let startAngle = this.#anscendantShift
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
-      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius, Utils.degreeToRadian(startAngle, this.#settings.CHART_ROTATION))
+      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius, Utils.degreeToRadian(startAngle))
 
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius + RULER_STRENGHT / (i % 2 + 1), Utils.degreeToRadian(startAngle, this.#settings.CHART_ROTATION))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius + RULER_STRENGHT / (i % 2 + 1), Utils.degreeToRadian(startAngle))
 
       const line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
@@ -174,9 +207,34 @@ class RadixChart extends Chart {
     this.#root.appendChild(wrapper)
   }
 
-  #drawMainAxis(){
+  /*
+   * Draw main axis
+   * @param {Array} axisList
+   */
+  #drawMainAxis(axisList) {
+    const AXIS_LENGTH = 10
 
+    const wrapper = SVGUtils.SVGGroup()
+
+    for (const axis of axisList) {
+      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius, Utils.degreeToRadian(axis.position, this.#anscendantShift))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.position, this.#anscendantShift))
+      let line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+      line.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+      wrapper.appendChild(line);
+
+      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.position, this.#anscendantShift))
+      let path = SVGUtils.SVGSymbol( axis.name, textPoint.x, textPoint.y, {...this.#settings})
+      path.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR);
+      path.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+      wrapper.appendChild(path);
+
+    }
+
+    this.#root.appendChild(wrapper)
   }
+
 }
 
 export {
