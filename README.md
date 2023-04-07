@@ -13,7 +13,7 @@ It does not calculate any positions of the planets in Universe.
 
 This is updated version of [AstroChart](https://github.com/Kibo/AstroChart). A completely rewritten code with modern JavaScript features, new API and new bugs ;)
 
-Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) for questons, new ideas or open [new Issue](https://github.com/Kibo/AstrologyChart2/issues) for bug report.
+Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) for questons and new ideas or open [new Issue](https://github.com/Kibo/AstrologyChart2/issues) for bug report.
 
 ### Examples
 - [Radix chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radix.html)
