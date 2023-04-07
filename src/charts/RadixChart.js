@@ -11,19 +11,19 @@ import Chart from './Chart.js'
 class RadixChart extends Chart {
 
   /*
-  * Inner circle radius ratio
-  * @constant
-  * @type {Number}
-  * @default 8
-  */
+   * Inner circle radius ratio
+   * @constant
+   * @type {Number}
+   * @default 8
+   */
   static INNER_CIRCLE_RADIUS_RATIO = 8;
 
   /*
-  * Outer circle radius ratio
-  * @constant
-  * @type {Number}
-  * @default 2
-  */
+   * Outer circle radius ratio
+   * @constant
+   * @type {Number}
+   * @default 2
+   */
   static OUTER_CIRCLE_RADIUS_RATIO = 2;
 
 
@@ -76,7 +76,7 @@ class RadixChart extends Chart {
       throw new Error(status.messages)
     }
 
-    this.#anscendantShift = Utils.DEG_180 - data.cusps[0].position
+    this.#anscendantShift = (Utils.DEG_180 - data.cusps[0].position)
     this.#draw(data)
   }
 
@@ -136,14 +136,14 @@ class RadixChart extends Chart {
     const NUMBER_OF_ASTROLOGICAL_SIGNS = 12
     const STEP = 30 //degree
     const COLORS_SIGNS = [this.#settings.COLOR_ARIES, this.#settings.COLOR_TAURUS, this.#settings.COLOR_GEMINI, this.#settings.COLOR_CANCER, this.#settings.COLOR_LEO, this.#settings.COLOR_VIRGO, this.#settings.COLOR_LIBRA, this.#settings.COLOR_SCORPIO, this.#settings.COLOR_SAGITTARIUS, this.#settings.COLOR_CAPRICORN, this.#settings.COLOR_AQUARIUS, this.#settings.COLOR_PISCES]
-    const SYMBOL_SIGNS = [this.#settings.SYMBOL_ARIES, this.#settings.SYMBOL_TAURUS, this.#settings.SYMBOL_GEMINI, this.#settings.SYMBOL_CANCER, this.#settings.SYMBOL_LEO, this.#settings.SYMBOL_VIRGO, this.#settings.SYMBOL_LIBRA, this.#settings.SYMBOL_SCORPIO, this.#settings.SYMBOL_SAGITTARIUS, this.#settings.SYMBOL_CAPRICORN, this.#settings.SYMBOL_AQUARIUS, this.#settings.SYMBOL_PISCES]
+    const SYMBOL_SIGNS = [SVGUtils.SYMBOL_ARIES, SVGUtils.SYMBOL_TAURUS, SVGUtils.SYMBOL_GEMINI, SVGUtils.SYMBOL_CANCER, SVGUtils.SYMBOL_LEO, SVGUtils.SYMBOL_VIRGO, SVGUtils.SYMBOL_LIBRA, SVGUtils.SYMBOL_SCORPIO, SVGUtils.SYMBOL_SAGITTARIUS, SVGUtils.SYMBOL_CAPRICORN, SVGUtils.SYMBOL_AQUARIUS, SVGUtils.SYMBOL_PISCES]
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
       let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2))
-      let point = SVGUtils.SVGCircle(position.x, position.y, 8)
-      point.setAttribute("stroke", "#333");
-      point.setAttribute("stroke-width", this.#settings.CHART_STROKE);
-      return point
+      let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y, 8)
+      symbol.setAttribute("stroke", "#333");
+      symbol.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+      return symbol
     }
 
     const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
@@ -225,7 +225,9 @@ class RadixChart extends Chart {
       wrapper.appendChild(line);
 
       let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.position, this.#anscendantShift))
-      let path = SVGUtils.SVGSymbol( axis.name, textPoint.x, textPoint.y, {...this.#settings})
+      let path = SVGUtils.SVGSymbol(axis.name, textPoint.x, textPoint.y, {
+        ...this.#settings
+      })
       path.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR);
       path.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
       wrapper.appendChild(path);
