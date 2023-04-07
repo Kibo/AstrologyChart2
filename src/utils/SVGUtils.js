@@ -274,8 +274,8 @@ class SVGUtils {
      * Medium coeli symbol
      */
     function mcSymbol(xPos, yPos) {
-      const X_SHIFT = 19; //px
-      const Y_SHIFT = -4; //px
+      const X_SHIFT = 9; //px
+      const Y_SHIFT = -9; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -288,8 +288,8 @@ class SVGUtils {
      * Immum coeli symbol
      */
     function icSymbol(xPos, yPos) {
-      const X_SHIFT = 19; //px
-      const Y_SHIFT = -2; //px
+      const X_SHIFT = 8; //px
+      const Y_SHIFT = 9; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -302,8 +302,8 @@ class SVGUtils {
      * Aries symbol
      */
     function ariesSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -9; //px
+      const Y_SHIFT = -2; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -316,8 +316,8 @@ class SVGUtils {
      * Taurus symbol
      */
     function taurusSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -9; //px
+      const Y_SHIFT = -11; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -330,8 +330,8 @@ class SVGUtils {
      * Gemini symbol
      */
     function geminiSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -6; //px
+      const Y_SHIFT = -6; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -344,8 +344,8 @@ class SVGUtils {
      * Cancer symbol
      */
     function cancerSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 9; //px
+      const Y_SHIFT = -9; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -358,8 +358,8 @@ class SVGUtils {
      * Leo symbol
      */
     function leoSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -3; //px
+      const Y_SHIFT = 4; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -372,8 +372,8 @@ class SVGUtils {
      * Virgo symbol
      */
     function virgoSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -9; //px
+      const Y_SHIFT = -5; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -386,8 +386,8 @@ class SVGUtils {
      * Libra symbol
      */
     function libraSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -2; //px
+      const Y_SHIFT = -8; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -400,8 +400,8 @@ class SVGUtils {
      * Scorpio symbol
      */
     function scorpioSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -9; //px
+      const Y_SHIFT = -4; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -414,8 +414,8 @@ class SVGUtils {
      * Sagittarius symbol
      */
     function sagittariusSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 7; //px
+      const Y_SHIFT = -9; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -428,8 +428,8 @@ class SVGUtils {
      * Capricorn symbol
      */
     function capricornSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -9; //px
+      const Y_SHIFT = -3; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -442,8 +442,8 @@ class SVGUtils {
      * Aquarius symbol
      */
     function aquariusSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -8; //px
+      const Y_SHIFT = -2; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -456,8 +456,8 @@ class SVGUtils {
      * Pisces symbol
      */
     function piscesSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -8; //px
+      const Y_SHIFT = -8; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()

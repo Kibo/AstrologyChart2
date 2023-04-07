@@ -76,7 +76,7 @@ class RadixChart extends Chart {
       throw new Error(status.messages)
     }
 
-    this.#anscendantShift = (Utils.DEG_180 - data.cusps[0].position)
+    this.#anscendantShift = (data.cusps[0].position + Utils.DEG_180)
     this.#draw(data)
   }
 
@@ -141,14 +141,14 @@ class RadixChart extends Chart {
     const makeSymbol = (symbolIndex, angleInDegree) => {
       let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2))
       let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y, 8)
-      symbol.setAttribute("stroke", "#333");
+      symbol.setAttribute("stroke", this.#settings.CHART_SIGNS_COLOR);
       symbol.setAttribute("stroke-width", this.#settings.CHART_STROKE);
       return symbol
     }
 
     const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
-      let a1 = Utils.degreeToRadian(angleToInDegree)
-      let a2 = Utils.degreeToRadian(angleFromInDegree)
+      let a1 = Utils.degreeToRadian(angleFromInDegree)
+      let a2 = Utils.degreeToRadian(angleToInDegree)
       let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO);
       segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[symbolIndex]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");

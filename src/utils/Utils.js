@@ -25,7 +25,7 @@ class Utils {
    * @return {Number}
    */
   static degreeToRadian = function(angleInDegree, shiftInDegree = 0) {
-    return ((angleInDegree + shiftInDegree) % 360) * Math.PI / 180
+    return ((shiftInDegree - angleInDegree) % 360) * Math.PI / 180
   }
 
   /**
