@@ -28,7 +28,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 ```
 <script src="../dist/astrochart2.js"></script>
 <script>
-	const chart = new astrology.Chart('paper').radix().setData( data )	
+	new astrology.Chart('paper').radix().setData( data )	
 </script>
 ```
 ### Data example
