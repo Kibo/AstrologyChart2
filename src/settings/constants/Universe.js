@@ -24,6 +24,14 @@ export const CHART_VIEWBOX_WIDTH = 800
 */
 export const CHART_VIEWBOX_HEIGHT = 800
 
+/**
+* A point collision radius
+* @constant
+* @type {Number}
+* @default 2
+*/
+export const CHART_POINT_COLLISION_RADIUS = 2
+
 /*
 * Line strength
 * @constant

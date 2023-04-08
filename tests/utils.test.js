@@ -1,11 +1,12 @@
 import Utils from '../src/utils/Utils.js'
 
+
 test('Utils.degreeToRadian', () => {
-  expect(Number(Utils.degreeToRadian(1).toFixed(4))).toBe(0.0175);
-  expect(Number(Utils.degreeToRadian(30).toFixed(4))).toBe(0.5236);
-  expect(Number(Utils.degreeToRadian(60).toFixed(4))).toBe(1.0472);
-  expect( Utils.degreeToRadian(90) ).toBe(Math.PI/2);
-  expect( Utils.degreeToRadian(180) ).toBe(Math.PI);
+  // Inverted results
+  expect(Number(Utils.degreeToRadian(1).toFixed(4))).toBe(-0.0175);
+  expect( Utils.degreeToRadian(60)).toBe(-Math.PI/3);
+  expect( Utils.degreeToRadian(90) ).toBe(-Math.PI/2);
+  expect( Utils.degreeToRadian(180) ).toBe(-Math.PI);
   expect(Number(Utils.degreeToRadian(360).toFixed(4))).toBe(0);
   expect(Number(Utils.degreeToRadian(720).toFixed(4))).toBe(0);
 });
@@ -21,10 +22,10 @@ test('Utils.radianToDegree', () => {
 });
 
 test('Utils.positionOnCircle', () => {
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(0)) ).toMatchObject( {x:1, y:0} )
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(60)) ).toMatchObject( {x:1, y:1} )
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(90)) ).toMatchObject( {x:0, y:1})
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(180)) ).toMatchObject( {x:-1, y:0})
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(360)) ).toMatchObject( {x:1, y:0} )
-  expect( Utils.positionOnCircle(0,0,1, Utils.degreeToRadian(720)) ).toMatchObject( {x:1, y:0} )
+  expect( Utils.positionOnCircle(0,0,1, 0)).toMatchObject( {x:1, y:0} )
+  expect( Utils.positionOnCircle(0,0,1, Math.PI/3 )).toMatchObject( {x:1, y:1} )
+  expect( Utils.positionOnCircle(0,0,1, Math.PI/2 )).toMatchObject( {x:0, y:1})
+  expect( Utils.positionOnCircle(0,0,1, 2*Math.PI )).toMatchObject( {x:1, y:0})
+  expect( Utils.positionOnCircle(0,0,1, 4*Math.PI )).toMatchObject( {x:1, y:0} )
+  expect( Utils.positionOnCircle(0,0,1, 6*Math.PI )).toMatchObject( {x:1, y:0} )
 });

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Collision</title>
+    <style>
+      .paper{
+        background-color:#eee;
+        width:800px;
+        height:800px;
+
+      }
+      .wrapper{
+        text-align: center;
+        float:left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h3>Collision radius: 2</h3>
+      <div class="paper" id="chart1"></div>
+    </div>
+
+    <div class="wrapper">
+      <h3>Collision radius: 4</h3>
+      <div class="paper" id="chart2"></div>
+    </div>
+
+    <div class="wrapper">
+      <h3>Collision radius: 6</h3>
+      <div class="paper" id="chart3"></div>
+    </div>
+
+    <div class="wrapper">
+      <h3>Collision radius: 8</h3>
+      <div class="paper" id="chart4"></div>
+    </div>
+
+    <script src="../dist/astrochart2.js"></script>
+    <script>
+      // fetch from server
+      let data = {
+      	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}, {name:"Venus", position:92}, {name:"Mars", position:88}, {name:"Jupiter", position:87}, {name:"Saturn", position:86}, {name:"Uranus", position:2}, {name:"Neptun", position:1}, {name:"Pluto", position:0}, {name:"Lilith", position:4}, {name:"Chiron", position:358}, {name:"NNode", position:93}],
+      	"cusps":[{position:0}, {position:30}, {position:60}, {position:90}, {position:120}, {position:150}, {position:180}, {position:210}, {position:240}, {position:270}, {position:300}, {position:330}]
+      }
+
+      new astrology.Chart('chart1',{CHART_POINT_COLLISION_RADIUS:2}).radix().setData( data )
+      new astrology.Chart('chart2',{CHART_POINT_COLLISION_RADIUS:4}).radix().setData( data )
+      new astrology.Chart('chart3',{CHART_POINT_COLLISION_RADIUS:6}).radix().setData( data )
+      new astrology.Chart('chart4',{CHART_POINT_COLLISION_RADIUS:8}).radix().setData( data )
+    </script>
+  </body>
+</html>

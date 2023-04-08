@@ -18,7 +18,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 ### Examples
 - [Radix chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radix.html)
 - [More charts on page](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/double.html)
-- [Radix collision](#) TODO
+- [Radix collision](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/collision.html)
 - [Transit chart](#) TODO
 - [Stroke only](#) TODO
 - [Animation](#) TODO
@@ -28,8 +28,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 ```
 <script src="../dist/astrochart2.js"></script>
 <script>
-	const chart = new astrology.Chart('paper')
-	chart.radix().setData( data )
+	const chart = new astrology.Chart('paper').radix().setData( data )	
 </script>
 ```
 ### Data example
