@@ -25,7 +25,7 @@ class Utils {
    * @return {Number}
    */
   static degreeToRadian = function(angleInDegree, shiftInDegree = 0) {
-    return ((shiftInDegree - angleInDegree) % 360) * Math.PI / 180
+    return (shiftInDegree - angleInDegree) * Math.PI / 180
   }
 
   /**
@@ -36,7 +36,7 @@ class Utils {
    * @return {Number}
    */
   static radianToDegree = function(radian) {
-    return (radian * 180 / Math.PI) % 360
+    return (radian * 180 / Math.PI)
   }
 
   /**
@@ -51,8 +51,8 @@ class Utils {
    */
   static positionOnCircle(cx, cy, radius, angleInRadians) {
     return {
-      x: Math.round(radius * Math.cos(angleInRadians) + cx),
-      y: Math.round(radius * Math.sin(angleInRadians) + cy)
+      x: (radius * Math.cos(angleInRadians) + cx),
+      y: (radius * Math.sin(angleInRadians) + cy)
     };
   }
 
@@ -67,17 +67,20 @@ class Utils {
    * @return {Object} - {"Moon":30, "Sun":60, "Mercury":86, ...}
    */
   static calculatePositionWithoutOverlapping(points, collisionRadius, circleRadius) {
-    const STEP = 1 //degree
-    const _points = points.map(p => {
+    const STEP = 0.5 //degree
+    let result
+
+    const hemisphere = points.map(point => {
       return {
-        ...p
+        name: point.name,
+        position: point.position + Utils.DEG_360
       }
-    })
-    _points.sort((a, b) => {
+    }).sort((a, b) => {
       return a.position - b.position
     })
 
-    const arrangePoints = () => {
+    // Recursive function
+    const arrangePoints = (_points) => {
       for (let i = 0, ln = _points.length; i < ln; i++) {
         const pointPosition = Utils.positionOnCircle(0, 0, circleRadius, Utils.degreeToRadian(_points[i].position))
         _points[i].x = pointPosition.x
@@ -85,18 +88,19 @@ class Utils {
 
         for (let j = 0; j < i; j++) {
           const distance = Math.sqrt(Math.pow(_points[i].x - _points[j].x, 2) + Math.pow(_points[i].y - _points[j].y, 2));
-          if (distance < 2 * collisionRadius) {
-            _points[i].position = (_points[i].position + 1)
-            _points[j].position = (_points[j].position - 1) 
-            arrangePoints()
+          if (distance < (2 * collisionRadius)) {
+            _points[i].position += STEP
+            _points[j].position -= STEP
+            arrangePoints(_points) //======> Recursive call
           }
         }
       }
     }
 
-    arrangePoints()
+    arrangePoints(hemisphere)
 
-    return _points.reduce((accumulator, point, currentIndex) => {
+    result = [...hemisphere]
+    return result.reduce((accumulator, point, currentIndex) => {
       accumulator[point.name] = point.position
       return accumulator
     }, {})
