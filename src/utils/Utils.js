@@ -79,14 +79,14 @@ class Utils {
     })
 
     const numberOfCellsInScalar = Math.floor(circleCircumference / pointWidth)
-    const cellWidth = DEG_360/numberOfCellsInScalar
     const scalar = new Array(numberOfCellsInScalar)
+    const cellWidth = Utils.DEG_360 / scalar.length
 
     for (const point of points) {
-      let idx = Math.floor(point.position / pointWidth)
+      let idx = Math.floor(point.position / cellWidth)
 
       while (scalar[idx] !== undefined) {
-        idx = (idx + 1) % numberOfCellsInScalar
+        idx = (idx+1) % numberOfCellsInScalar
       }
 
       scalar[idx] = point
@@ -102,7 +102,7 @@ class Utils {
         return accumulator
       }
 
-      accumulator[point.name] = (currentIndex * pointWidth) - pointRadius
+      accumulator[point.name] = (currentIndex * cellWidth) + cellWidth/2
       return accumulator
     }, {})
   }
