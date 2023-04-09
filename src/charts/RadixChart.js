@@ -253,16 +253,15 @@ class RadixChart extends Chart {
    * Draw points
    * @param {Array} points - [{"name":String, "position":Number}]
    */
-  #drawPoints(points) {
+  #drawPoints(points) {    
     const TODO = 40
     const POINT_RADIUS = this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + TODO)
     const innerCircleRadius = this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO
     const wrapper = SVGUtils.SVGGroup()
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
-
       const point = new Point(pointData)
-      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, innerCircleRadius-1.5*RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
       const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
 
       // ruler mark

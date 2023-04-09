@@ -61,48 +61,39 @@ class Utils {
    *
    * @throws {Error} - If there is no place on the circle to place points.
    * @param {Array} points - [{name:"a", position:10}, {name:"b", position:20}]
-   * @param {Number} pointRadius - point radius
+   * @param {Number} collisionRadius - point radius
    * @param {Number} radius - circle radius
    *
    * @return {Object} - {"Moon":30, "Sun":60, "Mercury":86, ...}
    */
-  static calculatePositionWithoutOverlapping(points, pointRadius, circleRadius) {
-    const pointWidth = 2 * pointRadius
-    const circleCircumference = 2 * Math.PI * circleRadius
-    const pointsCircumference = points.length * pointWidth
-    if (pointsCircumference > circleCircumference) {
-      throw new Error(`There is no place on the circle to place points.`)
-    }
-
-    points.sort((a, b) => {
+  static calculatePositionWithoutOverlapping(points, collisionRadius, circleRadius) {
+    const STEP = 1 //degree
+    const _points = points.map(p => {return {...p}}) 
+    _points.sort((a, b) => {
       return a.position - b.position
     })
 
-    const numberOfCellsInScalar = Math.floor(circleCircumference / pointWidth)
-    const scalar = new Array(numberOfCellsInScalar)
-    const cellWidth = Utils.DEG_360 / scalar.length
+    const arrangePoints = () => {
+      for (let i = 0, ln = _points.length; i < ln; i++) {
+        const pointPosition = Utils.positionOnCircle(0, 0, circleRadius, Utils.degreeToRadian(_points[i].position))
+        _points[i].x = pointPosition.x
+        _points[i].y = pointPosition.y
 
-    for (const point of points) {
-      let idx = Math.floor(point.position / cellWidth)
-
-      while (scalar[idx] !== undefined) {
-        idx = (idx+1) % numberOfCellsInScalar
+        for (let j = 0; j < i; j++) {
+          const distance = Math.sqrt(Math.pow(_points[i].x - _points[j].x, 2) + Math.pow(_points[i].y - _points[j].y, 2));
+          if (distance < 2 * collisionRadius) {
+            _points[i].position += 1
+            _points[j].position -= 1
+            arrangePoints()
+          }
+        }
       }
-
-      scalar[idx] = point
     }
 
-    console.log(scalar)
+    arrangePoints()
 
-    return scalar.reduce((accumulator, point, currentIndex) => {
-
-      // a Point has a space to draw itself at the precise position.
-      if (scalar[(currentIndex - 1) % numberOfCellsInScalar] === undefined && scalar[(currentIndex + 1) % numberOfCellsInScalar] === undefined) {
-        accumulator[point.name] = point.position
-        return accumulator
-      }
-
-      accumulator[point.name] = (currentIndex * cellWidth) + cellWidth/2
+    return _points.reduce((accumulator, point, currentIndex) => {
+      accumulator[point.name] = point.position
       return accumulator
     }, {})
   }
