@@ -28,6 +28,14 @@ class RadixChart extends Chart {
   static OUTER_CIRCLE_RADIUS_RATIO = 2;
 
 
+  /*
+   * The length of the pointers in the ruler
+   * @constant
+   * @type {Number}
+   * @default 10
+   */
+  static RULER_LENGTH = 10
+
   #settings
   #root
 
@@ -182,19 +190,18 @@ class RadixChart extends Chart {
   }
 
   #drawRuler() {
-    const RULER_STRENGHT = 10
     const NUMBER_OF_DIVIDERS = 72
     const STEP = 5
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const rulerRadius = (this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + RULER_STRENGHT));
+    const rulerRadius = (this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + RadixChart.RULER_LENGTH));
 
     let startAngle = this.#anscendantShift
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
       let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius, Utils.degreeToRadian(startAngle))
 
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius + RULER_STRENGHT / (i % 2 + 1), Utils.degreeToRadian(startAngle))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, rulerRadius + RadixChart.RULER_LENGTH / (i % 2 + 1), Utils.degreeToRadian(startAngle))
 
       const line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
@@ -247,24 +254,36 @@ class RadixChart extends Chart {
    * @param {Array} points - [{"name":String, "position":Number}]
    */
   #drawPoints(points) {
-    const TODO = 50
+    const TODO = 40
     const POINT_RADIUS = this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + TODO)
+    const innerCircleRadius = this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO
     const wrapper = SVGUtils.SVGGroup()
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
+
       const point = new Point(pointData)
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, innerCircleRadius-1.5*RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
       const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
+
+      // ruler mark
+      const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + RadixChart.RULER_LENGTH), Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
+      const rulerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, rulerLineEndPosition.x, rulerLineEndPosition.y)
+      rulerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+      rulerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+      wrapper.appendChild(rulerLine);
+
+      // symbol
       const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y)
       symbol.setAttribute("stroke", this.#settings.CHART_POINTS_COLOR);
       symbol.setAttribute("stroke-width", this.#settings.CHART_STROKE);
       wrapper.appendChild(symbol);
 
-      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO), Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
-      const line = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, symbolPosition.x, symbolPosition.y)
-      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
-      line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
-      wrapper.appendChild(line);
-
+      // pointer
+      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
+      const pointerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, pointerLineEndPosition.x, pointerLineEndPosition.y)
+      pointerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+      pointerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE / 2);
+      wrapper.appendChild(pointerLine);
     }
 
     this.#root.appendChild(wrapper)

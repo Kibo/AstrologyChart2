@@ -78,40 +78,31 @@ class Utils {
       return a.position - b.position
     })
 
-    const numberOfCellsInGrid = Math.floor(Utils.DEG_360 / pointWidth)    
-    const linearGrid = new Array(numberOfCellsInGrid)
+    const numberOfCellsInScalar = Math.floor(circleCircumference / pointWidth)
+    const cellWidth = DEG_360/numberOfCellsInScalar
+    const scalar = new Array(numberOfCellsInScalar)
 
     for (const point of points) {
       let idx = Math.floor(point.position / pointWidth)
 
-      while (linearGrid[idx] !== undefined) {
-        idx = (idx + 1) % numberOfCellsInGrid
+      while (scalar[idx] !== undefined) {
+        idx = (idx + 1) % numberOfCellsInScalar
       }
 
-      linearGrid[idx] = point
+      scalar[idx] = point
     }
 
-    return linearGrid.reduce((accumulator, point, currentIndex) => {
+    console.log(scalar)
+
+    return scalar.reduce((accumulator, point, currentIndex) => {
 
       // a Point has a space to draw itself at the precise position.
-      if (linearGrid[(currentIndex - 1) % numberOfCellsInGrid] === undefined && linearGrid[(currentIndex + 1) % numberOfCellsInGrid] === undefined) {
+      if (scalar[(currentIndex - 1) % numberOfCellsInScalar] === undefined && scalar[(currentIndex + 1) % numberOfCellsInScalar] === undefined) {
         accumulator[point.name] = point.position
         return accumulator
       }
 
-      // a Point has a more space from the left side
-      if (linearGrid[(currentIndex - 1) % numberOfCellsInGrid] === undefined ) {
-        accumulator[point.name] = (currentIndex * pointWidth) - pointRadius
-        return accumulator
-      }
-
-      // a Point has a more space from the right side
-      if (linearGrid[(currentIndex + 1) % numberOfCellsInGrid] === undefined ) {
-        accumulator[point.name] = (currentIndex * pointWidth) + pointRadius
-        return accumulator
-      }
-
-      accumulator[point.name] = (currentIndex * pointWidth)
+      accumulator[point.name] = (currentIndex * pointWidth) - pointRadius
       return accumulator
     }, {})
   }

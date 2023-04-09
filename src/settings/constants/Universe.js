@@ -30,7 +30,7 @@ export const CHART_VIEWBOX_HEIGHT = 800
 * @type {Number}
 * @default 2
 */
-export const CHART_POINT_COLLISION_RADIUS = 2
+export const CHART_POINT_COLLISION_RADIUS = 4
 
 /*
 * Line strength
