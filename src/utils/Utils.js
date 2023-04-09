@@ -68,7 +68,11 @@ class Utils {
    */
   static calculatePositionWithoutOverlapping(points, collisionRadius, circleRadius) {
     const STEP = 1 //degree
-    const _points = points.map(p => {return {...p}}) 
+    const _points = points.map(p => {
+      return {
+        ...p
+      }
+    })
     _points.sort((a, b) => {
       return a.position - b.position
     })
@@ -82,8 +86,8 @@ class Utils {
         for (let j = 0; j < i; j++) {
           const distance = Math.sqrt(Math.pow(_points[i].x - _points[j].x, 2) + Math.pow(_points[i].y - _points[j].y, 2));
           if (distance < 2 * collisionRadius) {
-            _points[i].position += 1
-            _points[j].position -= 1
+            _points[i].position = (_points[i].position + 1)
+            _points[j].position = (_points[j].position - 1) 
             arrangePoints()
           }
         }
