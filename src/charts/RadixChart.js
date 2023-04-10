@@ -253,10 +253,10 @@ class RadixChart extends Chart {
    * Draw points
    * @param {Array} points - [{"name":String, "position":Number}]
    */
-  #drawPoints(points) {    
-    const TODO = 40
-    const POINT_RADIUS = this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO + TODO)
+  #drawPoints(points) {
     const innerCircleRadius = this.#radius - this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO
+    const POINT_RADIUS = innerCircleRadius - (4*RadixChart.RULER_LENGTH)
+    
     const wrapper = SVGUtils.SVGGroup()
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
@@ -278,11 +278,14 @@ class RadixChart extends Chart {
       wrapper.appendChild(symbol);
 
       // pointer
-      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
-      const pointerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, pointerLineEndPosition.x, pointerLineEndPosition.y)
-      pointerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
-      pointerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE / 2);
-      wrapper.appendChild(pointerLine);
+      if (positions[point.getName()] != pointData.position) {
+        const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
+        const pointerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, (pointPosition.x + pointerLineEndPosition.x) / 2, (pointPosition.y + pointerLineEndPosition.y) / 2)
+        pointerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+        pointerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE / 2);
+        wrapper.appendChild(pointerLine);
+      }
+
     }
 
     this.#root.appendChild(wrapper)
