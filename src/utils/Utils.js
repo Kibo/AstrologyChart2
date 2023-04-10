@@ -17,6 +17,19 @@ class Utils {
   static DEG_180 = 180
 
   /**
+   * Generate random ID
+   *
+   * @static
+   * @return {String}
+   */
+  static generateUniqueId = function() {
+    const randomNumber = Math.random() * 1000000;
+    const timestamp = Date.now();
+    const uniqueId = `id_${randomNumber}_${timestamp}`;
+    return uniqueId;
+  }
+
+  /**
    * Inverted degree to radian
    * @static
    *
@@ -67,20 +80,34 @@ class Utils {
    * @return {Object} - {"Moon":30, "Sun":60, "Mercury":86, ...}
    */
   static calculatePositionWithoutOverlapping(points, collisionRadius, circleRadius) {
-    const STEP = 0.5 //degree
-    let result
+    const STEP = 1 //degree
 
-    const hemisphere = points.map(point => {
+    const cellWidth = 10 //degree
+    const numberOfCells = Utils.DEG_360 / cellWidth
+    const frequency = new Array( numberOfCells ).fill(0)
+    for(const point of points){
+      const index = Math.floor(point.position / cellWidth)
+      frequency[index] += 1
+    }
+
+    // In this algorithm the order of points is crucial. 
+    // At that point in the circle, where the period changes in the circle (for instance:[358,359,0,1]), the points are arranged incorrectly.
+    // As a starting point, I try to find a place where there are no points.
+    const START_ANGLE = cellWidth * frequency.findIndex( count => count == 0 )
+
+    const _points = points.map(point => {
       return {
         name: point.name,
-        position: point.position + Utils.DEG_360
+        position: point.position < START_ANGLE ? point.position + Utils.DEG_360 : point.position
       }
-    }).sort((a, b) => {
+    })
+
+    _points.sort((a, b) => {
       return a.position - b.position
     })
 
     // Recursive function
-    const arrangePoints = (_points) => {
+    const arrangePoints = () => {
       for (let i = 0, ln = _points.length; i < ln; i++) {
         const pointPosition = Utils.positionOnCircle(0, 0, circleRadius, Utils.degreeToRadian(_points[i].position))
         _points[i].x = pointPosition.x
@@ -91,16 +118,15 @@ class Utils {
           if (distance < (2 * collisionRadius)) {
             _points[i].position += STEP
             _points[j].position -= STEP
-            arrangePoints(_points) //======> Recursive call
+            arrangePoints() //======> Recursive call
           }
         }
       }
     }
 
-    arrangePoints(hemisphere)
+    arrangePoints()
 
-    result = [...hemisphere]
-    return result.reduce((accumulator, point, currentIndex) => {
+    return _points.reduce((accumulator, point, currentIndex) => {
       accumulator[point.name] = point.position
       return accumulator
     }, {})
