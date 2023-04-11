@@ -22,7 +22,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 - [Transit chart](#) TODO
 - [Stroke only](#) TODO
 - [Animation](#) TODO
-- [Calibration]((https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/calibration.html))
+- [Calibration](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/calibration.html)
 
 ### How to use
 ```
