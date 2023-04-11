@@ -510,8 +510,8 @@ class SVGUtils {
      * Sun symbol
      */
     function sunSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -1; //px
+      const Y_SHIFT = -7; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -524,7 +524,7 @@ class SVGUtils {
      * Moon symbol
      */
     function moonSymbol(xPos, yPos) {
-      const X_SHIFT = -2; //px
+      const X_SHIFT = -4; //px
       const Y_SHIFT = -7; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
@@ -564,8 +564,8 @@ class SVGUtils {
      * Venus symbol
      */
     function venusSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 2; //px
+      const Y_SHIFT = 7; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -578,8 +578,8 @@ class SVGUtils {
      * Mars symbol
      */
     function marsSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 3; //px
+      const Y_SHIFT = -3; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -592,8 +592,8 @@ class SVGUtils {
      * Jupiter symbol
      */
     function jupiterSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -6; //px
+      const Y_SHIFT = -2; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -606,8 +606,8 @@ class SVGUtils {
      * Saturn symbol
      */
     function saturnSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 4; //px
+      const Y_SHIFT = 7; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -620,8 +620,8 @@ class SVGUtils {
      * Uranus symbol
      */
     function uranusSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -5; //px
+      const Y_SHIFT = -6; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
 
@@ -633,7 +633,7 @@ class SVGUtils {
       wrapper.appendChild(horns)
 
       const bodyXShift = 7; //px
-      const bodyYShift = -14.5; //px
+      const bodyYShift = 13; //px
       const body = SVGUtils.SVGPath()
       body.setAttribute("d", "m" + (x + bodyXShift) + ", " + (y + bodyYShift) + " a 1.8384377,1.8384377 0 0 1 -1.83844,1.83843 1.8384377,1.8384377 0 0 1 -1.83842,-1.83843 1.8384377,1.8384377 0 0 1 1.83842,-1.83844 1.8384377,1.8384377 0 0 1 1.83844,1.83844 z");
       body.setAttribute("fill", "none");
@@ -647,8 +647,8 @@ class SVGUtils {
      * Neptune symbol
      */
     function neptuneSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 4; //px
+      const Y_SHIFT = -6; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -661,8 +661,8 @@ class SVGUtils {
      * Pluto symbol
      */
     function plutoSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 6; //px
+      const Y_SHIFT = -7; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
 
@@ -673,8 +673,8 @@ class SVGUtils {
       body.setAttribute("fill", "none");
       wrapper.appendChild(body)
 
-      const headXShift = 7; //px
-      const headYShift = -14.5; //px
+      const headXShift = -2.4; //px
+      const headYShift = -1; //px
       const head = SVGUtils.SVGPath()
       head.setAttribute("d", "m" + (x + headXShift) + ", " + (y + headYShift) + " a 3.3644834,3.3644834 0 0 1 -3.36448,3.36449 3.3644834,3.3644834 0 0 1 -3.36448,-3.36449 3.3644834,3.3644834 0 0 1 3.36448,-3.36448 3.3644834,3.3644834 0 0 1 3.36448,3.36448 z");
       head.setAttribute("fill", "none");
@@ -687,8 +687,8 @@ class SVGUtils {
      * Chiron symbol
      */
     function chironSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 4; //px
+      const Y_SHIFT = 3; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
 
@@ -699,7 +699,7 @@ class SVGUtils {
       body.setAttribute("fill", "none");
       wrapper.appendChild(body)
 
-      const headXShift = 7; //px
+      const headXShift = 0; //px
       const headYShift = -14.5; //px
       const head = SVGUtils.SVGPath()
       head.setAttribute("d", "m" + (x + headXShift) + ", " + (y + headYShift) + "   -3.942997,4.243844 4.110849,3.656151 m -4.867569,-9.009468 0,11.727251");
@@ -713,8 +713,8 @@ class SVGUtils {
      * Lilith symbol
      */
     function lilithSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = 2; //px
+      const Y_SHIFT = 3; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()
@@ -727,8 +727,8 @@ class SVGUtils {
      * NNode symbol
      */
     function nnodeSymbol(xPos, yPos) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = 0; //px
+      const X_SHIFT = -3; //px
+      const Y_SHIFT = 3; //px
       const x = xPos + X_SHIFT
       const y = yPos + Y_SHIFT
       const path = SVGUtils.SVGPath()

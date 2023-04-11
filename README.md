@@ -3,7 +3,7 @@ A JavaScript library with clean API and zero dependencies **for generating astro
 
 It does not calculate any positions of the planets in Universe.
 
-**Version**: 0.0.1 (in progress)
+**Version**: 0.1.0 (in progress)
 
 - Pure Javascript implementation without dependencies
 - OOP style
@@ -22,13 +22,13 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 - [Transit chart](#) TODO
 - [Stroke only](#) TODO
 - [Animation](#) TODO
-- [Calibration](#) TODO
+- [Calibration]((https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/calibration.html))
 
 ### How to use
 ```
 <script src="../dist/astrochart2.js"></script>
 <script>
-	new astrology.Chart('paper').radix().setData( data )	
+	new astrology.Chart('paper').radix().setData( data )
 </script>
 ```
 ### Data example
