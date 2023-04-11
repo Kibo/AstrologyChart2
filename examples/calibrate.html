@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Calibration</title>
+  <style>
+    .paper {
+      background-color: #eee;
+      width: 800px;
+      height: 800px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script src="../dist/astrochart2.js"></script>
+  <script>
+    calibrate("Sun")
+    calibrate("Moon")
+    calibrate("Mercury")
+    calibrate("Venus")
+    calibrate("Mars")
+    calibrate("Jupiter")
+    calibrate("Saturn")
+    calibrate("Uranus")
+    calibrate("Neptune")
+    calibrate("Pluto")
+    calibrate("Chiron")
+    calibrate("Lilith")
+    calibrate("NNode")
+
+    /*
+     * Dirty function for calibrate points in chart - for debug/ test only
+     *
+     * @param {String} pointName - for instance Sun, Moon, Chiron ,....
+     */
+    function calibrate(pointName) {
+      const WIDTH = 800
+      const HEIGHT = 800
+      const NUMBER_OF_SIGNS = 12
+      const LINE_COLOR = "#666"
+      const SYMBOL_COLOR = "#000"
+      const STROKE = 1
+
+      const cx = WIDTH / 2
+      const cy = HEIGHT / 2
+      const radius = Math.min(WIDTH / 2, HEIGHT / 2)
+
+      const SVGDocument = astrology.SVGUtils.SVGDocument(WIDTH, HEIGHT)
+
+      for (let i = 0; i < NUMBER_OF_SIGNS; i++) {
+        const positions =  astrology.Utils.positionOnCircle(cx, cy, radius, i * Math.PI / 6);
+        const line =  astrology.SVGUtils.SVGLine(cx, cy, positions.x, positions.y);
+        line.setAttribute("stroke", LINE_COLOR);
+        SVGDocument.appendChild(line);
+
+        const circle =  astrology.SVGUtils.SVGCircle(cx, cy, radius / NUMBER_OF_SIGNS * i);
+        circle.setAttribute("stroke", LINE_COLOR);
+        circle.setAttribute("stroke-width", STROKE);
+        SVGDocument.appendChild(circle);
+
+        for (let n = 0; n < NUMBER_OF_SIGNS; n++) {
+          const symbolPosition =  astrology.Utils.positionOnCircle(cx, cy, radius / NUMBER_OF_SIGNS * i, n * Math.PI / 6);
+          const symbol =  astrology.SVGUtils.SVGSymbol(pointName, symbolPosition.x, symbolPosition.y)
+          symbol.setAttribute("stroke", SYMBOL_COLOR);
+          symbol.setAttribute("stroke-width", STROKE);
+          SVGDocument.appendChild(symbol);
+        }
+      }
+
+      document.body.appendChild(SVGDocument)
+    }
+  </script>
+</body>
+
+</html>
