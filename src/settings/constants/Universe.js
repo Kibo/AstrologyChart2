@@ -41,7 +41,7 @@ export const CHART_POINT_COLLISION_RADIUS = 12
 export const CHART_STROKE = 1
 
 /*
-* Line strength of the main lines. For instance main axis, main circles
+* Line strength of the main lines. For instance points, main axis, main circles
 * @constant
 * @type {Number}
 * @default 1

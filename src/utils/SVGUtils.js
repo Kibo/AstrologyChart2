@@ -237,6 +237,46 @@ class SVGUtils {
         return piscesSymbol(xPos, yPos)
         break;
 
+      case SVGUtils.SYMBOL_SUN:
+        return sunSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_MOON:
+        return moonSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_MERCURY:
+        return mercurySymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_VENUS:
+        return venusSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_MARS:
+        return marsSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_JUPITER:
+        return jupiterSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_SATURN:
+        return saturnSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_URANUS:
+        return uranusSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_NEPTUNE:
+        return neptuneSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_PLUTO:
+        return plutoSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_CHIRON:
+        return chironSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_LILITH:
+        return lilithSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_NNODE:
+        return nnodeSymbol(xPos, yPos)
+        break;
+
       default:
         const unknownSymbol = SVGUtils.SVGCircle(xPos, yPos, 8)
         return unknownSymbol
@@ -466,8 +506,237 @@ class SVGUtils {
       return path
     }
 
-  }
+    /*
+     * Sun symbol
+     */
+    function sunSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " -2.18182,0.727268 -2.181819,1.454543 -1.454552,2.18182 -0.727268,2.181819 0,2.181819 0.727268,2.181819 1.454552,2.18182 2.181819,1.454544 2.18182,0.727276 2.18181,0 2.18182,-0.727276 2.181819,-1.454544 1.454552,-2.18182 0.727268,-2.181819 0,-2.181819 -0.727268,-2.181819 -1.454552,-2.18182 -2.181819,-1.454543 -2.18182,-0.727268 -2.18181,0 m 0.727267,6.54545 -0.727267,0.727276 0,0.727275 0.727267,0.727268 0.727276,0 0.727267,-0.727268 0,-0.727275 -0.727267,-0.727276 -0.727276,0 m 0,0.727276 0,0.727275 0.727276,0 0,-0.727275 -0.727276,0");
+      path.setAttribute("fill", "none");
+      return path
+    }
 
+    /*
+     * Moon symbol
+     */
+    function moonSymbol(xPos, yPos) {
+      const X_SHIFT = -2; //px
+      const Y_SHIFT = -7; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " a 7.4969283,7.4969283 0 0 1 0,14.327462 7.4969283,7.4969283 0 1 0 0,-14.327462 z");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * Mercury symbol
+     */
+    function mercurySymbol(xPos, yPos) {
+      const X_SHIFT = -2; //px
+      const Y_SHIFT = 7; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+
+      const wrapper = SVGUtils.SVGGroup()
+
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " 4.26011,0 m -2.13005,-2.98207 0,5.11213 m 4.70312,-9.7983 a 4.70315,4.70315 0 0 1 -4.70315,4.70314 4.70315,4.70315 0 0 1 -4.70314,-4.70314 4.70315,4.70315 0 0 1 4.70314,-4.70315 4.70315,4.70315 0 0 1 4.70315,4.70315 z");
+      path.setAttribute("fill", "none");
+      wrapper.appendChild(path)
+
+      const crownXShift = 6; //px
+      const crownYShift = -16; //px
+      const crown = SVGUtils.SVGPath()
+      crown.setAttribute("d", "m" + (x + crownXShift) + ", " + (y + crownYShift) + " a 3.9717855,3.9717855 0 0 1 -3.95541,3.59054 3.9717855,3.9717855 0 0 1 -3.95185,-3.59445");
+      crown.setAttribute("fill", "none");
+      wrapper.appendChild(crown)
+
+      return wrapper
+    }
+
+    /*
+     * Venus symbol
+     */
+    function venusSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " -4.937669,0.03973 m 2.448972,2.364607 0,-5.79014 c -3.109546,-0.0085 -5.624617,-2.534212 -5.620187,-5.64208 0.0044,-3.107706 2.526514,-5.621689 5.635582,-5.621689 3.109068,0 5.631152,2.513983 5.635582,5.621689 0.0044,3.107868 -2.510641,5.633586 -5.620187,5.64208");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * Mars symbol
+     */
+    function marsSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " c -5.247438,-4.150623 -11.6993,3.205518 -7.018807,7.886007 4.680494,4.680488 12.036628,-1.771382 7.885999,-7.018816 z m 0,0 0.433597,0.433595 3.996566,-4.217419 m -3.239802,-0.05521 3.295015,0 0.110427,3.681507");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * Jupiter symbol
+     */
+    function jupiterSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " c -0.43473,0 -1.30422,-0.40572 -1.30422,-2.02857 0,-1.62285 1.73897,-3.2457 3.47792,-3.2457 1.73897,0 3.47792,1.21715 3.47792,4.05713 0,2.83999 -2.1737,7.30283 -6.52108,7.30283 m 12.17269,0 -12.60745,0 m 9.99902,-11.76567 0,15.82279");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * Saturn symbol
+     */
+    function saturnSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " c -0.52222,0.52221 -1.04445,1.04444 -1.56666,1.04444 -0.52222,0 -1.56667,-0.52223 -1.56667,-1.56667 0,-1.04443 0.52223,-2.08887 1.56667,-3.13332 1.04444,-1.04443 2.08888,-3.13331 2.08888,-5.22219 0,-2.08888 -1.04444,-4.17776 -3.13332,-4.17776 -1.97566,0 -3.65555,1.04444 -4.69998,3.13333 m -2.55515,-5.87499 6.26664,0 m -3.71149,-2.48054 0,15.14438");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * Uranus symbol
+     */
+    function uranusSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+
+      const wrapper = SVGUtils.SVGGroup()
+
+      const horns = SVGUtils.SVGPath()
+      horns.setAttribute("d", "m" + x + ", " + y + "  0,10.23824 m 10.23633,-10.32764 0,10.23824 m -10.26606,-4.6394 10.23085,0 m -5.06415,-5.51532 0,11.94985");
+      horns.setAttribute("fill", "none");
+      wrapper.appendChild(horns)
+
+      const bodyXShift = 7; //px
+      const bodyYShift = -14.5; //px
+      const body = SVGUtils.SVGPath()
+      body.setAttribute("d", "m" + (x + bodyXShift) + ", " + (y + bodyYShift) + " a 1.8384377,1.8384377 0 0 1 -1.83844,1.83843 1.8384377,1.8384377 0 0 1 -1.83842,-1.83843 1.8384377,1.8384377 0 0 1 1.83842,-1.83844 1.8384377,1.8384377 0 0 1 1.83844,1.83844 z");
+      body.setAttribute("fill", "none");
+      wrapper.appendChild(body)
+
+      return wrapper
+
+    }
+
+    /*
+     * Neptune symbol
+     */
+    function neptuneSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " 1.77059,-2.36312 2.31872,1.8045 m -14.44264,-0.20006 2.34113,-1.77418 1.74085,2.38595 m -1.80013,-1.77265 c -1.23776,8.40975 0.82518,9.67121 4.95106,9.67121 4.12589,0 6.18883,-1.26146 4.95107,-9.67121 m -7.05334,3.17005 2.03997,-2.12559 2.08565,2.07903 m -5.32406,9.91162 6.60142,0 m -3.30071,-12.19414 0,15.55803");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * Pluto symbol
+     */
+    function plutoSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+
+      const wrapper = SVGUtils.SVGGroup()
+
+      const body = SVGUtils.SVGPath()
+      body.setAttribute("d", "m" + x + ", " + y + " a 5.7676856,5.7676856 0 0 1 -2.88385,4.99496 5.7676856,5.7676856 0 0 1 -5.76768,0 5.7676856,5.7676856 0 0 1 -2.88385,-4.99496 m 5.76771,13.93858 0,-8.17088 m -3.84512,4.32576 7.69024,0");
+      body.setAttribute("fill", "none");
+      wrapper.appendChild(body)
+
+      const headXShift = 7; //px
+      const headYShift = -14.5; //px
+      const head = SVGUtils.SVGPath()
+      head.setAttribute("d", "m" + (x + headXShift) + ", " + (y + headYShift) + " a 3.3644834,3.3644834 0 0 1 -3.36448,3.36449 3.3644834,3.3644834 0 0 1 -3.36448,-3.36449 3.3644834,3.3644834 0 0 1 3.36448,-3.36448 3.3644834,3.3644834 0 0 1 3.36448,3.36448 z");
+      head.setAttribute("fill", "none");
+      wrapper.appendChild(head)
+
+      return wrapper
+    }
+
+    /*
+     * Chiron symbol
+     */
+    function chironSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+
+      const wrapper = SVGUtils.SVGGroup()
+
+      const body = SVGUtils.SVGPath()
+      body.setAttribute("d", "m" + x + ", " + y + " a 3.8764725,3.0675249 0 0 1 -3.876473,3.067525 3.8764725,3.0675249 0 0 1 -3.876472,-3.067525 3.8764725,3.0675249 0 0 1 3.876472,-3.067525 3.8764725,3.0675249 0 0 1 3.876473,3.067525 z");
+      body.setAttribute("fill", "none");
+      wrapper.appendChild(body)
+
+      const headXShift = 7; //px
+      const headYShift = -14.5; //px
+      const head = SVGUtils.SVGPath()
+      head.setAttribute("d", "m" + (x + headXShift) + ", " + (y + headYShift) + "   -3.942997,4.243844 4.110849,3.656151 m -4.867569,-9.009468 0,11.727251");
+      head.setAttribute("fill", "none");
+      wrapper.appendChild(head)
+
+      return wrapper
+    }
+
+    /*
+     * Lilith symbol
+     */
+    function lilithSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " -2.525435,-1.12853 -1.464752,-1.79539 -0.808138,-2.20576 0.151526,-2.05188 0.909156,-1.5389 1.010173,-1.02593 0.909157,-0.56427 1.363735,-0.61556 m 2.315327,-0.39055 -1.716301,0.54716 -1.7163,1.09431 -1.1442,1.64146 -0.572102,1.64146 0,1.64146 0.572102,1.64147 1.1442,1.64145 1.7163,1.09432 1.716301,0.54715 m 0,-11.49024 -2.2884,0 -2.288401,0.54716 -1.716302,1.09431 -1.144201,1.64146 -0.5721,1.64146 0,1.64146 0.5721,1.64147 1.144201,1.64145 1.716302,1.09432 2.288401,0.54715 2.2884,0 m -4.36712,-0.4752 0,6.44307 m -2.709107,-3.41101 5.616025,0");
+      path.setAttribute("fill", "none");
+      return path
+    }
+
+    /*
+     * NNode symbol
+     */
+    function nnodeSymbol(xPos, yPos) {
+      const X_SHIFT = 0; //px
+      const Y_SHIFT = 0; //px
+      const x = xPos + X_SHIFT
+      const y = yPos + Y_SHIFT
+      const path = SVGUtils.SVGPath()
+      path.setAttribute("d", "m" + x + ", " + y + " -1.3333334,-0.6666667 -0.6666666,0 -1.3333334,0.6666667 -0.6666667,1.3333333 0,0.6666667 0.6666667,1.3333333 1.3333334,0.6666667 0.6666666,0 1.3333334,-0.6666667 0.6666666,-1.3333333 0,-0.6666667 -0.6666666,-1.3333333 -2,-2.66666665 -0.6666667,-1.99999995 0,-1.3333334 0.6666667,-2 1.3333333,-1.3333333 2,-0.6666667 2.6666666,0 2,0.6666667 1.3333333,1.3333333 0.6666667,2 0,1.3333334 -0.6666667,1.99999995 -2,2.66666665 -0.6666666,1.3333333 0,0.6666667 0.6666666,1.3333333 1.3333334,0.6666667 0.6666666,0 1.3333334,-0.6666667 0.6666667,-1.3333333 0,-0.6666667 -0.6666667,-1.3333333 -1.3333334,-0.6666667 -0.6666666,0 -1.3333334,0.6666667 m -7.9999999,-6 0.6666667,-1.3333333 1.3333333,-1.3333333 2,-0.6666667 2.6666666,0 2,0.6666667 1.3333333,1.3333333 0.6666667,1.3333333");
+      path.setAttribute("fill", "none");
+      return path
+    }
+  }
 }
 
 export {
