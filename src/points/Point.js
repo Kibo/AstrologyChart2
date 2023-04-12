@@ -52,12 +52,13 @@ class Point {
   * Get symbol
   * @param {Number} xPos
   * @param {Number} yPos
+  * @param {Number} [scale]
   *
   * @return {SVGElement}
   */
-  getSymbol(xPos, yPos){
+  getSymbol(xPos, yPos, scale){
     const wrapper = SVGUtils.SVGGroup()
-    const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos)
+    const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos, scale)
     wrapper.appendChild(symbol)
     return wrapper
   }

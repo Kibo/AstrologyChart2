@@ -153,7 +153,7 @@ class RadixChart extends Chart {
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
       let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#anscendantShift))
-      let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y, 8)
+      let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y, this.#settings.RADIX_SIGNS_SCALE)
       symbol.setAttribute("stroke", this.#settings.CHART_SIGNS_COLOR);
       symbol.setAttribute("stroke-width", this.#settings.CHART_STROKE);
       return symbol
@@ -272,7 +272,7 @@ class RadixChart extends Chart {
       wrapper.appendChild(rulerLine);
 
       // symbol
-      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y)
+      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, this.#settings.RADIX_POINTS_SCALE)
       symbol.setAttribute("stroke", this.#settings.CHART_POINTS_COLOR);
       symbol.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
       wrapper.appendChild(symbol);

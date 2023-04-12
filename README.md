@@ -19,8 +19,9 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 - [Radix chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radix.html)
 - [More charts on page](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/double.html)
 - [Radix collision](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/collision.html)
+- [Radix scaling symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/scaling.html)
+- [Stroke only](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/stroke.html)
 - [Transit chart](#) TODO
-- [Stroke only](#) TODO
 - [Animation](#) TODO
 - [Calibration](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/calibration.html)
 
@@ -45,7 +46,7 @@ Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron
 ### Chart settings
 Look into the [settings](https://github.com/Kibo/AstrologyChart2/tree/master/src/settings/constants).
 ```
-const settings = {SYMBOL_SCALE:2};
+const settings = {RADIX_POINTS_SCALE:1.4};
 const chart = new astrology.Chart('paper', settings);
 ```
 Note: All keys are uppercase.
