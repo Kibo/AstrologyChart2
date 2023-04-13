@@ -6,15 +6,27 @@
     <style>
       .paper{
         background-color:#eee;
-        width:600px;
-        height:600px;
+        width:400px;
+        height:400px;
         float:left;
+      }
+      .alert{
+        padding:2em;
+        background-color: green;
+        text-align: center;
+        color:white;
       }
     </style>
   </head>
   <body>
+    <div class="alert">
+      Each chart is customizable.
+    </div>
+
+
     <div class="paper" id="chart1"></div>
     <div class="paper" id="chart2"></div>
+    <div class="paper" id="chart3"></div>
 
     <script src="../dist/astrochart2.js"></script>
     <script>
@@ -24,13 +36,18 @@
       }
 
       new astrology.Chart('chart1').radix().setData( data1 )
-      
+
       let data2 = {
-      	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}],
+      		"points":[{name:"Moon", position:64}, {name:"Sun", position:273}, {name:"Mercury", position:194}, {name:"Venus", position:158}, {name:"Mars", position:304}, {name:"Jupiter", position:229}, {name:"Saturn", position:255}, {name:"Uranus", position:350}, {name:"Neptune", position:21}, {name:"Pluto", position:233}, {name:"Lilith", position:244}, {name:"Chiron", position:339}, {name:"NNode", position:285}],
       	"cusps":[{position:0}, {position:30}, {position:60}, {position:90}, {position:120}, {position:150}, {position:180}, {position:210}, {position:240}, {position:270}, {position:300}, {position:330}]
       }
 
-      const chart2 = new astrology.Chart('chart2', {CHART_SIGNS_COLOR:"#fff"}).radix().setData( data2 )
+      const settings = {CHART_SIGNS_COLOR:"#fff", CHART_BACKGROUND_COLOR:"#000", CHART_POINTS_COLOR:"#fff", CHART_LINE_COLOR:"#aaa", CHART_TEXT_COLOR:"#aaa"}
+      const chart2 = new astrology.Chart('chart2', settings).radix().setData( data2 )
+
+
+      const chart3 = new astrology.Chart('chart3', {CHART_STROKE_ONLY:true}).radix().setData( data2 )
+
     </script>
   </body>
 </html>
