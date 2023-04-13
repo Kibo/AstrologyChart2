@@ -258,7 +258,7 @@ class RadixChart extends Chart {
    * @param {Array} points - [{"name":String, "position":Number}]
    */
   #drawPoints(points) {
-    const POINT_RADIUS = this.#innerCircleRadius - (4*RadixChart.RULER_LENGTH)
+    const POINT_RADIUS = this.#innerCircleRadius - (4 * RadixChart.RULER_LENGTH)
 
     const wrapper = SVGUtils.SVGGroup()
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
@@ -296,18 +296,28 @@ class RadixChart extends Chart {
    * Draw points
    * @param {Array} cusps - [{"position":Number}]
    */
-  #drawCusps(cusps){
+  #drawCusps(cusps) {
     const wrapper = SVGUtils.SVGGroup()
 
-    const textRadius = 30
+    const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 2* RadixChart.RULER_LENGTH
 
-    for(let i = 0; i < cusps.length; i++ ){
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, cusps[i].position)
-      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, cusps[i].position)
+    for (let i = 0; i < cusps.length; i++) {
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].position, this.#anscendantShift))
+      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].position, this.#anscendantShift))
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPos.x, endPos.y)
-      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
-      line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR)
+      line.setAttribute("stroke-width", this.#settings.CHART_STROKE)
       wrapper.appendChild(line);
+
+      const startCusp = cusps[i].position
+      const endCusp = cusps[(i + 1) % 12].position
+      const gap = endCusp - startCusp > 0 ? endCusp - startCusp : endCusp - startCusp + Utils.DEG_360
+      const textAngle = startCusp + gap / 2
+      const textPos = Utils.positionOnCircle(this.#centerX, this.#centerY, textRadius, Utils.degreeToRadian(textAngle, this.#anscendantShift))
+      const text = SVGUtils.SVGSymbol(`${i+1}`, textPos.x, textPos.y)
+      text.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR)
+      text.setAttribute("stroke-width", this.#settings.CHART_STROKE)
+      wrapper.appendChild(text)
     }
 
     this.#root.appendChild(wrapper)

@@ -28,7 +28,7 @@ export const CHART_LINE_COLOR = "#666";
 * @type {String}
 * @default #333
 */
-export const CHART_TEXT_COLOR = "#333";
+export const CHART_TEXT_COLOR = "#666";
 
 /*
 * Default color of signs in charts (arise symbol, taurus symbol, ...)
