@@ -84,16 +84,16 @@ class Utils {
 
     const cellWidth = 10 //degree
     const numberOfCells = Utils.DEG_360 / cellWidth
-    const frequency = new Array( numberOfCells ).fill(0)
-    for(const point of points){
+    const frequency = new Array(numberOfCells).fill(0)
+    for (const point of points) {
       const index = Math.floor(point.position / cellWidth)
       frequency[index] += 1
     }
 
     // In this algorithm the order of points is crucial.
     // At that point in the circle, where the period changes in the circle (for instance:[358,359,0,1]), the points are arranged in incorrect order.
-    // As a starting point, I try to find a place where there are no points. This place I use as START_ANGLE.  
-    const START_ANGLE = cellWidth * frequency.findIndex( count => count == 0 )
+    // As a starting point, I try to find a place where there are no points. This place I use as START_ANGLE.
+    const START_ANGLE = cellWidth * frequency.findIndex(count => count == 0)
 
     const _points = points.map(point => {
       return {
@@ -130,6 +130,28 @@ class Utils {
       accumulator[point.name] = point.position
       return accumulator
     }, {})
+  }
+
+  /**
+   * Check if the angle collides with the points
+   *
+   * @param {Number} angle
+   * @param {Array} anglesList
+   * @param {Number} [collisionRadius]
+   *
+   * @return {Boolean}
+   */
+  static isCollision(angle, anglesList, collisionRadius = 10) {
+    
+    const pointInCollision = anglesList.find(point => {
+
+      let a = (point - angle) > Utils.DEG_180 ? angle + Utils.DEG_360 : angle
+      let p = (angle - point) > Utils.DEG_180 ? point + Utils.DEG_360 : point
+
+      return Math.abs(a - p) <= collisionRadius
+    })
+
+    return pointInCollision === undefined ? false : true
   }
 }
 

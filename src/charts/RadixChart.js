@@ -126,7 +126,7 @@ class RadixChart extends Chart {
       },
     ])
     this.#drawPoints(data.points)
-    this.#drawCusps(data.cusps)
+    this.#drawCusps(data.cusps, data.points)
     this.#drawBorders()
   }
 
@@ -294,17 +294,26 @@ class RadixChart extends Chart {
 
   /*
    * Draw points
-   * @param {Array} cusps - [{"position":Number}]
+   * @param {Array} cusps - [{"position":Number}, ...]
+   * @param {Array} points - [{"name": "Sun", "position":Number}, ...]
    */
-  #drawCusps(cusps) {
+  #drawCusps(cusps, points) {
+    const pointsPositions = points.map(point => {
+        return point.position
+    })
+    
     const wrapper = SVGUtils.SVGGroup()
 
-    const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 2* RadixChart.RULER_LENGTH
+    const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 2 * RadixChart.RULER_LENGTH
 
     for (let i = 0; i < cusps.length; i++) {
       const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].position, this.#anscendantShift))
       const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].position, this.#anscendantShift))
-      const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPos.x, endPos.y)
+
+      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].position, pointsPositions, this.#settings.CHART_POINT_COLLISION_RADIUS/2)
+      const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
+      const endPosY = isLineInCollisionWithPoint ? (startPos.y + endPos.y) / 2 : endPos.y
+      const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPosX, endPosY)
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR)
       line.setAttribute("stroke-width", this.#settings.CHART_STROKE)
       wrapper.appendChild(line);

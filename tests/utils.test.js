@@ -39,3 +39,29 @@ test('Utils.positionOnCircle', () => {
   expect( Utils.positionOnCircle(0,0,1, 6*Math.PI ).x).toBeLessThanOrEqual(1)
   expect( Utils.positionOnCircle(0,0,1, 6*Math.PI ).y).toBeLessThanOrEqual(0.000001)// 0
 });
+
+test('Utils.isCollision', () => {
+  const COLLISION_RADIUS = 10
+
+  expect( Utils.isCollision(50, [60], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(60, [60], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(70, [60], COLLISION_RADIUS) ).toBeTruthy()
+
+  expect( Utils.isCollision(170, [180], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(180, [180], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(190, [180], COLLISION_RADIUS) ).toBeTruthy()
+
+  expect( Utils.isCollision(350, [0], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(0, [0], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(10, [0], COLLISION_RADIUS) ).toBeTruthy()
+
+  expect( Utils.isCollision(340, [350], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(350, [350], COLLISION_RADIUS) ).toBeTruthy()
+  expect( Utils.isCollision(0, [350], COLLISION_RADIUS) ).toBeTruthy()
+
+  expect( Utils.isCollision(349, [0], COLLISION_RADIUS) ).toBeFalsy()
+  expect( Utils.isCollision(11, [0], COLLISION_RADIUS) ).toBeFalsy()
+
+  expect( Utils.isCollision(339, [350], COLLISION_RADIUS) ).toBeFalsy()
+  expect( Utils.isCollision(1, [350], COLLISION_RADIUS) ).toBeFalsy()
+});
