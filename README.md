@@ -3,7 +3,7 @@ A JavaScript library with clean API and zero dependencies **for generating astro
 
 It does not calculate any positions of the planets in Universe.
 
-**Version**: 0.1.0 (in progress)
+**Version**: 0.2.0 (in progress)
 
 - Pure Javascript implementation without dependencies
 - OOP style
