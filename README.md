@@ -35,9 +35,19 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 ### Data example
 ```
 {
-	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}, ... ],
-	"cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+	"points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}, {name:"Mercury", angle:60}, ... ],
+	"cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
 }
+```
+
+**Point**
+```
+{name:{String}, angle:{Number}, [isRetrograde]:{Boolean}}
+```
+
+**Cusp**
+```
+{angle:{Number}}
 ```
 
 ### Known points
@@ -69,5 +79,3 @@ npm run doc
 - Build and publish a public astrology API server (Ephemetris).
 - Build a public open source astrology application full of new ideas and modern approaches to astrology.
 - Design a computer system for interpreting astrological charts.
-
-*Are you interested? Are you a graphic designer, business manager, marketing or astrologer guru? Let me know.*

@@ -62,19 +62,19 @@ class Chart {
           message: "point.name.length == 0"
         }
       }
-      if (typeof point.position !== 'number') {
+      if (typeof point.angle !== 'number') {
         return {
           isValid: false,
-          message: "point.position !== 'number'"
+          message: "point.angle !== 'number'"
         }
       }
     }
 
     for (let cusp of data.cusps) {
-      if (typeof cusp.position !== 'number') {
+      if (typeof cusp.angle !== 'number') {
         return {
           isValid: false,
-          message: "cusp.position !== 'number'"
+          message: "cusp.angle !== 'number'"
         }
       }
     }

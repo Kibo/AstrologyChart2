@@ -94,7 +94,7 @@ class RadixChart extends Chart {
       throw new Error(status.messages)
     }
 
-    this.#anscendantShift = (data.cusps[0].position + Utils.DEG_180)
+    this.#anscendantShift = (data.cusps[0].angle + Utils.DEG_180)
     this.#draw(data)
   }
 
@@ -110,19 +110,19 @@ class RadixChart extends Chart {
     this.#drawRuler()
     this.#drawMainAxis([{
         name: SVGUtils.SYMBOL_AS,
-        position: data.cusps[0].position
+        angle: data.cusps[0].angle
       },
       {
         name: SVGUtils.SYMBOL_IC,
-        position: data.cusps[3].position
+        angle: data.cusps[3].angle
       },
       {
         name: SVGUtils.SYMBOL_DS,
-        position: data.cusps[6].position
+        angle: data.cusps[6].angle
       },
       {
         name: SVGUtils.SYMBOL_MC,
-        position: data.cusps[9].position
+        angle: data.cusps[9].angle
       },
     ])
     this.#drawPoints(data.points)
@@ -233,14 +233,14 @@ class RadixChart extends Chart {
     const wrapper = SVGUtils.SVGGroup()
 
     for (const axis of axisList) {
-      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius, Utils.degreeToRadian(axis.position, this.#anscendantShift))
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.position, this.#anscendantShift))
+      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
       let line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       line.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
       wrapper.appendChild(line);
 
-      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.position, this.#anscendantShift))
+      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
       let path = SVGUtils.SVGSymbol(axis.name, textPoint.x, textPoint.y, {
         ...this.#settings
       })
@@ -255,7 +255,7 @@ class RadixChart extends Chart {
 
   /*
    * Draw points
-   * @param {Array} points - [{"name":String, "position":Number}]
+   * @param {Array} points - [{"name":String, "angle":Number}]
    */
   #drawPoints(points) {
     const POINT_RADIUS = this.#innerCircleRadius - (4 * RadixChart.RULER_LENGTH)
@@ -264,11 +264,11 @@ class RadixChart extends Chart {
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
       const point = new Point(pointData)
-      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getAngle(), this.#anscendantShift))
       const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
 
       // ruler mark
-      const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#rullerCircleRadius, Utils.degreeToRadian(point.getPosition(), this.#anscendantShift))
+      const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#rullerCircleRadius, Utils.degreeToRadian(point.getAngle(), this.#anscendantShift))
       const rulerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, rulerLineEndPosition.x, rulerLineEndPosition.y)
       rulerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       rulerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -294,23 +294,23 @@ class RadixChart extends Chart {
 
   /*
    * Draw points
-   * @param {Array} cusps - [{"position":Number}, ...]
-   * @param {Array} points - [{"name": "Sun", "position":Number}, ...]
+   * @param {Array} cusps - [{"angle":Number}, ...]
+   * @param {Array} points - [{"name": "Sun", "angle":Number}, ...]
    */
   #drawCusps(cusps, points) {
     const pointsPositions = points.map(point => {
-        return point.position
+        return point.angle
     })
-    
+
     const wrapper = SVGUtils.SVGGroup()
 
     const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 2 * RadixChart.RULER_LENGTH
 
     for (let i = 0; i < cusps.length; i++) {
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].position, this.#anscendantShift))
-      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].position, this.#anscendantShift))
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
+      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
 
-      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].position, pointsPositions, this.#settings.CHART_POINT_COLLISION_RADIUS/2)
+      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.CHART_POINT_COLLISION_RADIUS/2)
       const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
       const endPosY = isLineInCollisionWithPoint ? (startPos.y + endPos.y) / 2 : endPos.y
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPosX, endPosY)
@@ -318,8 +318,8 @@ class RadixChart extends Chart {
       line.setAttribute("stroke-width", this.#settings.CHART_STROKE)
       wrapper.appendChild(line);
 
-      const startCusp = cusps[i].position
-      const endCusp = cusps[(i + 1) % 12].position
+      const startCusp = cusps[i].angle
+      const endCusp = cusps[(i + 1) % 12].angle
       const gap = endCusp - startCusp > 0 ? endCusp - startCusp : endCusp - startCusp + Utils.DEG_360
       const textAngle = startCusp + gap / 2
       const textPos = Utils.positionOnCircle(this.#centerX, this.#centerY, textRadius, Utils.degreeToRadian(textAngle, this.#anscendantShift))

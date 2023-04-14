@@ -73,7 +73,7 @@ class Utils {
    * Calculates new position of points on circle without overlapping each other
    *
    * @throws {Error} - If there is no place on the circle to place points.
-   * @param {Array} points - [{name:"a", position:10}, {name:"b", position:20}]
+   * @param {Array} points - [{name:"a", angle:10}, {name:"b", angle:20}]
    * @param {Number} collisionRadius - point radius
    * @param {Number} radius - circle radius
    *
@@ -86,7 +86,7 @@ class Utils {
     const numberOfCells = Utils.DEG_360 / cellWidth
     const frequency = new Array(numberOfCells).fill(0)
     for (const point of points) {
-      const index = Math.floor(point.position / cellWidth)
+      const index = Math.floor(point.angle / cellWidth)
       frequency[index] += 1
     }
 
@@ -98,26 +98,26 @@ class Utils {
     const _points = points.map(point => {
       return {
         name: point.name,
-        position: point.position < START_ANGLE ? point.position + Utils.DEG_360 : point.position
+        angle: point.angle < START_ANGLE ? point.angle + Utils.DEG_360 : point.angle
       }
     })
 
     _points.sort((a, b) => {
-      return a.position - b.position
+      return a.angle - b.angle
     })
 
     // Recursive function
     const arrangePoints = () => {
       for (let i = 0, ln = _points.length; i < ln; i++) {
-        const pointPosition = Utils.positionOnCircle(0, 0, circleRadius, Utils.degreeToRadian(_points[i].position))
+        const pointPosition = Utils.positionOnCircle(0, 0, circleRadius, Utils.degreeToRadian(_points[i].angle))
         _points[i].x = pointPosition.x
         _points[i].y = pointPosition.y
 
         for (let j = 0; j < i; j++) {
           const distance = Math.sqrt(Math.pow(_points[i].x - _points[j].x, 2) + Math.pow(_points[i].y - _points[j].y, 2));
           if (distance < (2 * collisionRadius)) {
-            _points[i].position += STEP
-            _points[j].position -= STEP
+            _points[i].angle += STEP
+            _points[j].angle -= STEP
             arrangePoints() //======> Recursive call
           }
         }
@@ -127,7 +127,7 @@ class Utils {
     arrangePoints()
 
     return _points.reduce((accumulator, point, currentIndex) => {
-      accumulator[point.name] = point.position
+      accumulator[point.name] = point.angle
       return accumulator
     }, {})
   }
@@ -142,7 +142,7 @@ class Utils {
    * @return {Boolean}
    */
   static isCollision(angle, anglesList, collisionRadius = 10) {
-    
+
     const pointInCollision = anglesList.find(point => {
 
       let a = (point - angle) > Utils.DEG_180 ? angle + Utils.DEG_360 : angle

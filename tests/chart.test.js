@@ -21,14 +21,14 @@ test('Chart.validateData', () => {
 
   // Empty cups is undefined
   data = {
-    "points":[{name:"Moon", position:0}, {name:"Sun", position:30}],
+    "points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}],
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
   // Empty points is undefined
   data = {
-    "cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
@@ -43,64 +43,64 @@ test('Chart.validateData', () => {
 
   // Cups.length < 12
   data = {
-    "points":[{name:"Moon", position:0}, {name:"Sun", position:30}],
-    "cusps":[{position:300}]
+    "points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}],
+    "cusps":[{angle:300}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
   // Point.name == undefined
   data = {
-    "points":[{position:0}, {name:"Sun", position:30}],
-    "cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{angle:0}, {name:"Sun", angle:30}],
+    "cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
   // Point.name == empty
   data = {
-    "points":[{name:"", position:0}, {name:"Sun", position:30}],
-    "cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{name:"", angle:0}, {name:"Sun", angle:30}],
+    "cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
-  // Point.position == undefined
+  // Point.angle == undefined
   data = {
-    "points":[{name:"Moon"}, {name:"Sun", position:30}],
-    "cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{name:"Moon"}, {name:"Sun", angle:30}],
+    "cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
-  // Point.position != Number
+  // Point.angle != Number
   data = {
-    "points":[{name:"Moon", position:"abc"}, {name:"Sun", position:30}],
-    "cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{name:"Moon", angle:"abc"}, {name:"Sun", angle:30}],
+    "cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
-  // Cup.position == undefined
+  // Cup.angle == undefined
   data = {
-    "points":[{name:"Moon", position:0}, {name:"Sun", position:30}],
-    "cusps":[{}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}],
+    "cusps":[{}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
-  // Cup.position != number
+  // Cup.angle != number
   data = {
-    "points":[{name:"Moon", position:0}, {name:"Sun", position:30}],
-    "cusps":[{position:"abc"}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}],
+    "cusps":[{angle:"abc"}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeFalsy()
 
   // valid data
   data = {
-    "points":[{name:"Moon", position:0}, {name:"Sun", position:30}],
-    "cusps":[{position:300}, {position:340}, {position:30}, {position:60}, {position:75}, {position:90}, {position:116}, {position:172}, {position:210}, {position:236}, {position:250}, {position:274}]
+    "points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}],
+    "cusps":[{angle:300}, {angle:340}, {angle:30}, {angle:60}, {angle:75}, {angle:90}, {angle:116}, {angle:172}, {angle:210}, {angle:236}, {angle:250}, {angle:274}]
   }
   status = chart.validateData( data )
   expect(status.isValid).toBeTruthy()

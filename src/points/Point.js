@@ -8,7 +8,7 @@ import SVGUtils from '../utils/SVGUtils.js';
 class Point {
 
   #name
-  #position
+  #angle
   #isRetrograde
 
   /**
@@ -17,7 +17,7 @@ class Point {
    */
   constructor( data ) {
     this.#name = data.name ?? "Unknown"
-    this.#position = data.position ?? 0
+    this.#angle = data.angle ?? 0
     this.#isRetrograde = data.isRetrograde ?? false
   }
 
@@ -40,12 +40,12 @@ class Point {
   }
 
   /**
-  * Get position
+  * Get angle
   *
   * @return {Number}
   */
-  getPosition(){
-    return this.#position
+  getAngle(){
+    return this.#angle
   }
 
   /**

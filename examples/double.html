@@ -31,15 +31,15 @@
     <script src="../dist/astrochart2.js"></script>
     <script>
       let data1 = {
-      	"points":[{name:"Moon", position:0}, {name:"Sun", position:30}, {name:"Mercury", position:60}],
-      	"cusps":[{position:296}, {position:350}, {position:30}, {position:56}, {position:75}, {position:94}, {position:116}, {position:170}, {position:210}, {position:236}, {position:255}, {position:274}]
+      	"points":[{name:"Moon", angle:0}, {name:"Sun", angle:30}, {name:"Mercury", angle:60}],
+      	"cusps":[{angle:296}, {angle:350}, {angle:30}, {angle:56}, {angle:75}, {angle:94}, {angle:116}, {angle:170}, {angle:210}, {angle:236}, {angle:255}, {angle:274}]
       }
 
       new astrology.Chart('chart1').radix().setData( data1 )
 
       let data2 = {
-      		"points":[{name:"Moon", position:64}, {name:"Sun", position:273}, {name:"Mercury", position:194}, {name:"Venus", position:158}, {name:"Mars", position:304}, {name:"Jupiter", position:229}, {name:"Saturn", position:255}, {name:"Uranus", position:350}, {name:"Neptune", position:21}, {name:"Pluto", position:233}, {name:"Lilith", position:244}, {name:"Chiron", position:339}, {name:"NNode", position:285}],
-      	"cusps":[{position:0}, {position:30}, {position:60}, {position:90}, {position:120}, {position:150}, {position:180}, {position:210}, {position:240}, {position:270}, {position:300}, {position:330}]
+      		"points":[{name:"Moon", angle:64}, {name:"Sun", angle:273}, {name:"Mercury", angle:194}, {name:"Venus", angle:158}, {name:"Mars", angle:304}, {name:"Jupiter", angle:229}, {name:"Saturn", angle:255}, {name:"Uranus", angle:350}, {name:"Neptune", angle:21}, {name:"Pluto", angle:233}, {name:"Lilith", angle:244}, {name:"Chiron", angle:339}, {name:"NNode", angle:285}],
+      	"cusps":[{angle:0}, {angle:30}, {angle:60}, {angle:90}, {angle:120}, {angle:150}, {angle:180}, {angle:210}, {angle:240}, {angle:270}, {angle:300}, {angle:330}]
       }
 
       const settings = {CHART_SIGNS_COLOR:"#fff", CHART_BACKGROUND_COLOR:"#000", CHART_POINTS_COLOR:"#fff", CHART_LINE_COLOR:"#aaa", CHART_TEXT_COLOR:"#aaa"}

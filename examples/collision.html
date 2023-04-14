@@ -57,14 +57,14 @@
         for(let i = 0; i < COUNT_OF_RANDOM_POINTS; i++){
           const randomNumber = Math.random() * 360;
           const timestamp = Date.now();
-          points.push({name:`id_${randomNumber}_${timestamp}`, position:randomNumber})
+          points.push({name:`id_${randomNumber}_${timestamp}`, angle:randomNumber})
         }
         return points
       }
 
       let data = {
       	"points":generateRandomPoints(),
-      	"cusps":[{position:0}, {position:30}, {position:60}, {position:90}, {position:120}, {position:150}, {position:180}, {position:210}, {position:240}, {position:270}, {position:300}, {position:330}]
+      	"cusps":[{angle:0}, {angle:30}, {angle:60}, {angle:90}, {angle:120}, {angle:150}, {angle:180}, {angle:210}, {angle:240}, {angle:270}, {angle:300}, {angle:330}]
       }
 
       new astrology.Chart('chart1',{CHART_POINT_COLLISION_RADIUS:8}).radix().setData( data )
