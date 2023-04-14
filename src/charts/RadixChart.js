@@ -241,9 +241,7 @@ class RadixChart extends Chart {
       wrapper.appendChild(line);
 
       let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
-      let path = SVGUtils.SVGSymbol(axis.name, textPoint.x, textPoint.y, {
-        ...this.#settings
-      })
+      let path = SVGUtils.SVGSymbol(axis.name, textPoint.x, textPoint.y)
       path.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR);
       path.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
       wrapper.appendChild(path);
