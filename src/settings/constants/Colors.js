@@ -28,7 +28,15 @@ export const CHART_LINE_COLOR = "#666";
 * @type {String}
 * @default #333
 */
-export const CHART_TEXT_COLOR = "#666";
+export const CHART_TEXT_COLOR = "#999";
+
+/*
+* Default color of mqin axis - As, Ds, Mc, Ic
+* @constant
+* @type {String}
+* @default #000
+*/
+export const CHART_MAIN_AXIS_COLOR = "#000";
 
 /*
 * Default color of signs in charts (arise symbol, taurus symbol, ...)

@@ -241,11 +241,44 @@ class RadixChart extends Chart {
       wrapper.appendChild(line);
 
       let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
-      let path = SVGUtils.SVGSymbol(axis.name, textPoint.x, textPoint.y)
-      path.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR);
-      path.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
-      wrapper.appendChild(path);
+      let text;
+      let SHIFT_X = 0;
+      let SHIFT_Y = 0;
+      const STEP = 2
+      switch (axis.name) {
+        case "As":
+          SHIFT_X -= STEP
+          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
+          text.setAttribute("text-anchor", "end")
+          text.setAttribute("dominant-baseline", "middle")
+          break;
+        case "Ds":
+          SHIFT_X += STEP
+          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
+          text.setAttribute("text-anchor", "start")
+          text.setAttribute("dominant-baseline", "middle")
+          break;
+        case "Mc":
+          SHIFT_Y -= STEP
+          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
+          text.setAttribute("text-anchor", "middle")
+          text.setAttribute("dominant-baseline", "text-top")
+          break;
+        case "Ic":
+          SHIFT_Y += STEP
+          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
+          text.setAttribute("text-anchor", "middle")
+          text.setAttribute("dominant-baseline", "hanging")
+          break;
+        default:
+          throw new Error("Unknown axis name.")
+      }
+      text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
+      text.setAttribute("font-size", this.#settings.CHART_FONT_SIZE);
+      text.setAttribute("stroke", this.#settings.CHART_MAIN_AXIS_COLOR);
+      text.setAttribute("stroke-width", this.#settings.CHART_STROKE);
 
+      wrapper.appendChild(text);
     }
 
     this.#root.appendChild(wrapper)
@@ -302,7 +335,7 @@ class RadixChart extends Chart {
     const cusps = data.cusps
 
     const pointsPositions = points.map(point => {
-        return point.angle
+      return point.angle
     })
 
     const wrapper = SVGUtils.SVGGroup()
@@ -313,7 +346,7 @@ class RadixChart extends Chart {
       const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
       const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
 
-      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS/2)
+      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS / 2)
       const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
       const endPosY = isLineInCollisionWithPoint ? (startPos.y + endPos.y) / 2 : endPos.y
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPosX, endPosY)
@@ -325,8 +358,13 @@ class RadixChart extends Chart {
       const endCusp = cusps[(i + 1) % 12].angle
       const gap = endCusp - startCusp > 0 ? endCusp - startCusp : endCusp - startCusp + Utils.DEG_360
       const textAngle = startCusp + gap / 2
+
       const textPos = Utils.positionOnCircle(this.#centerX, this.#centerY, textRadius, Utils.degreeToRadian(textAngle, this.#anscendantShift))
-      const text = SVGUtils.SVGSymbol(`${i+1}`, textPos.x, textPos.y)
+      const text = SVGUtils.SVGText(textPos.x, textPos.y, `${i+1}`)
+      text.setAttribute("text-anchor", "middle") // start, middle, end
+      text.setAttribute("dominant-baseline", "middle")
+      text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
+      text.setAttribute("font-size", 10); //this.#settings.CHART_FONT_SIZE                  
       text.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR)
       text.setAttribute("stroke-width", this.#settings.CHART_STROKE)
       wrapper.appendChild(text)

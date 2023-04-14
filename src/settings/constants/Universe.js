@@ -55,3 +55,11 @@ export const CHART_STROKE_ONLY = false;
 * @default monospace
 */
 export const CHART_FONT_FAMILY = "monospace";
+
+/**
+* Font size - axis, cusps
+* @constant
+* @type {Number}
+* @default 14
+*/
+export const CHART_FONT_SIZE = 18;
