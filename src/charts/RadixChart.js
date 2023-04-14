@@ -125,8 +125,8 @@ class RadixChart extends Chart {
         angle: data.cusps[9].angle
       },
     ])
-    this.#drawPoints(data.points)
-    this.#drawCusps(data.cusps, data.points)
+    this.#drawPoints(data)
+    this.#drawCusps(data)
     this.#drawBorders()
   }
 
@@ -255,15 +255,18 @@ class RadixChart extends Chart {
 
   /*
    * Draw points
-   * @param {Array} points - [{"name":String, "angle":Number}]
+   * @param {Object} data - chart data
    */
-  #drawPoints(points) {
+  #drawPoints(data) {
+    const points = data.points
+    const cusps = data.cusps
     const POINT_RADIUS = this.#innerCircleRadius - (4 * RadixChart.RULER_LENGTH)
 
     const wrapper = SVGUtils.SVGGroup()
+
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
-      const point = new Point(pointData)
+      const point = new Point(pointData, cusps, this.#settings)
       const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getAngle(), this.#anscendantShift))
       const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
 
@@ -294,10 +297,12 @@ class RadixChart extends Chart {
 
   /*
    * Draw points
-   * @param {Array} cusps - [{"angle":Number}, ...]
-   * @param {Array} points - [{"name": "Sun", "angle":Number}, ...]
+   * @param {Object} data - chart data
    */
-  #drawCusps(cusps, points) {
+  #drawCusps(data) {
+    const points = data.points
+    const cusps = data.cusps
+
     const pointsPositions = points.map(point => {
         return point.angle
     })
@@ -352,7 +357,6 @@ class RadixChart extends Chart {
 
     this.#root.appendChild(wrapper)
   }
-
 }
 
 export {

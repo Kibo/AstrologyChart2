@@ -47,6 +47,14 @@ export const CHART_SIGNS_COLOR = "#000";
 export const CHART_POINTS_COLOR = "#000";
 
 /*
+* Default color for point properties - angle in sign, dignities, retrograde
+* @constant
+* @type {String}
+* @default #333
+*/
+export const POINT_PROPERTIES_COLOR = "#333"
+
+/*
 * Aries color
 * @constant
 * @type {String}
