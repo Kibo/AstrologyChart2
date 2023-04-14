@@ -43,16 +43,16 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 **Point**
 ```
 {
-	name:{String},
-	angle:{Number},
-	[isRetrograde]:{Boolean}
+name:{String},
+angle:{Number},
+[isRetrograde]:{Boolean}
 }
 ```
 
 **Cusp**
 ```
 {
-	angle:{Number}
+angle:{Number}
 }
 ```
 
