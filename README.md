@@ -45,7 +45,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 {
 name:{String},
 angle:{Number},
-[isRetrograde]:{Boolean}
+[isRetrograde]:{Boolean=false}
 }
 ```
 
