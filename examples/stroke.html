@@ -20,6 +20,7 @@
   <body>
     <div class="alert">
       <p>A <b>stroke chart</b> is suitable for Laser/ CNC machine.</p>
+      <p><code>const settings = {CHART_STROKE_ONLY:true, POINT_PROPERTIES_SHOW:false}</code></p>
       <p>@see <a href="https://www.ponoko.com/laser-cutting" target="_blank">www.ponoko.com</a></p>
     </div>
 
@@ -33,7 +34,8 @@
       	"cusps":[{angle:0}, {angle:30}, {angle:60}, {angle:90}, {angle:120}, {angle:150}, {angle:180}, {angle:210}, {angle:240}, {angle:270}, {angle:300}, {angle:330}]
       }
 
-      new astrology.Chart('paper', {CHART_STROKE_ONLY:true}).radix().setData( data )
+      const settings = {CHART_STROKE_ONLY:true, POINT_PROPERTIES_SHOW:false}
+      new astrology.Chart('paper', settings).radix().setData( data )
     </script>
   </body>
 </html>
