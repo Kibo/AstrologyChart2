@@ -65,3 +65,10 @@ test('Utils.isCollision', () => {
   expect( Utils.isCollision(339, [350], COLLISION_RADIUS) ).toBeFalsy()
   expect( Utils.isCollision(1, [350], COLLISION_RADIUS) ).toBeFalsy()
 });
+
+test('Utils.positionToAngle', () => {
+  expect( Utils.positionToAngle(0, 0, 0, 1) ).toBe(90)
+  expect( Utils.positionToAngle(0, 0, 0, -1) ).toBe(-90)
+  expect( Utils.positionToAngle(0, 0, 1, 0) ).toBe(0)
+  expect( Utils.positionToAngle(0, 0, -1, 0) ).toBe(180)
+});

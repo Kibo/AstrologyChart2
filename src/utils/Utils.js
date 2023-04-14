@@ -70,6 +70,23 @@ class Utils {
   }
 
   /**
+  * Calculates the angle between the line (2 points) and the x-axis.
+  *
+  * @param {Number} x1
+  * @param {Number} y1
+  * @param {Number} x2
+  * @param {Number} y2
+  *
+  * @return {Number} - degree
+  */
+  static positionToAngle(x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const angleInRadians = Math.atan2(dy, dx);
+    return Utils.radianToDegree(angleInRadians)
+  }
+
+  /**
    * Calculates new position of points on circle without overlapping each other
    *
    * @throws {Error} - If there is no place on the circle to place points.

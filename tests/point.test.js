@@ -10,21 +10,21 @@ test('Point.getAngleInSign', () => {
   const d5 = {angle:365}
   const d6 = {angle:12.123}
 
-  const p1 = new Point(d1, cusps)
+  const p1 = new Point(d1, cusps, defaultSettings)
   expect(p1.getAngleInSign()).toBe(0)
 
-  const p2 = new Point(d2, cusps)
+  const p2 = new Point(d2, cusps, defaultSettings)
   expect(p2.getAngleInSign()).toBe(10)
 
-  const p3 = new Point(d3, cusps)
+  const p3 = new Point(d3, cusps, defaultSettings)
   expect(p3.getAngleInSign()).toBe(1)
 
-  const p4 = new Point(d4, cusps)
+  const p4 = new Point(d4, cusps, defaultSettings)
   expect(p4.getAngleInSign()).toBe(20)
 
-  const p5 = new Point(d5, cusps)
+  const p5 = new Point(d5, cusps, defaultSettings)
   expect(p5.getAngleInSign()).toBe(5)
 
-  const p6 = new Point(d6, cusps)
+  const p6 = new Point(d6, cusps, defaultSettings)
   expect(p6.getAngleInSign()).toBe(12)
 });

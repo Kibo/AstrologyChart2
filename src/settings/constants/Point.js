@@ -21,3 +21,11 @@ export const POINT_PROPERTIES_FONT_SIZE = 6
 * @default 0.4
 */
 export const POINT_PROPERTIES_TEXT_STROKE = 0.4
+
+/**
+* A point collision radius
+* @constant
+* @type {Number}
+* @default 2
+*/
+export const POINT_COLLISION_RADIUS = 12

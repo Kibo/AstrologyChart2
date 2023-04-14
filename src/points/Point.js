@@ -1,4 +1,5 @@
 import SVGUtils from '../utils/SVGUtils.js';
+import Utils from '../utils/Utils.js';
 
 /**
  * @class
@@ -25,7 +26,7 @@ class Point {
     this.#isRetrograde = pointData.isRetrograde ?? false
 
     if (!Array.isArray(cusps) || cusps.length != 12) {
-      throw new Error("Incorect param cups. ")
+      throw new Error("Bad param cusps. ")
     }
 
     this.#cusps = cusps
@@ -80,18 +81,30 @@ class Point {
     const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos, scale)
     wrapper.appendChild(symbol)
 
-    if(this.#settings.POINT_PROPERTIES_SHOW == false){
+    if (this.#settings.POINT_PROPERTIES_SHOW == false) {
       return wrapper //======>
     }
 
+    const chartCenterX = this.#settings.CHART_VIEWBOX_WIDTH / 2
+    const chartCenterY = this.#settings.CHART_VIEWBOX_HEIGHT / 2
+    const angleFromSymbolToCenter = Utils.positionToAngle(xPos, yPos, chartCenterX, chartCenterY)
+
     // point properties - angle in sign
-    const textXPos = xPos + 8 * scale
-    const textYPos = yPos - 12 * scale
-    const text = SVGUtils.SVGText(textXPos, textYPos, this.getAngleInSign(), scale)
+    const textRadius = 1.4 * scale * this.#settings.POINT_COLLISION_RADIUS
+    const textPosition = Utils.positionOnCircle(xPos, yPos, textRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
+    const textWrapper = SVGUtils.SVGGroup()
+    // It is possible to rotate the text, when uncomment a line bellow.
+    //textWrapper.setAttribute("transform", `rotate(${angleFromSymbolToCenter},${textPosition.x},${textPosition.y})`)
+    const text = SVGUtils.SVGText(textPosition.x, textPosition.y, this.getAngleInSign(), scale)
+    text.setAttribute("text-anchor", "middle") // start, middle, end
+    text.setAttribute("dominant-baseline", "middle")
+    text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
     text.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE);
     text.setAttribute("stroke", this.#settings.POINT_PROPERTIES_COLOR);
     text.setAttribute("stroke-width", this.#settings.POINT_PROPERTIES_TEXT_STROKE);
-    wrapper.appendChild(text)
+    textWrapper.appendChild(text)
+
+    wrapper.appendChild(textWrapper)
 
     return wrapper
   }

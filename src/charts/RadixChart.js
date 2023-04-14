@@ -264,7 +264,7 @@ class RadixChart extends Chart {
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.CHART_POINT_COLLISION_RADIUS, POINT_RADIUS)
+    const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
       const point = new Point(pointData, cusps, this.#settings)
       const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getAngle(), this.#anscendantShift))
@@ -315,7 +315,7 @@ class RadixChart extends Chart {
       const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
       const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
 
-      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.CHART_POINT_COLLISION_RADIUS/2)
+      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS/2)
       const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
       const endPosY = isLineInCollisionWithPoint ? (startPos.y + endPos.y) / 2 : endPos.y
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPosX, endPosY)

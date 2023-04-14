@@ -194,9 +194,7 @@ class SVGUtils {
     const text = document.createElementNS(SVGUtils.SVG_NAMESPACE, "text");
     text.setAttribute("transform", "translate(" + (-xPos * (scale - 1)) + "," + (-yPos * (scale - 1)) + ") scale(" + scale + ")");
     text.setAttribute("x", xPos);
-    text.setAttribute("y", yPos);
-    text.setAttribute("dominant-baseline", "central");
-    text.setAttribute("font-family", "monospace");
+    text.setAttribute("y", yPos);    
     text.setAttribute("fill", "none");
     text.appendChild(document.createTextNode(txt));
 
