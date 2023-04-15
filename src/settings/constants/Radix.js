@@ -7,17 +7,25 @@
 export const RADIX_ID = "radix"
 
 /*
-* Scale points ratio
+* Font size - points (planets)
 * @constant
 * @type {Number}
-* @default 1
+* @default 24
 */
-export const RADIX_POINTS_SCALE = 1
+export const RADIX_POINTS_FONT_SIZE = 36
 
 /*
-* Scale signs ratio
+* Font size - signs
 * @constant
 * @type {Number}
-* @default 1
+* @default 24
 */
-export const RADIX_SIGNS_SCALE = 1
+export const RADIX_SIGNS_FONT_SIZE = 32
+
+/*
+* Font size - axis (As, Ds, MC, IC)
+* @constant
+* @type {Number}
+* @default 24
+*/
+export const RADIX_AXIS_FONT_SIZE = 32

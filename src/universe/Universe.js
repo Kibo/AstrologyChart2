@@ -4,6 +4,7 @@ import Utils from '../utils/Utils.js';
 import RadixChart from '../charts/RadixChart.js';
 import TransitChart from '../charts/TransitChart.js';
 
+
 /**
  * @class
  * @classdesc An wrapper for all parts of graph.
@@ -40,6 +41,8 @@ class Universe {
     this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
     this.#transit = new TransitChart(this.#SVGDocument, this.#settings)
 
+    this.#loadFont( new FontFace('AstrologySymbols', 'url(../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf)') )
+
     return this
   }
 
@@ -68,9 +71,20 @@ class Universe {
   getSettings() {
     return this.#settings
   }
-  
+
   // ## PRIVATE ##############################
 
+  /*
+  * Load fond to DOM
+  */
+  async #loadFont( font ){
+    try{
+      await font.load();
+      document.fonts.add(font)
+    }catch(e){
+      throw new Error(e)
+    }
+  }
 }
 
 export {

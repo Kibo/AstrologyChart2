@@ -70,15 +70,14 @@ class Point {
    *
    * @param {Number} xPos
    * @param {Number} yPos
-   * @param {Number} [scale]
    * @param {Boolean} [isProperties] - angleInSign, dignities, retrograde
    *
    * @return {SVGElement}
    */
-  getSymbol(xPos, yPos, scale = 1, isProperties = true) {
+  getSymbol(xPos, yPos, isProperties = true) {
     const wrapper = SVGUtils.SVGGroup()
 
-    const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos, scale)
+    const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos)
     wrapper.appendChild(symbol)
 
     if (this.#settings.POINT_PROPERTIES_SHOW == false) {
@@ -90,18 +89,16 @@ class Point {
     const angleFromSymbolToCenter = Utils.positionToAngle(xPos, yPos, chartCenterX, chartCenterY)
 
     // point properties - angle in sign
-    const textRadius = 1.4 * scale * this.#settings.POINT_COLLISION_RADIUS
+    const textRadius = 1.8 * this.#settings.POINT_COLLISION_RADIUS
     const textPosition = Utils.positionOnCircle(xPos, yPos, textRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
     const textWrapper = SVGUtils.SVGGroup()
     // It is possible to rotate the text, when uncomment a line bellow.
     //textWrapper.setAttribute("transform", `rotate(${angleFromSymbolToCenter},${textPosition.x},${textPosition.y})`)
-    const text = SVGUtils.SVGText(textPosition.x, textPosition.y, this.getAngleInSign(), scale)
+    const text = SVGUtils.SVGText(textPosition.x, textPosition.y, this.getAngleInSign())
     text.setAttribute("text-anchor", "middle") // start, middle, end
     text.setAttribute("dominant-baseline", "middle")
-    text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
     text.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE);
-    text.setAttribute("stroke", this.#settings.POINT_PROPERTIES_COLOR);
-    text.setAttribute("stroke-width", this.#settings.POINT_PROPERTIES_TEXT_STROKE);
+    text.setAttribute("fill", this.#settings.POINT_PROPERTIES_COLOR);
     textWrapper.appendChild(text)
 
     wrapper.appendChild(textWrapper)

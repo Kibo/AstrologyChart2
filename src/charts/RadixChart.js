@@ -161,9 +161,12 @@ class RadixChart extends Chart {
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
       let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#anscendantShift))
-      let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y, this.#settings.RADIX_SIGNS_SCALE)
-      symbol.setAttribute("stroke", this.#settings.CHART_SIGNS_COLOR);
-      symbol.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+
+      let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y)
+      symbol.setAttribute("text-anchor", "middle") // start, middle, end
+      symbol.setAttribute("dominant-baseline", "middle")
+      symbol.setAttribute("font-size", this.#settings.RADIX_SIGNS_FONT_SIZE);
+      symbol.setAttribute("fill", this.#settings.CHART_SIGNS_COLOR);
       return symbol
     }
 
@@ -241,44 +244,45 @@ class RadixChart extends Chart {
       wrapper.appendChild(line);
 
       let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
-      let text;
+      let symbol;
       let SHIFT_X = 0;
       let SHIFT_Y = 0;
       const STEP = 2
       switch (axis.name) {
         case "As":
           SHIFT_X -= STEP
-          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
-          text.setAttribute("text-anchor", "end")
-          text.setAttribute("dominant-baseline", "middle")
+          SHIFT_Y -= STEP
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "end")
+          symbol.setAttribute("dominant-baseline", "middle")
           break;
         case "Ds":
           SHIFT_X += STEP
-          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
-          text.setAttribute("text-anchor", "start")
-          text.setAttribute("dominant-baseline", "middle")
+          SHIFT_Y -= STEP
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "start")
+          symbol.setAttribute("dominant-baseline", "middle")
           break;
         case "Mc":
           SHIFT_Y -= STEP
-          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
-          text.setAttribute("text-anchor", "middle")
-          text.setAttribute("dominant-baseline", "text-top")
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "middle")
+          symbol.setAttribute("dominant-baseline", "text-top")
           break;
         case "Ic":
           SHIFT_Y += STEP
-          text = SVGUtils.SVGText(textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y, axis.name)
-          text.setAttribute("text-anchor", "middle")
-          text.setAttribute("dominant-baseline", "hanging")
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "middle")
+          symbol.setAttribute("dominant-baseline", "hanging")
           break;
         default:
+          console.error(axis.name)
           throw new Error("Unknown axis name.")
       }
-      text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
-      text.setAttribute("font-size", this.#settings.CHART_FONT_SIZE);
-      text.setAttribute("stroke", this.#settings.CHART_MAIN_AXIS_COLOR);
-      text.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+      symbol.setAttribute("font-size", this.#settings.RADIX_AXIS_FONT_SIZE);
+      symbol.setAttribute("fill", this.#settings.CHART_SIGNS_COLOR);
 
-      wrapper.appendChild(text);
+      wrapper.appendChild(symbol);
     }
 
     this.#root.appendChild(wrapper)
@@ -309,9 +313,11 @@ class RadixChart extends Chart {
       wrapper.appendChild(rulerLine);
 
       // symbol
-      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, this.#settings.RADIX_POINTS_SCALE)
-      symbol.setAttribute("stroke", this.#settings.CHART_POINTS_COLOR);
-      symbol.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y)
+      symbol.setAttribute("text-anchor", "middle") // start, middle, end
+      symbol.setAttribute("dominant-baseline", "middle")
+      symbol.setAttribute("font-size", this.#settings.RADIX_POINTS_FONT_SIZE)
+      symbol.setAttribute("fill", this.#settings.CHART_POINTS_COLOR)
       wrapper.appendChild(symbol);
 
       // pointer
@@ -340,7 +346,7 @@ class RadixChart extends Chart {
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 2 * RadixChart.RULER_LENGTH
+    const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 1.8 * RadixChart.RULER_LENGTH
 
     for (let i = 0; i < cusps.length; i++) {
       const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
@@ -363,10 +369,8 @@ class RadixChart extends Chart {
       const text = SVGUtils.SVGText(textPos.x, textPos.y, `${i+1}`)
       text.setAttribute("text-anchor", "middle") // start, middle, end
       text.setAttribute("dominant-baseline", "middle")
-      text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
-      text.setAttribute("font-size", 10); //this.#settings.CHART_FONT_SIZE                  
-      text.setAttribute("stroke", this.#settings.CHART_TEXT_COLOR)
-      text.setAttribute("stroke-width", this.#settings.CHART_STROKE)
+      text.setAttribute("font-size", this.#settings.RADIX_POINTS_FONT_SIZE / 2)
+      text.setAttribute("fill", this.#settings.CHART_TEXT_COLOR)
       wrapper.appendChild(text)
     }
 

@@ -44,7 +44,7 @@ export const CHART_MAIN_AXIS_COLOR = "#000";
 * @type {String}
 * @default #000
 */
-export const CHART_SIGNS_COLOR = "#000";
+export const CHART_SIGNS_COLOR = "#333";
 
 /*
 * Default color of signs in charts (arise symbol, taurus symbol, ...)

@@ -22,24 +22,6 @@ class SVGUtils {
   static SYMBOL_AQUARIUS = "Aquarius";
   static SYMBOL_PISCES = "Pisces";
 
-  static SYMBOL_NUMBER_1 = "1";
-  static SYMBOL_NUMBER_2 = "2";
-  static SYMBOL_NUMBER_3 = "3";
-  static SYMBOL_NUMBER_4 = "4";
-  static SYMBOL_NUMBER_5 = "5";
-  static SYMBOL_NUMBER_6 = "6";
-  static SYMBOL_NUMBER_7 = "7";
-  static SYMBOL_NUMBER_8 = "8";
-  static SYMBOL_NUMBER_9 = "9";
-  static SYMBOL_NUMBER_10 = "10";
-  static SYMBOL_NUMBER_11 = "11";
-  static SYMBOL_NUMBER_12 = "12";
-
-  static SYMBOL_AS = "As";
-  static SYMBOL_DS = "Ds";
-  static SYMBOL_MC = "Mc";
-  static SYMBOL_IC = "Ic";
-
   static SYMBOL_SUN = "Sun";
   static SYMBOL_MOON = "Moon";
   static SYMBOL_MERCURY = "Mercury";
@@ -53,6 +35,11 @@ class SVGUtils {
   static SYMBOL_CHIRON = "Chiron";
   static SYMBOL_LILITH = "Lilith";
   static SYMBOL_NNODE = "NNode";
+
+  static SYMBOL_AS = "As";
+  static SYMBOL_DS = "Ds";
+  static SYMBOL_MC = "Mc";
+  static SYMBOL_IC = "Ic";
 
   constructor() {
     if (this instanceof SVGUtils) {
@@ -185,17 +172,12 @@ class SVGUtils {
    *
    * @return {SVGElement} line
    */
-  static SVGText(x, y, txt, scale = 1) {
-    const X_SHIFT = 0; //px
-    const Y_SHIFT = 0; //px
-    const xPos = x + X_SHIFT * scale
-    const yPos = y + Y_SHIFT * scale
-
+  static SVGText(x, y, txt) {
     const text = document.createElementNS(SVGUtils.SVG_NAMESPACE, "text");
-    text.setAttribute("transform", "translate(" + (-xPos * (scale - 1)) + "," + (-yPos * (scale - 1)) + ") scale(" + scale + ")");
-    text.setAttribute("x", xPos);
-    text.setAttribute("y", yPos);
-    text.setAttribute("fill", "none");
+    text.setAttribute("x", x);
+    text.setAttribute("y", y);
+    text.setAttribute("stroke", "none");
+    text.setAttribute("font-family", "AstrologySymbols");
     text.appendChild(document.createTextNode(txt));
 
     return text;
@@ -210,83 +192,96 @@ class SVGUtils {
    *
    * @return {SVGElement}
    */
-  static SVGSymbol(name, xPos, yPos, scale = 1) {
+  static SVGSymbol(name, xPos, yPos) {
     switch (name) {
+      case SVGUtils.SYMBOL_AS:
+        return asSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_DS:
+        return dsSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_MC:
+        return mcSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_IC:
+        return icSymbol(xPos, yPos)
+        break;
+
       case SVGUtils.SYMBOL_ARIES:
-        return ariesSymbol(xPos, yPos, scale)
+        return ariesSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_TAURUS:
-        return taurusSymbol(xPos, yPos, scale)
+        return taurusSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_GEMINI:
-        return geminiSymbol(xPos, yPos, scale)
+        return geminiSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_CANCER:
-        return cancerSymbol(xPos, yPos, scale)
+        return cancerSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_LEO:
-        return leoSymbol(xPos, yPos, scale)
+        return leoSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_VIRGO:
-        return virgoSymbol(xPos, yPos, scale)
+        return virgoSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_LIBRA:
-        return libraSymbol(xPos, yPos, scale)
+        return libraSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_SCORPIO:
-        return scorpioSymbol(xPos, yPos, scale)
+        return scorpioSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_SAGITTARIUS:
-        return sagittariusSymbol(xPos, yPos, scale)
+        return sagittariusSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_CAPRICORN:
-        return capricornSymbol(xPos, yPos, scale)
+        return capricornSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_AQUARIUS:
-        return aquariusSymbol(xPos, yPos, scale)
+        return aquariusSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_PISCES:
-        return piscesSymbol(xPos, yPos, scale)
+        return piscesSymbol(xPos, yPos)
         break;
 
       case SVGUtils.SYMBOL_SUN:
-        return sunSymbol(xPos, yPos, scale)
+        return sunSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_MOON:
-        return moonSymbol(xPos, yPos, scale)
+        return moonSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_MERCURY:
-        return mercurySymbol(xPos, yPos, scale)
+        return mercurySymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_VENUS:
-        return venusSymbol(xPos, yPos, scale)
+        return venusSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_MARS:
-        return marsSymbol(xPos, yPos, scale)
+        return marsSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_JUPITER:
-        return jupiterSymbol(xPos, yPos, scale)
+        return jupiterSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_SATURN:
-        return saturnSymbol(xPos, yPos, scale)
+        return saturnSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_URANUS:
-        return uranusSymbol(xPos, yPos, scale)
+        return uranusSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_NEPTUNE:
-        return neptuneSymbol(xPos, yPos, scale)
+        return neptuneSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_PLUTO:
-        return plutoSymbol(xPos, yPos, scale)
+        return plutoSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_CHIRON:
-        return chironSymbol(xPos, yPos, scale)
+        return chironSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_LILITH:
-        return lilithSymbol(xPos, yPos, scale)
+        return lilithSymbol(xPos, yPos)
         break;
       case SVGUtils.SYMBOL_NNODE:
-        return nnodeSymbol(xPos, yPos, scale)
+        return nnodeSymbol(xPos, yPos)
         break;
 
       default:
@@ -295,532 +290,207 @@ class SVGUtils {
     }
 
     /*
+     * Ascendant symbol
+     */
+    function asSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "c")
+    }
+
+    /*
+     * Descendant symbol
+     */
+    function dsSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "e")
+    }
+
+    /*
+     * Medium coeli symbol
+     */
+    function mcSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "d")
+    }
+
+    /*
+     * Immum coeli symbol
+     */
+    function icSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "e")
+    }
+
+    /*
      * Aries symbol
      */
-    function ariesSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -9; //px
-      const Y_SHIFT = -2; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " -0.9,-0.9 0,-1.8 0.9,-1.8 1.8,-0.8999998 1.8,0 1.8,0.8999998 0.9,0.9 0.9,1.8 0.9,4.5 m -9,-5.4 1.8,-1.8 1.8,0 1.8,0.9 0.9,0.9 0.9,1.8 0.9,3.6 0,9.9 m 8.1,-12.6 0.9,-0.9 0,-1.8 -0.9,-1.8 -1.8,-0.8999998 -1.8,0 -1.8,0.8999998 -0.9,0.9 -0.9,1.8 -0.9,4.5 m 9,-5.4 -1.8,-1.8 -1.8,0 -1.8,0.9 -0.9,0.9 -0.9,1.8 -0.9,3.6 0,9.9");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function ariesSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "A")
     }
 
     /*
      * Taurus symbol
      */
-    function taurusSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -9; //px
-      const Y_SHIFT = -11; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " 1,4 1,2 2,2 3,1 4,0 3,-1 2,-2 1,-2 1,-4 m -18,0 1,3 1,2 2,2 3,1 4,0 3,-1 2,-2 1,-2 1,-3 m -11,8 -2,1 -1,1 -1,2 0,3 1,2 2,2 2,1 2,0 2,-1 2,-2 1,-2 0,-3 -1,-2 -1,-1 -2,-1 m -4,1 -2,1 -1,2 0,3 1,3 m 8,0 1,-3 0,-3 -1,-2 -2,-1");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function taurusSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "B")
     }
 
     /*
      * Gemini symbol
      */
-    function geminiSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -5; //px
-      const Y_SHIFT = -6; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " 0,11.546414 m 0.9622011,-10.5842129 0,9.6220117 m 7.6976097,-9.6220117 0,9.6220117 m 0.962201,-10.5842128 0,11.546414 m -13.4708165,-14.4330172 1.9244023,1.924402 1.9244024,0.9622012 2.8866038,0.9622011 3.848804,0 2.886604,-0.9622011 1.924402,-0.9622012 1.924403,-1.924402 m -17.3196215,17.3196207 1.9244023,-1.9244024 1.9244024,-0.9622011 2.8866038,-0.9622012 3.848804,0 2.886604,0.9622012 1.924402,0.9622011 1.924403,1.9244024");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function geminiSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "C")
     }
 
     /*
      * Cancer symbol
      */
-    function cancerSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 9; //px
-      const Y_SHIFT = -9; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " -15,0 -2,1 -1,2 0,2 1,2 2,1 2,0 2,-1 1,-2 0,-2 -1,-2 11,0 m -18,3 1,2 1,1 2,1 m 4,-4 -1,-2 -1,-1 -2,-1 m -4,15 15,0 2,-1 1,-2 0,-2 -1,-2 -2,-1 -2,0 -2,1 -1,2 0,2 1,2 -11,0 m 18,-3 -1,-2 -1,-1 -2,-1 m -4,4 1,2 1,1 2,1");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function cancerSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "D")
     }
 
     /*
      * Leo symbol
      */
-    function leoSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -3; //px
-      const Y_SHIFT = 4; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " -2,-1 -1,0 -2,1 -1,2 0,1 1,2 2,1 1,0 2,-1 1,-2 0,-1 -1,-2 -5,-5 -1,-2 0,-3 1,-2 2,-1 3,-1 4,0 4,1 2,2 1,2 0,3 -1,3 -3,3 -1,2 0,2 1,2 2,0 1,-1 1,-2 m -13,-5 -2,-3 -1,-2 0,-3 1,-2 1,-1 m 7,-1 3,1 2,2 1,2 0,3 -1,3 -2,3");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function leoSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "E")
     }
 
     /*
      * Virgo symbol
      */
-    function virgoSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -9; //px
-      const Y_SHIFT = -5; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " 2.5894868,-2.5894868 1.7263245,2.5894868 0,9.4947847 m -2.5894868,-11.2211092 1.7263245,2.5894867 0,8.6316225 m 0.8631623,-9.4947847 2.5894867,-2.5894868 1.72632451,2.5894868 0,8.6316224 m -2.58948671,-10.3579469 1.72632447,2.5894867 0,7.7684602 m 0.86316224,-8.6316224 2.58948679,-2.5894868 1.7263244,2.5894868 0,13.8105959 m -2.5894867,-15.5369204 1.7263245,2.5894867 0,12.9474337 m 0.8631622,-13.8105959 2.5894868,-2.5894868 0.8631622,1.7263245 0.8631623,2.5894868 0,2.5894867 -0.8631623,2.58948673 -0.8631622,1.72632447 -1.7263245,1.7263245 -2.5894867,1.7263245 -4.3158113,1.7263245 m 7.7684602,-15.5369204 0.8631623,0.8631622 0.8631622,2.5894868 0,2.5894867 -0.8631622,2.58948673 -0.8631623,1.72632447 -1.7263245,1.7263245 -2.5894867,1.7263245 -3.452649,1.7263245");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function virgoSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "F")
     }
 
     /*
      * Libra symbol
      */
-    function libraSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 0; //px
-      const Y_SHIFT = -8; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " c 0.7519,1e-5 1.3924,0.12227 1.9316,0.35156 0.6619,0.28495 1.2134,0.63854 1.666,1.0625 0.4838,0.45481 0.853,0.97255 1.1172,1.56641 0.2467,0.56612 0.3711,1.17397 0.3711,1.83789 0,0.64113 -0.1244,1.23948 -0.373,1.80859 -0.1624,0.36305 -0.3631,0.69725 -0.6055,1.00586 l -0.6367,0.8086 4.3789,0 0,0.67187 -5.4024,0 0,-0.91797 c 0.2173,-0.1385 0.4379,-0.27244 0.6367,-0.44726 0.4215,-0.36876 0.7529,-0.82784 0.9883,-1.35547 0.2215,-0.50074 0.334,-1.0358 0.334,-1.58594 0,-0.55653 -0.1122,-1.09434 -0.334,-1.5957 l -0,-0.002 0,-0.004 c -0.2292,-0.49901 -0.5581,-0.94778 -0.9746,-1.33789 l -0,-0.002 -0,-0.002 c -0.3967,-0.36155 -0.8679,-0.65723 -1.4062,-0.88476 l -0,0 c -0.4984,-0.20903 -1.0622,-0.30663 -1.6817,-0.30664 -0.5926,1e-5 -1.1526,0.10008 -1.6699,0.30273 l -0,0 c -0.5261,0.20799 -1.0032,0.5067 -1.4199,0.88867 l -0,0.002 -0,0.002 c -0.4166,0.39011 -0.7454,0.83887 -0.9746,1.33789 l 0,0.004 -0,0.002 c -0.2218,0.50136 -0.334,1.03915 -0.334,1.5957 0,0.55015 0.1125,1.08519 0.334,1.58594 l 0,0.002 0,0.004 c 0.229,0.49855 0.5574,0.94911 0.9746,1.33984 0.1876,0.17482 0.4143,0.31484 0.6367,0.45703 l 0,0.91797 -5.3906,0 0,-0.67187 4.3789,0 -0.6367,-0.8086 c -0.2428,-0.30904 -0.443,-0.64418 -0.6055,-1.00781 -0.2487,-0.56911 -0.3731,-1.16552 -0.3731,-1.80664 0,-0.66391 0.1244,-1.27178 0.3711,-1.83789 l 0,-0.002 c 3e-4,-5.8e-4 -2e-4,-10e-4 0,-0.002 0.2641,-0.59218 0.6326,-1.10871 1.1153,-1.5625 0.4847,-0.45571 1.0332,-0.80585 1.6562,-1.05859 0.5861,-0.23488 1.2294,-0.35546 1.9414,-0.35547 z m -7.8496,13.45899 15.6992,0 0,0.67187 -15.6992,0 z");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function libraSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "G")
     }
 
     /*
      * Scorpio symbol
      */
-    function scorpioSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -9; //px
-      const Y_SHIFT = -4; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m " + x + ", " + y + " 2.3781101,-2.3781101 2.3781101,2.3781101 0,9.5124404 m -3.1708135,-11.0978471 2.3781101,2.3781101 0,8.719737 m 0.7927034,-9.5124404 2.3781101,-2.3781101 2.37811007,2.3781101 0,9.5124404 m -3.17081347,-11.0978471 2.3781101,2.3781101 0,8.719737 m 0.79270337,-9.5124404 2.37811013,-2.3781101 2.3781101,2.3781101 0,8.719737 1.5854067,1.5854068 m -4.7562202,-11.8905505 2.3781101,2.3781101 0,8.719737 1.5854067,1.5854067 2.3781101,-2.3781101");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function scorpioSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "H")
     }
 
     /*
      * Sagittarius symbol
      */
-    function sagittariusSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 7; //px
-      const Y_SHIFT = -9; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-      const path = SVGUtils.SVGPath()
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      path.setAttribute("d", "m " + x + ", " + y + " -17.11444,17.11444 m 17.11444,-17.11444 -3.2089575,1.0696525 -6.417915,0 m 7.4875675,1.0696525 -3.2089575,0 -4.27861,-1.0696525 m 9.6268725,-1.0696525 -1.0696525,3.2089575 0,6.41791504 m -1.0696525,-7.48756754 0,3.2089575 1.0696525,4.27861004 m -8.55722,0 -7.4875675,0 m 6.417915,1.06965246 -3.2089575,0 -3.2089575,-1.06965246 m 7.4875675,0 0,7.48756746 m -1.0696525,-6.417915 0,3.2089575 1.0696525,3.2089575");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function sagittariusSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "I")
     }
 
     /*
      * Capricorn symbol
      */
-    function capricornSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -9; //px
-      const Y_SHIFT = -3; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-      const path = SVGUtils.SVGPath()
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      path.setAttribute("d", "m " + x + ", " + y + " 1.8047633,-3.6095267 4.5119084,9.0238168 m -4.5119084,-7.2190534 4.5119084,9.0238167 2.707145,-6.3166717 4.5119084,0 2.707145,-0.9023817 0.9023817,-1.8047633 0,-1.8047634 -0.9023817,-1.8047633 -1.8047634,-0.9023817 -0.9023816,0 -1.8047634,0.9023817 -0.9023817,1.8047633 0,1.8047634 0.9023817,2.707145 0.9023817,1.80476336 0.9023817,2.70714504 0,2.707145 -1.8047634,1.8047633 m 1.8047634,-16.2428701 -0.9023817,0.9023817 -0.9023817,1.8047633 0,1.8047634 1.8047634,3.6095267 0.9023816,2.707145 0,2.707145 -0.9023816,1.8047634 -1.8047634,0.9023816");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function capricornSymbol(xPos, yPos) {
+    return SVGUtils.SVGText(xPos, yPos, "J")
     }
 
     /*
      * Aquarius symbol
      */
-    function aquariusSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -8; //px
-      const Y_SHIFT = -2; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-      const path = SVGUtils.SVGPath()
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      path.setAttribute("d", "m " + x + ", " + y + " 2.8866035,-2.8866035 3.8488047,1.9244023 m -4.8110059,-0.9622011 3.8488047,1.9244023 2.8866035,-2.8866035 2.8866035,1.9244023 m -3.84880467,-0.9622011 2.88660347,1.9244023 2.8866035,-2.8866035 1.9244024,1.9244023 m -2.8866035,-0.9622011 1.9244023,1.9244023 2.8866035,-2.8866035 m -17.319621,8.6598105 2.8866035,-2.88660348 3.8488047,1.92440238 m -4.8110059,-0.96220121 3.8488047,1.92440231 2.8866035,-2.88660348 2.8866035,1.92440238 m -3.84880467,-0.96220121 2.88660347,1.92440231 2.8866035,-2.88660348 1.9244024,1.92440238 m -2.8866035,-0.96220121 1.9244023,1.92440231 2.8866035,-2.88660348");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function aquariusSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "K")
     }
 
     /*
      * Pisces symbol
      */
-    function piscesSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -8; //px
-      const Y_SHIFT = -8; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-      const path = SVGUtils.SVGPath()
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      path.setAttribute("d", "m " + x + ", " + y + " 4,2 2,2 1,3 0,3 -1,3 -2,2 -4,2 m 0,-17 3,1 2,1 2,2 1,3 m 0,3 -1,3 -2,2 -2,1 -3,1 m 16,-17 -3,1 -2,1 -2,2 -1,3 m 0,3 1,3 2,2 2,1 3,1 m 0,-17 -4,2 -2,2 -1,3 0,3 1,3 2,2 4,2 m -17,-9 18,0 m -18,1 18,0");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function piscesSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "L")
     }
 
     /*
      * Sun symbol
      */
-    function sunSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -1; //px
-      const Y_SHIFT = -7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " -2.18182,0.727268 -2.181819,1.454543 -1.454552,2.18182 -0.727268,2.181819 0,2.181819 0.727268,2.181819 1.454552,2.18182 2.181819,1.454544 2.18182,0.727276 2.18181,0 2.18182,-0.727276 2.181819,-1.454544 1.454552,-2.18182 0.727268,-2.181819 0,-2.181819 -0.727268,-2.181819 -1.454552,-2.18182 -2.181819,-1.454543 -2.18182,-0.727268 -2.18181,0 m 0.727267,6.54545 -0.727267,0.727276 0,0.727275 0.727267,0.727268 0.727276,0 0.727267,-0.727268 0,-0.727275 -0.727267,-0.727276 -0.727276,0 m 0,0.727276 0,0.727275 0.727276,0 0,-0.727275 -0.727276,0");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function sunSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "Q")
     }
 
     /*
      * Moon symbol
      */
-    function moonSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -4; //px
-      const Y_SHIFT = -7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " a 7.4969283,7.4969283 0 0 1 0,14.327462 7.4969283,7.4969283 0 1 0 0,-14.327462 z");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function moonSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "R")
     }
 
     /*
      * Mercury symbol
      */
-    function mercurySymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -2; //px
-      const Y_SHIFT = 7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " 4.26011,0 m -2.13005,-2.98207 0,5.11213 m 4.70312,-9.7983 a 4.70315,4.70315 0 0 1 -4.70315,4.70314 4.70315,4.70315 0 0 1 -4.70314,-4.70314 4.70315,4.70315 0 0 1 4.70314,-4.70315 4.70315,4.70315 0 0 1 4.70315,4.70315 z");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      const crownXShift = 6; //px
-      const crownYShift = -16; //px
-      const crown = SVGUtils.SVGPath()
-      crown.setAttribute("d", "m" + (x + crownXShift) + ", " + (y + crownYShift) + " a 3.9717855,3.9717855 0 0 1 -3.95541,3.59054 3.9717855,3.9717855 0 0 1 -3.95185,-3.59445");
-      crown.setAttribute("fill", "none");
-      wrapper.appendChild(crown)
-
-      return wrapper
+    function mercurySymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "S")
     }
 
     /*
      * Venus symbol
      */
-    function venusSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 2.3; //px
-      const Y_SHIFT = 7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " -4.937669,0.03973 m 2.448972,2.364607 0,-5.79014 c -3.109546,-0.0085 -5.624617,-2.534212 -5.620187,-5.64208 0.0044,-3.107706 2.526514,-5.621689 5.635582,-5.621689 3.109068,0 5.631152,2.513983 5.635582,5.621689 0.0044,3.107868 -2.510641,5.633586 -5.620187,5.64208");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function venusSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "T")
     }
 
     /*
      * Mars symbol
      */
-    function marsSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 3; //px
-      const Y_SHIFT = -3.7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " c -5.247438,-4.150623 -11.6993,3.205518 -7.018807,7.886007 4.680494,4.680488 12.036628,-1.771382 7.885999,-7.018816 z m 0,0 0.433597,0.433595 3.996566,-4.217419 m -3.239802,-0.05521 3.295015,0 0.110427,3.681507");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function marsSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "U")
     }
 
     /*
      * Jupiter symbol
      */
-    function jupiterSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -6; //px
-      const Y_SHIFT = -2; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " c -0.43473,0 -1.30422,-0.40572 -1.30422,-2.02857 0,-1.62285 1.73897,-3.2457 3.47792,-3.2457 1.73897,0 3.47792,1.21715 3.47792,4.05713 0,2.83999 -2.1737,7.30283 -6.52108,7.30283 m 12.17269,0 -12.60745,0 m 9.99902,-11.76567 0,15.82279");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function jupiterSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "V")
     }
 
     /*
      * Saturn symbol
      */
-    function saturnSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 4; //px
-      const Y_SHIFT = 7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " c -0.52222,0.52221 -1.04445,1.04444 -1.56666,1.04444 -0.52222,0 -1.56667,-0.52223 -1.56667,-1.56667 0,-1.04443 0.52223,-2.08887 1.56667,-3.13332 1.04444,-1.04443 2.08888,-3.13331 2.08888,-5.22219 0,-2.08888 -1.04444,-4.17776 -3.13332,-4.17776 -1.97566,0 -3.65555,1.04444 -4.69998,3.13333 m -2.55515,-5.87499 6.26664,0 m -3.71149,-2.48054 0,15.14438");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function saturnSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "W")
     }
 
     /*
      * Uranus symbol
      */
-    function uranusSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -5; //px
-      const Y_SHIFT = -6; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const horns = SVGUtils.SVGPath()
-      horns.setAttribute("d", "m" + x + ", " + y + "  0,10.23824 m 10.23633,-10.32764 0,10.23824 m -10.26606,-4.6394 10.23085,0 m -5.06415,-5.51532 0,11.94985");
-      horns.setAttribute("fill", "none");
-      wrapper.appendChild(horns)
-
-      const bodyXShift = 7; //px
-      const bodyYShift = 13; //px
-      const body = SVGUtils.SVGPath()
-      body.setAttribute("d", "m" + (x + bodyXShift) + ", " + (y + bodyYShift) + " a 1.8384377,1.8384377 0 0 1 -1.83844,1.83843 1.8384377,1.8384377 0 0 1 -1.83842,-1.83843 1.8384377,1.8384377 0 0 1 1.83842,-1.83844 1.8384377,1.8384377 0 0 1 1.83844,1.83844 z");
-      body.setAttribute("fill", "none");
-      wrapper.appendChild(body)
-
-      return wrapper
+    function uranusSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "X")
     }
 
     /*
      * Neptune symbol
      */
-    function neptuneSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 4; //px
-      const Y_SHIFT = -6; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " 1.77059,-2.36312 2.31872,1.8045 m -14.44264,-0.20006 2.34113,-1.77418 1.74085,2.38595 m -1.80013,-1.77265 c -1.23776,8.40975 0.82518,9.67121 4.95106,9.67121 4.12589,0 6.18883,-1.26146 4.95107,-9.67121 m -7.05334,3.17005 2.03997,-2.12559 2.08565,2.07903 m -5.32406,9.91162 6.60142,0 m -3.30071,-12.19414 0,15.55803");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function neptuneSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "Y")
     }
 
     /*
      * Pluto symbol
      */
-    function plutoSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 6; //px
-      const Y_SHIFT = -7; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const body = SVGUtils.SVGPath()
-      body.setAttribute("d", "m" + x + ", " + y + " a 5.7676856,5.7676856 0 0 1 -2.88385,4.99496 5.7676856,5.7676856 0 0 1 -5.76768,0 5.7676856,5.7676856 0 0 1 -2.88385,-4.99496 m 5.76771,13.93858 0,-8.17088 m -3.84512,4.32576 7.69024,0");
-      body.setAttribute("fill", "none");
-      wrapper.appendChild(body)
-
-      const headXShift = -2.4; //px
-      const headYShift = -1; //px
-      const head = SVGUtils.SVGPath()
-      head.setAttribute("d", "m" + (x + headXShift) + ", " + (y + headYShift) + " a 3.3644834,3.3644834 0 0 1 -3.36448,3.36449 3.3644834,3.3644834 0 0 1 -3.36448,-3.36449 3.3644834,3.3644834 0 0 1 3.36448,-3.36448 3.3644834,3.3644834 0 0 1 3.36448,3.36448 z");
-      head.setAttribute("fill", "none");
-      wrapper.appendChild(head)
-
-      return wrapper
+    function plutoSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "Z")
     }
 
     /*
      * Chiron symbol
      */
-    function chironSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 4; //px
-      const Y_SHIFT = 3; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const body = SVGUtils.SVGPath()
-      body.setAttribute("d", "m" + x + ", " + y + " a 3.8764725,3.0675249 0 0 1 -3.876473,3.067525 3.8764725,3.0675249 0 0 1 -3.876472,-3.067525 3.8764725,3.0675249 0 0 1 3.876472,-3.067525 3.8764725,3.0675249 0 0 1 3.876473,3.067525 z");
-      body.setAttribute("fill", "none");
-      wrapper.appendChild(body)
-
-      const headXShift = 0; //px
-      const headYShift = -14.5; //px
-      const head = SVGUtils.SVGPath()
-      head.setAttribute("d", "m" + (x + headXShift) + ", " + (y + headYShift) + "   -3.942997,4.243844 4.110849,3.656151 m -4.867569,-9.009468 0,11.727251");
-      head.setAttribute("fill", "none");
-      wrapper.appendChild(head)
-
-      return wrapper
+    function chironSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "q")
     }
 
     /*
      * Lilith symbol
      */
-    function lilithSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = 2; //px
-      const Y_SHIFT = 3; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " -2.525435,-1.12853 -1.464752,-1.79539 -0.808138,-2.20576 0.151526,-2.05188 0.909156,-1.5389 1.010173,-1.02593 0.909157,-0.56427 1.363735,-0.61556 m 2.315327,-0.39055 -1.716301,0.54716 -1.7163,1.09431 -1.1442,1.64146 -0.572102,1.64146 0,1.64146 0.572102,1.64147 1.1442,1.64145 1.7163,1.09432 1.716301,0.54715 m 0,-11.49024 -2.2884,0 -2.288401,0.54716 -1.716302,1.09431 -1.144201,1.64146 -0.5721,1.64146 0,1.64146 0.5721,1.64147 1.144201,1.64145 1.716302,1.09432 2.288401,0.54715 2.2884,0 m -4.36712,-0.4752 0,6.44307 m -2.709107,-3.41101 5.616025,0");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
+    function lilithSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "z")
     }
 
     /*
      * NNode symbol
      */
-    function nnodeSymbol(xPos, yPos, scale = 1) {
-      const X_SHIFT = -3; //px
-      const Y_SHIFT = 3; //px
-      const x = xPos + X_SHIFT * scale
-      const y = yPos + Y_SHIFT * scale
-
-      const wrapper = SVGUtils.SVGGroup()
-      wrapper.setAttribute("transform", "translate(" + (-x * (scale - 1)) + "," + (-y * (scale - 1)) + ") scale(" + scale + ")");
-
-      const path = SVGUtils.SVGPath()
-      path.setAttribute("d", "m" + x + ", " + y + " -1.3333334,-0.6666667 -0.6666666,0 -1.3333334,0.6666667 -0.6666667,1.3333333 0,0.6666667 0.6666667,1.3333333 1.3333334,0.6666667 0.6666666,0 1.3333334,-0.6666667 0.6666666,-1.3333333 0,-0.6666667 -0.6666666,-1.3333333 -2,-2.66666665 -0.6666667,-1.99999995 0,-1.3333334 0.6666667,-2 1.3333333,-1.3333333 2,-0.6666667 2.6666666,0 2,0.6666667 1.3333333,1.3333333 0.6666667,2 0,1.3333334 -0.6666667,1.99999995 -2,2.66666665 -0.6666666,1.3333333 0,0.6666667 0.6666666,1.3333333 1.3333334,0.6666667 0.6666666,0 1.3333334,-0.6666667 0.6666667,-1.3333333 0,-0.6666667 -0.6666667,-1.3333333 -1.3333334,-0.6666667 -0.6666666,0 -1.3333334,0.6666667 m -7.9999999,-6 0.6666667,-1.3333333 1.3333333,-1.3333333 2,-0.6666667 2.6666666,0 2,0.6666667 1.3333333,1.3333333 0.6666667,1.3333333");
-      path.setAttribute("fill", "none");
-      wrapper.appendChild(path)
-
-      return wrapper
-    }    
+    function nnodeSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "g")
+    }
   }
 }
 

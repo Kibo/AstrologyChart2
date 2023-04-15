@@ -47,19 +47,3 @@ export const CHART_MAIN_STROKE = 2
 * @default false
 */
 export const CHART_STROKE_ONLY = false;
-
-/**
-* A font for text in a chart
-* @constant
-* @type {String}
-* @default monospace
-*/
-export const CHART_FONT_FAMILY = "monospace";
-
-/**
-* Font size - axis, cusps
-* @constant
-* @type {Number}
-* @default 14
-*/
-export const CHART_FONT_SIZE = 18;

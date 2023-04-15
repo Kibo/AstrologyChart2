@@ -15,5 +15,5 @@ test('SVGUtils.SVGText', () => {
   const textElement = document.querySelector("svg text")
 
   expect(textElement).toBeDefined()
-  expect(textElement.getAttribute('font-family')).toBe("monospace")
+  expect(textElement.getAttribute('font-family')).toBe("AstrologySymbols")
 });
