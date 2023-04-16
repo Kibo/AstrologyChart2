@@ -71,9 +71,11 @@ Note: All keys are uppercase.
  - default namespace for this library is *astrology*
  - you can change it in [webpack.config.js](https://webpack.js.org/configuration/output/#outputlibrary)
 
-### ASTRONOMICON fonts
-Thanks to Roberto	Corona work, I could remove [the symbols drawn in the SVGPath](https://github.com/Kibo/AstrologyChart2/blob/7c9fbcf097c856f2291df27b00ef1543f0ebc13f/src/utils/SVGUtils.js#L300) and replace them with this font.
+### Astronomicon font
 - [Astronimicon font](https://astronomicon.co/en/astronomicon-fonts/)
+
+Thanks to Roberto	Corona work, I could remove [the symbols drawn in the SVGPath](https://github.com/Kibo/AstrologyChart2/blob/7c9fbcf097c856f2291df27b00ef1543f0ebc13f/src/utils/SVGUtils.js#L300) and replace them with this font.
+
 
 ### Tests
  ```
