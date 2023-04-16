@@ -62,7 +62,7 @@ Sun, Moon, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto,
 ### Chart settings
 Look into the [settings](https://github.com/Kibo/AstrologyChart2/tree/master/src/settings/constants).
 ```
-const settings = {RADIX_POINTS_SCALE:1.4};
+const settings = {RADIX_POINTS_FONT_SIZE:24};
 const chart = new astrology.Chart('paper', settings);
 ```
 Note: All keys are uppercase.
@@ -72,8 +72,8 @@ Note: All keys are uppercase.
  - you can change it in [webpack.config.js](https://webpack.js.org/configuration/output/#outputlibrary)
 
 ### ASTRONOMICON fonts
-Thanks to Roberto	Corona work, I could remove (the symbols drawn in the SVGPath)[https://github.com/Kibo/AstrologyChart2/blob/7c9fbcf097c856f2291df27b00ef1543f0ebc13f/src/utils/SVGUtils.js#L300] and replace them with this font.
-- (Astronimicon font)[https://astronomicon.co/en/astronomicon-fonts/]
+Thanks to Roberto	Corona work, I could remove [the symbols drawn in the SVGPath](https://github.com/Kibo/AstrologyChart2/blob/7c9fbcf097c856f2291df27b00ef1543f0ebc13f/src/utils/SVGUtils.js#L300) and replace them with this font.
+- [Astronimicon font](https://astronomicon.co/en/astronomicon-fonts/)
 
 ### Tests
  ```
