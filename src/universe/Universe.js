@@ -72,6 +72,14 @@ class Universe {
     return this.#settings
   }
 
+  /**
+   * Get root SVG document
+   * @return {SVGDocument}
+   */
+  getSVGDocument() {
+    return this.#SVGDocument
+  }
+
   // ## PRIVATE ##############################
 
   /*

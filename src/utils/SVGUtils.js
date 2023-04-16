@@ -26,6 +26,7 @@ class SVGUtils {
   static SYMBOL_MOON = "Moon";
   static SYMBOL_MERCURY = "Mercury";
   static SYMBOL_VENUS = "Venus";
+  static SYMBOL_EARTH = "Earth";
   static SYMBOL_MARS = "Mars";
   static SYMBOL_JUPITER = "Jupiter";
   static SYMBOL_SATURN = "Saturn";
@@ -35,6 +36,7 @@ class SVGUtils {
   static SYMBOL_CHIRON = "Chiron";
   static SYMBOL_LILITH = "Lilith";
   static SYMBOL_NNODE = "NNode";
+  static SYMBOL_SNODE = "SNode";
 
   static SYMBOL_AS = "As";
   static SYMBOL_DS = "Ds";
@@ -256,6 +258,9 @@ class SVGUtils {
       case SVGUtils.SYMBOL_VENUS:
         return venusSymbol(xPos, yPos)
         break;
+      case SVGUtils.SYMBOL_EARTH:
+        return earthSymbol(xPos, yPos)
+        break;
       case SVGUtils.SYMBOL_MARS:
         return marsSymbol(xPos, yPos)
         break;
@@ -283,9 +288,13 @@ class SVGUtils {
       case SVGUtils.SYMBOL_NNODE:
         return nnodeSymbol(xPos, yPos)
         break;
+      case SVGUtils.SYMBOL_SNODE:
+        return snodeSymbol(xPos, yPos)
+        break;
 
       default:
         const unknownSymbol = SVGUtils.SVGCircle(xPos, yPos, 8)
+        unknownSymbol.setAttribute("stroke", "#333")
         return unknownSymbol
     }
 
@@ -384,7 +393,7 @@ class SVGUtils {
      * Capricorn symbol
      */
     function capricornSymbol(xPos, yPos) {
-    return SVGUtils.SVGText(xPos, yPos, "J")
+      return SVGUtils.SVGText(xPos, yPos, "J")
     }
 
     /*
@@ -427,6 +436,13 @@ class SVGUtils {
      */
     function venusSymbol(xPos, yPos) {
       return SVGUtils.SVGText(xPos, yPos, "T")
+    }
+
+    /*
+     * Earth symbol
+     */
+    function earthSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, ">")
     }
 
     /*
@@ -490,6 +506,13 @@ class SVGUtils {
      */
     function nnodeSymbol(xPos, yPos) {
       return SVGUtils.SVGText(xPos, yPos, "g")
+    }
+
+    /*
+     * SNode symbol
+     */
+    function snodeSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, "i")
     }
   }
 }

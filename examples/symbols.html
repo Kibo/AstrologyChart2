@@ -24,36 +24,38 @@
     Calibrate your new symbols here.
   </div>
 
+  <div id="paper"></div>
+
   <script src="../dist/astrochart2.js"></script>
   <script>
-    const SCALE = 1
+    calibrate("Sun")
+    calibrate("Moon")
+    calibrate("Mercury")
+    calibrate("Venus")
+    calibrate("Earth")
+    calibrate("Mars")
+    calibrate("Jupiter")
+    calibrate("Saturn")
+    calibrate("Uranus")
+    calibrate("Neptune")
+    calibrate("Pluto")
+    calibrate("Chiron")
+    calibrate("Lilith")
+    calibrate("NNode")
+    calibrate("SNode")
 
-    calibrate("Sun",SCALE)
-    calibrate("Moon" ,SCALE)
-    calibrate("Mercury", SCALE)
-    calibrate("Venus", SCALE)
-    calibrate("Mars", SCALE)
-    calibrate("Jupiter", SCALE)
-    calibrate("Saturn", SCALE)
-    calibrate("Uranus", SCALE)
-    calibrate("Neptune", SCALE)
-    calibrate("Pluto", SCALE)
-    calibrate("Chiron", SCALE)
-    calibrate("Lilith", SCALE)
-    calibrate("NNode", SCALE)
-
-    calibrate("Aries", SCALE)
-    calibrate("Taurus", SCALE)
-    calibrate("Gemini", SCALE)
-    calibrate("Cancer", SCALE)
-    calibrate("Leo", SCALE)
-    calibrate("Virgo", SCALE)
-    calibrate("Libra", SCALE)
-    calibrate("Scorpio", SCALE)
-    calibrate("Sagittarius", SCALE)
-    calibrate("Capricorn", SCALE)
-    calibrate("Aquarius", SCALE)
-    calibrate("Pisces", SCALE)
+    calibrate("Aries")
+    calibrate("Taurus")
+    calibrate("Gemini")
+    calibrate("Cancer")
+    calibrate("Leo")
+    calibrate("Virgo")
+    calibrate("Libra")
+    calibrate("Scorpio")
+    calibrate("Sagittarius")
+    calibrate("Capricorn")
+    calibrate("Aquarius")
+    calibrate("Pisces")
 
     /*
      * Dirty function for calibrate points in chart - for debug/ test only
@@ -67,12 +69,13 @@
       const LINE_COLOR = "#666"
       const SYMBOL_COLOR = "#000"
       const STROKE = 1
+      const FONT_SIZE = 24
 
       const cx = WIDTH / 2
       const cy = HEIGHT / 2
       const radius = Math.min(WIDTH / 2, HEIGHT / 2)
 
-      const SVGDocument = astrology.SVGUtils.SVGDocument(WIDTH, HEIGHT)
+      const SVGDocument = new astrology.Chart("paper").getSVGDocument()
 
       for (let i = 0; i < NUMBER_OF_SIGNS; i++) {
         const positions = astrology.Utils.positionOnCircle(cx, cy, radius, i * Math.PI / 6);
@@ -88,8 +91,10 @@
         for (let n = 0; n < NUMBER_OF_SIGNS; n++) {
           const symbolPosition = astrology.Utils.positionOnCircle(cx, cy, radius / NUMBER_OF_SIGNS * i, n * Math.PI / 6);
           const symbol = astrology.SVGUtils.SVGSymbol(pointName, symbolPosition.x, symbolPosition.y)
-          symbol.setAttribute("stroke", SYMBOL_COLOR);
-          symbol.setAttribute("stroke-width", STROKE);
+          symbol.setAttribute("text-anchor", "middle")
+          symbol.setAttribute("dominant-baseline", "middle")
+          symbol.setAttribute("font-size", FONT_SIZE);
+          symbol.setAttribute("fill", SYMBOL_COLOR);
           SVGDocument.appendChild(symbol);
         }
       }
