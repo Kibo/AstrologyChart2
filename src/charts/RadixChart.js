@@ -163,6 +163,7 @@ class RadixChart extends Chart {
       let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#anscendantShift))
 
       let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y)
+      symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("text-anchor", "middle") // start, middle, end
       symbol.setAttribute("dominant-baseline", "middle")
       symbol.setAttribute("font-size", this.#settings.RADIX_SIGNS_FONT_SIZE);
@@ -279,6 +280,7 @@ class RadixChart extends Chart {
           console.error(axis.name)
           throw new Error("Unknown axis name.")
       }
+      symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("font-size", this.#settings.RADIX_AXIS_FONT_SIZE);
       symbol.setAttribute("fill", this.#settings.CHART_SIGNS_COLOR);
 
@@ -314,6 +316,7 @@ class RadixChart extends Chart {
 
       // symbol
       const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y)
+      symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("text-anchor", "middle") // start, middle, end
       symbol.setAttribute("dominant-baseline", "middle")
       symbol.setAttribute("font-size", this.#settings.RADIX_POINTS_FONT_SIZE)

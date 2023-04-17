@@ -41,7 +41,7 @@ class Universe {
     this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
     this.#transit = new TransitChart(this.#SVGDocument, this.#settings)
 
-    this.#loadFont( new FontFace('AstrologySymbols', 'url(../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf)') )
+    this.#loadFont( new FontFace('Astronomicon', 'url(../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf)') )
 
     return this
   }

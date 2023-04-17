@@ -91,6 +91,7 @@
         for (let n = 0; n < NUMBER_OF_SIGNS; n++) {
           const symbolPosition = astrology.Utils.positionOnCircle(cx, cy, radius / NUMBER_OF_SIGNS * i, n * Math.PI / 6);
           const symbol = astrology.SVGUtils.SVGSymbol(pointName, symbolPosition.x, symbolPosition.y)
+          symbol.setAttribute("font-family", "Astronomicon");
           symbol.setAttribute("text-anchor", "middle")
           symbol.setAttribute("dominant-baseline", "middle")
           symbol.setAttribute("font-size", FONT_SIZE);

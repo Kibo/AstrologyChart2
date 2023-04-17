@@ -47,3 +47,11 @@ export const CHART_MAIN_STROKE = 2
 * @default false
 */
 export const CHART_STROKE_ONLY = false;
+
+/**
+* Font family
+* @constant
+* @type {String}
+* @default
+*/
+export const CHART_FONT_FAMILY = "Astronomicon";

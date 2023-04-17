@@ -178,8 +178,7 @@ class SVGUtils {
     const text = document.createElementNS(SVGUtils.SVG_NAMESPACE, "text");
     text.setAttribute("x", x);
     text.setAttribute("y", y);
-    text.setAttribute("stroke", "none");
-    text.setAttribute("font-family", "AstrologySymbols");
+    text.setAttribute("stroke", "none");    
     text.appendChild(document.createTextNode(txt));
 
     return text;

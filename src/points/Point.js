@@ -95,6 +95,7 @@ class Point {
     // It is possible to rotate the text, when uncomment a line bellow.
     //textWrapper.setAttribute("transform", `rotate(${angleFromSymbolToCenter},${textPosition.x},${textPosition.y})`)
     const text = SVGUtils.SVGText(textPosition.x, textPosition.y, this.getAngleInSign())
+    text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
     text.setAttribute("text-anchor", "middle") // start, middle, end
     text.setAttribute("dominant-baseline", "middle")
     text.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE);
