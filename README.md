@@ -60,9 +60,9 @@ angle:{Number}
 
  ![properties](/assets/img/point_properties.png)
 
- - angle in sign
- - retrograde
- - dignities:
+- angle in sign
+- retrograde
+- dignities:
 
 - **r** - Rulership
 - **d** - Detriment
