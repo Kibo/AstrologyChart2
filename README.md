@@ -62,7 +62,7 @@ angle:{Number}
 
 - angle in sign
 - retrograde
-- dignities (r,d,e,f)
+- dignities (**r**: Rulership, **d**: Detriment, **e**: Exaltation, **f**: Fall)
 
 
 ### Known points
