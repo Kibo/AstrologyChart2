@@ -65,11 +65,6 @@ angle:{Number}
 - dignities
 
 
-- **r**: Rulership
-- **d**: Detriment
-- **e**: Exaltation
-- **f**: Fall
-
 ### Known points
 Sun, Moon, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron, Lilith, NNode, SNode.
 
