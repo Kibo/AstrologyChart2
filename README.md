@@ -56,7 +56,7 @@ angle:{Number}
 }
 ```
 
-**Point properties**
+### Point properties
 
  ![properties](/assets/img/point_properties.png)
 
@@ -64,6 +64,11 @@ angle:{Number}
 - retrograde
 - dignities
 
+
+- **r**: Rulership
+- **d**: Detriment
+- **e**: Exaltation
+- **f**: Fall
 
 ### Known points
 Sun, Moon, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron, Lilith, NNode, SNode.
