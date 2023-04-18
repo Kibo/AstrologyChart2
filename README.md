@@ -62,12 +62,13 @@ angle:{Number}
 
 - angle in sign
 - retrograde
-- dignities:
+- dignities
 
-- **r** - Rulership
-- **d** - Detriment
-- **e** - Exaltation
-- **f** - Fall
+
+- **r**: Rulership
+- **d**: Detriment
+- **e**: Exaltation
+- **f**: Fall
 
 ### Known points
 Sun, Moon, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Chiron, Lilith, NNode, SNode.
