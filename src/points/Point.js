@@ -87,24 +87,50 @@ class Point {
     const chartCenterX = this.#settings.CHART_VIEWBOX_WIDTH / 2
     const chartCenterY = this.#settings.CHART_VIEWBOX_HEIGHT / 2
     const angleFromSymbolToCenter = Utils.positionToAngle(xPos, yPos, chartCenterX, chartCenterY)
+    let STEP = 0.9
 
-    // point properties - angle in sign
-    const textRadius = 1.8 * this.#settings.POINT_COLLISION_RADIUS
-    const textPosition = Utils.positionOnCircle(xPos, yPos, textRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
-    const textWrapper = SVGUtils.SVGGroup()
-    // It is possible to rotate the text, when uncomment a line bellow.
-    //textWrapper.setAttribute("transform", `rotate(${angleFromSymbolToCenter},${textPosition.x},${textPosition.y})`)
-    const text = SVGUtils.SVGText(textPosition.x, textPosition.y, this.getAngleInSign())
-    text.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
-    text.setAttribute("text-anchor", "middle") // start, middle, end
-    text.setAttribute("dominant-baseline", "middle")
-    text.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE);
-    text.setAttribute("fill", this.#settings.POINT_PROPERTIES_COLOR);
-    textWrapper.appendChild(text)
+    angleInSign.call(this)
+    //this.#isRetrograde && retrogradeSymbol.call(this)
+    this.getDignity() && dignities.call(this)
 
-    wrapper.appendChild(textWrapper)
+    return wrapper //======>
 
-    return wrapper
+    /*
+     *  Angle in sign
+     */
+    function angleInSign() {
+      const angleInSignRadius = 2 * STEP * this.#settings.POINT_COLLISION_RADIUS
+      const angleInSignPosition = Utils.positionOnCircle(xPos, yPos, angleInSignRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
+      // It is possible to rotate the text, when uncomment a line bellow.
+      //textWrapper.setAttribute("transform", `rotate(${angleFromSymbolToCenter},${textPosition.x},${textPosition.y})`)
+
+      const text = []
+      text.push(this.getAngleInSign())
+      this.#isRetrograde && text.push(SVGUtils.SYMBOL_RETROGRADE_CODE)
+
+      const angleInSignText = SVGUtils.SVGText(angleInSignPosition.x, angleInSignPosition.y, text.join(" "))
+      angleInSignText.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
+      angleInSignText.setAttribute("text-anchor", "middle") // start, middle, end
+      angleInSignText.setAttribute("dominant-baseline", "middle")
+      angleInSignText.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE);
+      angleInSignText.setAttribute("fill", this.#settings.POINT_PROPERTIES_COLOR);
+      wrapper.appendChild(angleInSignText)
+    }
+
+    /*
+     *  Dignities
+     */
+    function dignities() {
+      const dignitiesRadius = 3 * STEP * this.#settings.POINT_COLLISION_RADIUS
+      const dignitiesPosition = Utils.positionOnCircle(xPos, yPos, dignitiesRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
+      const dignitiesText = SVGUtils.SVGText(dignitiesPosition.x, dignitiesPosition.y, this.getDignity())
+      dignitiesText.setAttribute("font-family", "sans-serif");
+      dignitiesText.setAttribute("text-anchor", "middle") // start, middle, end
+      dignitiesText.setAttribute("dominant-baseline", "text-bottom")
+      dignitiesText.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE/1.2);
+      dignitiesText.setAttribute("fill", this.#settings.POINT_PROPERTIES_COLOR);
+      wrapper.appendChild(dignitiesText)
+    }    
   }
 
   /**
@@ -120,7 +146,10 @@ class Point {
    *
    * @return {Number}
    */
-  getSignNumber() {}
+  getSignNumber() {
+    let angle = this.#angle % Utils.DEG_360
+    return Math.floor((angle / 30) + 1);
+  }
 
   /**
    * Returns the angle (Integer) in the sign in which it stands.
@@ -131,6 +160,226 @@ class Point {
     return Math.round(this.#angle % 30)
   }
 
+  /**
+   * Get dignity symbol (r - rulership, d - detriment, f - fall, e - exaltation)
+   *
+   * @return {String} - dignity symbol (r,d,f,e)
+   */
+  getDignity() {
+    const ARIES = 1
+    const TAURUS = 2
+    const GEMINI = 3
+    const CANCER = 4
+    const LEO = 5
+    const VIRGO = 6
+    const LIBRA = 7
+    const SCORPIO = 8
+    const SAGITTARIUS = 9
+    const CAPRICORN = 10
+    const AQUARIUS = 11
+    const PISCES = 12
+
+    const RULERSHIP_SYMBOL = "r"
+    const DETRIMENT_SYMBOL = "d"
+    const FALL_SYMBOL = "f"
+    const EXALTATION_SYMBOL = "e"
+
+    switch (this.#name) {
+      case SVGUtils.SYMBOL_SUN:
+        if (this.getSignNumber() == LEO) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == AQUARIUS) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == VIRGO) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == ARIES) {
+          return EXALTATION_SYMBOL //======>
+        }
+
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_MOON:
+        if (this.getSignNumber() == CANCER) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == CAPRICORN) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == SCORPIO) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == TAURUS) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_MERCURY:
+        if (this.getSignNumber() == GEMINI) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == SAGITTARIUS) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == PISCES) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == VIRGO) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_VENUS:
+        if (this.getSignNumber() == TAURUS || this.getSignNumber() == LIBRA) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == ARIES || this.getSignNumber() == SCORPIO) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == VIRGO) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == PISCES) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_MARS:
+        if (this.getSignNumber() == ARIES || this.getSignNumber() == SCORPIO) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == TAURUS || this.getSignNumber() == LIBRA) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == CANCER) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == CAPRICORN) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_JUPITER:
+        if (this.getSignNumber() == SAGITTARIUS || this.getSignNumber() == PISCES) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == GEMINI || this.getSignNumber() == VIRGO) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == CAPRICORN) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == CANCER) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_SATURN:
+        if (this.getSignNumber() == CAPRICORN || this.getSignNumber() == AQUARIUS) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == CANCER || this.getSignNumber() == LEO) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == ARIES) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == LIBRA) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_URANUS:
+        if (this.getSignNumber() == AQUARIUS) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == LEO) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == TAURUS) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == SCORPIO) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+      case SVGUtils.SYMBOL_NEPTUNE:
+        if (this.getSignNumber() == PISCES) {
+          return RULERSHIP_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == VIRGO) {
+          return DETRIMENT_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == GEMINI || this.getSignNumber() == AQUARIUS) {
+          return FALL_SYMBOL //======>
+        }
+
+        if (this.getSignNumber() == SAGITTARIUS || this.getSignNumber() == LEO) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
+
+        case SVGUtils.SYMBOL_PLUTO:
+          if (this.getSignNumber() == SCORPIO) {
+            return RULERSHIP_SYMBOL //======>
+          }
+
+          if (this.getSignNumber() == TAURUS) {
+            return DETRIMENT_SYMBOL //======>
+          }
+
+          if (this.getSignNumber() == LIBRA) {
+            return FALL_SYMBOL //======>
+          }
+
+          if (this.getSignNumber() == ARIES ){
+            return EXALTATION_SYMBOL //======>
+          }
+          return ""
+          break;
+
+      default:
+        return ""
+    }
+  }
 }
 
 export {

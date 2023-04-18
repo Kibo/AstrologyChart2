@@ -43,6 +43,45 @@ class SVGUtils {
   static SYMBOL_MC = "Mc";
   static SYMBOL_IC = "Ic";
 
+  static SYMBOL_RETROGRADE = "Retrograde"
+
+  // Astronomicon font codes
+  static SYMBOL_ARIES_CODE = "A";
+  static SYMBOL_TAURUS_CODE = "B";
+  static SYMBOL_GEMINI_CODE = "C";
+  static SYMBOL_CANCER_CODE = "D";
+  static SYMBOL_LEO_CODE = "E";
+  static SYMBOL_VIRGO_CODE = "F";
+  static SYMBOL_LIBRA_CODE = "G";
+  static SYMBOL_SCORPIO_CODE = "H";
+  static SYMBOL_SAGITTARIUS_CODE = "I";
+  static SYMBOL_CAPRICORN_CODE = "J";
+  static SYMBOL_AQUARIUS_CODE = "K";
+  static SYMBOL_PISCES_CODE = "L";
+
+  static SYMBOL_SUN_CODE = "Q";
+  static SYMBOL_MOON_CODE = "R";
+  static SYMBOL_MERCURY_CODE = "S";
+  static SYMBOL_VENUS_CODE = "T";
+  static SYMBOL_EARTH_CODE = ">";
+  static SYMBOL_MARS_CODE = "U";
+  static SYMBOL_JUPITER_CODE = "V";
+  static SYMBOL_SATURN_CODE = "W";
+  static SYMBOL_URANUS_CODE = "X";
+  static SYMBOL_NEPTUNE_CODE = "Y";
+  static SYMBOL_PLUTO_CODE = "Z";
+  static SYMBOL_CHIRON_CODE = "q";
+  static SYMBOL_LILITH_CODE = "z";
+  static SYMBOL_NNODE_CODE = "g";
+  static SYMBOL_SNODE_CODE = "i";
+
+  static SYMBOL_AS_CODE = "c";
+  static SYMBOL_DS_CODE = "f";
+  static SYMBOL_MC_CODE = "d";
+  static SYMBOL_IC_CODE = "e";
+
+  static SYMBOL_RETROGRADE_CODE = "M"
+
   constructor() {
     if (this instanceof SVGUtils) {
       throw Error('This is a static class and cannot be instantiated.');
@@ -178,7 +217,7 @@ class SVGUtils {
     const text = document.createElementNS(SVGUtils.SVG_NAMESPACE, "text");
     text.setAttribute("x", x);
     text.setAttribute("y", y);
-    text.setAttribute("stroke", "none");    
+    text.setAttribute("stroke", "none");
     text.appendChild(document.createTextNode(txt));
 
     return text;
@@ -291,6 +330,10 @@ class SVGUtils {
         return snodeSymbol(xPos, yPos)
         break;
 
+      case SVGUtils.SYMBOL_RETROGRADE:
+        return retrogradeSymbol(xPos, yPos)
+        break;
+
       default:
         const unknownSymbol = SVGUtils.SVGCircle(xPos, yPos, 8)
         unknownSymbol.setAttribute("stroke", "#333")
@@ -301,217 +344,221 @@ class SVGUtils {
      * Ascendant symbol
      */
     function asSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "c")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_AS_CODE )
     }
 
     /*
      * Descendant symbol
      */
     function dsSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "e")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_DS_CODE)
     }
 
     /*
      * Medium coeli symbol
      */
     function mcSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "d")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_MC_CODE)
     }
 
     /*
      * Immum coeli symbol
      */
     function icSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "e")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_IC_CODE)
     }
 
     /*
      * Aries symbol
      */
     function ariesSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "A")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_ARIES_CODE )
     }
 
     /*
      * Taurus symbol
      */
     function taurusSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "B")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_TAURUS_CODE)
     }
 
     /*
      * Gemini symbol
      */
     function geminiSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "C")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_GEMINI_CODE)
     }
 
     /*
      * Cancer symbol
      */
     function cancerSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "D")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_CANCER_CODE)
     }
 
     /*
      * Leo symbol
      */
     function leoSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "E")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_LEO_CODE)
     }
 
     /*
      * Virgo symbol
      */
     function virgoSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "F")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_VIRGO_CODE)
     }
 
     /*
      * Libra symbol
      */
     function libraSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "G")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_LIBRA_CODE)
     }
 
     /*
      * Scorpio symbol
      */
     function scorpioSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "H")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SCORPIO_CODE)
     }
 
     /*
      * Sagittarius symbol
      */
     function sagittariusSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "I")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SAGITTARIUS_CODE)
     }
 
     /*
      * Capricorn symbol
      */
     function capricornSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "J")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_CAPRICORN_CODE)
     }
 
     /*
      * Aquarius symbol
      */
     function aquariusSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "K")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_AQUARIUS_CODE)
     }
 
     /*
      * Pisces symbol
      */
     function piscesSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "L")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_PISCES_CODE)
     }
 
     /*
      * Sun symbol
      */
     function sunSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "Q")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SUN_CODE)
     }
 
     /*
      * Moon symbol
      */
     function moonSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "R")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_MOON_CODE)
     }
 
     /*
      * Mercury symbol
      */
     function mercurySymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "S")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_MERCURY_CODE)
     }
 
     /*
      * Venus symbol
      */
     function venusSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "T")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_VENUS_CODE)
     }
 
     /*
      * Earth symbol
      */
     function earthSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, ">")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_EARTH_CODE)
     }
 
     /*
      * Mars symbol
      */
     function marsSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "U")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_MARS_CODE)
     }
 
     /*
      * Jupiter symbol
      */
     function jupiterSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "V")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_JUPITER_CODE)
     }
 
     /*
      * Saturn symbol
      */
     function saturnSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "W")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SATURN_CODE)
     }
 
     /*
      * Uranus symbol
      */
     function uranusSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "X")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_URANUS_CODE)
     }
 
     /*
      * Neptune symbol
      */
     function neptuneSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "Y")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_NEPTUNE_CODE)
     }
 
     /*
      * Pluto symbol
      */
     function plutoSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "Z")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_PLUTO_CODE)
     }
 
     /*
      * Chiron symbol
      */
     function chironSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "q")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_CHIRON_CODE)
     }
 
     /*
      * Lilith symbol
      */
     function lilithSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "z")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_LILITH_CODE)
     }
 
     /*
      * NNode symbol
      */
     function nnodeSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "g")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_NNODE_CODE)
     }
 
     /*
      * SNode symbol
      */
     function snodeSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, "i")
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SNODE_CODE)
+    }
+
+    function retrogradeSymbol(xPos, yPos){
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_RETROGRADE_CODE)
     }
   }
 }

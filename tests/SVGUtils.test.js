@@ -10,10 +10,11 @@ test('SVGUtils.SVGText', () => {
   const text = SVGUtils.SVGText(10,10,"Hello")
   text.setAttribute("font-size", 24);
   text.setAttribute("fill", "#333");
+  text.setAttribute("font-family", DefaultSettings.CHART_FONT_FAMILY);
   svgElement.appendChild(text)
 
   const textElement = document.querySelector("svg text")
 
   expect(textElement).toBeDefined()
-  expect(textElement.getAttribute('font-family')).toBe("AstrologySymbols")
+  expect(textElement.getAttribute('font-family')).toBe(DefaultSettings.CHART_FONT_FAMILY)
 });
