@@ -1,3 +1,4 @@
+import Universe from '../universe/Universe.js';
 import SVGUtils from '../utils/SVGUtils.js';
 import Utils from '../utils/Utils.js';
 import Chart from './Chart.js'
@@ -36,13 +37,14 @@ class RadixChart extends Chart {
    */
   static RULER_LENGTH = 10
 
+  #universe
   #settings
   #root
 
   /*
    * Shift the Ascendant to the 0 degree on The Chart
    */
-  #anscendantShift
+  #ascendantShift
   #centerX
   #centerY
   #radius
@@ -52,22 +54,18 @@ class RadixChart extends Chart {
 
   /**
    * @constructs
-   * @param {SVGDocument} SVGDocument
-   * @param {Object} settings
+   * @param {Universe} Universe
    */
-  constructor(SVGDocument, settings) {
+  constructor(universe) {
 
-    if (!SVGDocument instanceof SVGElement) {
-      throw new Error('Bad param SVGDocument.')
+    if (!universe instanceof Universe) {
+      throw new Error('Bad param universe.')
     }
 
-    if (!settings) {
-      throw new Error('Bad param settings.')
-    }
+    super(universe.getSettings())
 
-    super(settings)
-
-    this.#settings = settings
+    this.#universe = universe
+    this.#settings = this.#universe.getSettings()
     this.#centerX = this.#settings.CHART_VIEWBOX_WIDTH / 2
     this.#centerY = this.#settings.CHART_VIEWBOX_HEIGHT / 2
     this.#radius = Math.min(this.#centerX, this.#centerY) - this.#settings.CHART_PADDING
@@ -77,7 +75,7 @@ class RadixChart extends Chart {
 
     this.#root = SVGUtils.SVGGroup()
     this.#root.setAttribute("id", `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.RADIX_ID}`)
-    SVGDocument.appendChild(this.#root);
+    this.#universe.getSVGDocument().appendChild(this.#root);
 
     return this
   }
@@ -94,8 +92,28 @@ class RadixChart extends Chart {
       throw new Error(status.messages)
     }
 
-    this.#anscendantShift = (data.cusps[0].angle + Utils.DEG_180)
+    this.#ascendantShift = (data.cusps[0].angle + Utils.DEG_180)
     this.#draw(data)
+
+    return this
+  }
+
+  /**
+  * Get Universe
+  *
+  * @return {Universe}
+  */
+  getUniverse(){
+    return this.#universe
+  }
+
+  /**
+  * Get Ascendat shift
+  *
+  * @return {Number}
+  */
+  getAscendantShift(){
+    return this.#ascendantShift
   }
 
   // ## PRIVATE ##############################
@@ -160,7 +178,7 @@ class RadixChart extends Chart {
     const SYMBOL_SIGNS = [SVGUtils.SYMBOL_ARIES, SVGUtils.SYMBOL_TAURUS, SVGUtils.SYMBOL_GEMINI, SVGUtils.SYMBOL_CANCER, SVGUtils.SYMBOL_LEO, SVGUtils.SYMBOL_VIRGO, SVGUtils.SYMBOL_LIBRA, SVGUtils.SYMBOL_SCORPIO, SVGUtils.SYMBOL_SAGITTARIUS, SVGUtils.SYMBOL_CAPRICORN, SVGUtils.SYMBOL_AQUARIUS, SVGUtils.SYMBOL_PISCES]
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
-      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#anscendantShift))
+      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius - (this.#radius / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.#ascendantShift))
 
       let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y)
       symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
@@ -172,8 +190,8 @@ class RadixChart extends Chart {
     }
 
     const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
-      let a1 = Utils.degreeToRadian(angleFromInDegree, this.#anscendantShift)
-      let a2 = Utils.degreeToRadian(angleToInDegree, this.#anscendantShift)
+      let a1 = Utils.degreeToRadian(angleFromInDegree, this.#ascendantShift)
+      let a2 = Utils.degreeToRadian(angleToInDegree, this.#ascendantShift)
       let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#radius, a1, a2, this.#innerCircleRadius);
       segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[symbolIndex]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
@@ -207,7 +225,7 @@ class RadixChart extends Chart {
 
     const wrapper = SVGUtils.SVGGroup()
 
-    let startAngle = this.#anscendantShift
+    let startAngle = this.#ascendantShift
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
       let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(startAngle))
       let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius + RadixChart.RULER_LENGTH / (i % 2 + 1), Utils.degreeToRadian(startAngle))
@@ -237,14 +255,14 @@ class RadixChart extends Chart {
     const wrapper = SVGUtils.SVGGroup()
 
     for (const axis of axisList) {
-      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
+      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius, Utils.degreeToRadian(axis.angle, this.#ascendantShift))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#ascendantShift))
       let line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       line.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
       wrapper.appendChild(line);
 
-      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#anscendantShift))
+      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#radius + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.#ascendantShift))
       let symbol;
       let SHIFT_X = 0;
       let SHIFT_Y = 0;
@@ -304,11 +322,11 @@ class RadixChart extends Chart {
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.POINT_COLLISION_RADIUS, POINT_RADIUS)
     for (const pointData of points) {
       const point = new Point(pointData, cusps, this.#settings)
-      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getAngle(), this.#anscendantShift))
-      const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#innerCircleRadius - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getAngle(), this.#ascendantShift))
+      const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#ascendantShift))
 
       // ruler mark
-      const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#rullerCircleRadius, Utils.degreeToRadian(point.getAngle(), this.#anscendantShift))
+      const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#rullerCircleRadius, Utils.degreeToRadian(point.getAngle(), this.#ascendantShift))
       const rulerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, rulerLineEndPosition.x, rulerLineEndPosition.y)
       rulerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       rulerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -325,7 +343,7 @@ class RadixChart extends Chart {
 
       // pointer
       //if (positions[point.getName()] != pointData.position) {
-      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#anscendantShift))
+      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.#ascendantShift))
       const pointerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, (pointPosition.x + pointerLineEndPosition.x) / 2, (pointPosition.y + pointerLineEndPosition.y) / 2)
       pointerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       pointerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE / 2);
@@ -352,8 +370,8 @@ class RadixChart extends Chart {
     const textRadius = this.#radius / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 1.8 * RadixChart.RULER_LENGTH
 
     for (let i = 0; i < cusps.length; i++) {
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
-      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#anscendantShift))
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#centerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#ascendantShift))
+      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#rullerCircleRadius, Utils.degreeToRadian(cusps[i].angle, this.#ascendantShift))
 
       const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS / 2)
       const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
@@ -368,7 +386,7 @@ class RadixChart extends Chart {
       const gap = endCusp - startCusp > 0 ? endCusp - startCusp : endCusp - startCusp + Utils.DEG_360
       const textAngle = startCusp + gap / 2
 
-      const textPos = Utils.positionOnCircle(this.#centerX, this.#centerY, textRadius, Utils.degreeToRadian(textAngle, this.#anscendantShift))
+      const textPos = Utils.positionOnCircle(this.#centerX, this.#centerY, textRadius, Utils.degreeToRadian(textAngle, this.#ascendantShift))
       const text = SVGUtils.SVGText(textPos.x, textPos.y, `${i+1}`)
       text.setAttribute("text-anchor", "middle") // start, middle, end
       text.setAttribute("dominant-baseline", "middle")

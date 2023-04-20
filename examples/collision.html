@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Collision</title>
     <meta http-equiv="refresh" content="30">
-    <style>    
+    <style>
       .paper{
         background-color:#eee;
         width:800px;
@@ -67,10 +67,10 @@
       	"cusps":[{angle:0}, {angle:30}, {angle:60}, {angle:90}, {angle:120}, {angle:150}, {angle:180}, {angle:210}, {angle:240}, {angle:270}, {angle:300}, {angle:330}]
       }
 
-      new astrology.Chart('chart1',{CHART_POINT_COLLISION_RADIUS:8}).radix().setData( data )
-      new astrology.Chart('chart2',{CHART_POINT_COLLISION_RADIUS:10}).radix().setData( data )
-      new astrology.Chart('chart3',{CHART_POINT_COLLISION_RADIUS:12}).radix().setData( data )
-      new astrology.Chart('chart4',{CHART_POINT_COLLISION_RADIUS:14}).radix().setData( data )
+      new astrology.Universe('chart1',{CHART_POINT_COLLISION_RADIUS:8}).radix().setData( data )
+      new astrology.Universe('chart2',{CHART_POINT_COLLISION_RADIUS:10}).radix().setData( data )
+      new astrology.Universe('chart3',{CHART_POINT_COLLISION_RADIUS:12}).radix().setData( data )
+      new astrology.Universe('chart4',{CHART_POINT_COLLISION_RADIUS:14}).radix().setData( data )
     </script>
   </body>
 </html>

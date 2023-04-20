@@ -38,10 +38,15 @@ class Universe {
     this.#SVGDocument = SVGUtils.SVGDocument(this.#settings.CHART_VIEWBOX_WIDTH, this.#settings.CHART_VIEWBOX_HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
 
-    this.#radix = new RadixChart(this.#SVGDocument, this.#settings)
-    this.#transit = new TransitChart(this.#SVGDocument, this.#settings)
+    this.#radix = new RadixChart(this)
+    this.#transit = new TransitChart(this.#radix)
 
-    this.#loadFont( new FontFace('Astronomicon', 'url(../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf)') )
+    if( typeof window.FontFace === "function"){
+      this.#loadFont( new FontFace('Astronomicon', 'url(../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf)') )
+    }else{
+      console.error("FontFace is not a function.")
+      console.error("@see https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API")
+    }
 
     return this
   }

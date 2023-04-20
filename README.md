@@ -29,7 +29,7 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 ```
 <script src="../dist/astrochart2.js"></script>
 <script>
-	new astrology.Chart('paper').radix().setData( data )
+	new astrology.Universe('paper').radix().setData( data )
 </script>
 ```
 ### Data example
@@ -72,7 +72,7 @@ Sun, Moon, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto,
 Look into the [settings](https://github.com/Kibo/AstrologyChart2/tree/master/src/settings/constants).
 ```
 const settings = {RADIX_POINTS_FONT_SIZE:24};
-const chart = new astrology.Chart('paper', settings);
+const chart = new astrology.Universe('paper', settings);
 ```
 Note: All keys are uppercase.
 

@@ -75,7 +75,7 @@
       const cy = HEIGHT / 2
       const radius = Math.min(WIDTH / 2, HEIGHT / 2)
 
-      const SVGDocument = new astrology.Chart("paper").getSVGDocument()
+      const SVGDocument = new astrology.Universe("paper").getSVGDocument()
 
       for (let i = 0; i < NUMBER_OF_SIGNS; i++) {
         const positions = astrology.Utils.positionOnCircle(cx, cy, radius, i * Math.PI / 6);

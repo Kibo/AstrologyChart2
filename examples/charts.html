@@ -34,13 +34,13 @@
           "points":[{name:"Moon", angle:64}, {name:"Sun", angle:273}, {name:"Mercury", angle:194}, {name:"Venus", angle:158}, {name:"Mars", angle:304}, {name:"Jupiter", angle:229}, {name:"Saturn", angle:255}, {name:"Uranus", angle:350}, {name:"Neptune", angle:21}, {name:"Pluto", angle:233}, {name:"Lilith", angle:244}, {name:"Chiron", angle:339}, {name:"NNode", angle:285}],
         "cusps":[{angle:0}, {angle:30}, {angle:60}, {angle:90}, {angle:120}, {angle:150}, {angle:180}, {angle:210}, {angle:240}, {angle:270}, {angle:300}, {angle:330}]
       }
-      new astrology.Chart('chart1').radix().setData( data )
+      new astrology.Universe('chart1').radix().setData( data )
 
 
       const settings = {CHART_SIGNS_COLOR:"#fff", CHART_BACKGROUND_COLOR:"#000", CHART_POINTS_COLOR:"#fff", CHART_LINE_COLOR:"#aaa", CHART_TEXT_COLOR:"#aaa"}
-      const chart2 = new astrology.Chart('chart2', settings).radix().setData( data )
+      new astrology.Universe('chart2', settings).radix().setData( data )
 
-      const chart3 = new astrology.Chart('chart3', {CHART_STROKE_ONLY:true}).radix().setData( data)
+      new astrology.Universe('chart3', {CHART_STROKE_ONLY:true}).radix().setData( data)
 
     </script>
   </body>
