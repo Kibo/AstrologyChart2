@@ -12,7 +12,7 @@ export const POINT_PROPERTIES_SHOW = true
 * @type {Number}
 * @default 6
 */
-export const POINT_PROPERTIES_FONT_SIZE = 12
+export const POINT_PROPERTIES_FONT_SIZE = 16
 
 /**
 * A point collision radius

@@ -143,25 +143,9 @@ class RadixChart extends Chart {
     this.#drawBackground()
     this.#drawAstrologicalSigns()
     this.#drawRuler()
-    this.#settings.RADIX_IS_MAIN_AXIS && this.#drawMainAxis([{
-        name: SVGUtils.SYMBOL_AS,
-        angle: data.cusps[0].angle
-      },
-      {
-        name: SVGUtils.SYMBOL_IC,
-        angle: data.cusps[3].angle
-      },
-      {
-        name: SVGUtils.SYMBOL_DS,
-        angle: data.cusps[6].angle
-      },
-      {
-        name: SVGUtils.SYMBOL_MC,
-        angle: data.cusps[9].angle
-      },
-    ])
     this.#drawPoints(data)
     this.#drawCusps(data)
+    this.#drawMainAxisDescription(data)
     this.#drawBorders()
   }
 
@@ -263,69 +247,6 @@ class RadixChart extends Chart {
   }
 
   /*
-   * Draw main axis
-   * @param {Array} axisList
-   */
-  #drawMainAxis(axisList) {
-    const AXIS_LENGTH = 10
-
-    const wrapper = SVGUtils.SVGGroup()
-
-    for (const axis of axisList) {
-      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius(), Utils.degreeToRadian(axis.angle, this.getAscendantShift()))
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius() + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.getAscendantShift()))
-      let line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
-      line.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
-      wrapper.appendChild(line);
-
-      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius() + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.getAscendantShift()))
-      let symbol;
-      let SHIFT_X = 0;
-      let SHIFT_Y = 0;
-      const STEP = 2
-      switch (axis.name) {
-        case "As":
-          SHIFT_X -= STEP
-          SHIFT_Y -= STEP
-          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
-          symbol.setAttribute("text-anchor", "end")
-          symbol.setAttribute("dominant-baseline", "middle")
-          break;
-        case "Ds":
-          SHIFT_X += STEP
-          SHIFT_Y -= STEP
-          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
-          symbol.setAttribute("text-anchor", "start")
-          symbol.setAttribute("dominant-baseline", "middle")
-          break;
-        case "Mc":
-          SHIFT_Y -= STEP
-          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
-          symbol.setAttribute("text-anchor", "middle")
-          symbol.setAttribute("dominant-baseline", "text-top")
-          break;
-        case "Ic":
-          SHIFT_Y += STEP
-          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
-          symbol.setAttribute("text-anchor", "middle")
-          symbol.setAttribute("dominant-baseline", "hanging")
-          break;
-        default:
-          console.error(axis.name)
-          throw new Error("Unknown axis name.")
-      }
-      symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
-      symbol.setAttribute("font-size", this.#settings.RADIX_AXIS_FONT_SIZE);
-      symbol.setAttribute("fill", this.#settings.CHART_MAIN_AXIS_COLOR);
-
-      wrapper.appendChild(symbol);
-    }
-
-    this.#root.appendChild(wrapper)
-  }
-
-  /*
    * Draw points
    * @param {Object} data - chart data
    */
@@ -378,6 +299,8 @@ class RadixChart extends Chart {
     const points = data.points
     const cusps = data.cusps
 
+    const mainAxisIndexes = [0,3,6,9] //As, Ic, Ds, Mc
+
     const pointsPositions = points.map(point => {
       return point.angle
     })
@@ -394,8 +317,8 @@ class RadixChart extends Chart {
       const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
       const endPosY = isLineInCollisionWithPoint ? (startPos.y + endPos.y) / 2 : endPos.y
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPosX, endPosY)
-      line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR)
-      line.setAttribute("stroke-width", this.#settings.CHART_STROKE)
+      line.setAttribute("stroke", mainAxisIndexes.includes(i) ? this.#settings.CHART_MAIN_AXIS_COLOR : this.#settings.CHART_LINE_COLOR)
+      line.setAttribute("stroke-width", mainAxisIndexes.includes(i) ? this.#settings.CHART_MAIN_STROKE : this.#settings.CHART_STROKE)
       wrapper.appendChild(line);
 
       const startCusp = cusps[i].angle
@@ -410,6 +333,88 @@ class RadixChart extends Chart {
       text.setAttribute("font-size", this.#settings.RADIX_POINTS_FONT_SIZE / 2)
       text.setAttribute("fill", this.#settings.CHART_TEXT_COLOR)
       wrapper.appendChild(text)
+    }
+
+    this.#root.appendChild(wrapper)
+  }
+
+  /*
+   * Draw main axis descrition
+   * @param {Array} axisList
+   */
+  #drawMainAxisDescription(data) {
+    const AXIS_LENGTH = 10
+    const cusps = data.cusps
+
+    const axisList = [{
+        name: SVGUtils.SYMBOL_AS,
+        angle: cusps[0].angle
+      },
+      {
+        name: SVGUtils.SYMBOL_IC,
+        angle: cusps[3].angle
+      },
+      {
+        name: SVGUtils.SYMBOL_DS,
+        angle: cusps[6].angle
+      },
+      {
+        name: SVGUtils.SYMBOL_MC,
+        angle: cusps[9].angle
+      },
+    ]
+
+    const wrapper = SVGUtils.SVGGroup()
+
+    for (const axis of axisList) {
+      let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius(), Utils.degreeToRadian(axis.angle, this.getAscendantShift()))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius() + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.getAscendantShift()))
+      let line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+      line.setAttribute("stroke", this.#settings.CHART_MAIN_AXIS_COLOR);
+      line.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+      wrapper.appendChild(line);
+
+      let textPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius() + AXIS_LENGTH, Utils.degreeToRadian(axis.angle, this.getAscendantShift()))
+      let symbol;
+      let SHIFT_X = 0;
+      let SHIFT_Y = 0;
+      const STEP = 2
+      switch (axis.name) {
+        case "As":
+          SHIFT_X -= STEP
+          SHIFT_Y -= STEP
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "end")
+          symbol.setAttribute("dominant-baseline", "middle")
+          break;
+        case "Ds":
+          SHIFT_X += STEP
+          SHIFT_Y -= STEP
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "start")
+          symbol.setAttribute("dominant-baseline", "middle")
+          break;
+        case "Mc":
+          SHIFT_Y -= STEP
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "middle")
+          symbol.setAttribute("dominant-baseline", "text-top")
+          break;
+        case "Ic":
+          SHIFT_Y += STEP
+          symbol = SVGUtils.SVGSymbol(axis.name, textPoint.x + SHIFT_X, textPoint.y + SHIFT_Y)
+          symbol.setAttribute("text-anchor", "middle")
+          symbol.setAttribute("dominant-baseline", "hanging")
+          break;
+        default:
+          console.error(axis.name)
+          throw new Error("Unknown axis name.")
+      }
+      symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
+      symbol.setAttribute("font-size", this.#settings.RADIX_AXIS_FONT_SIZE);
+      symbol.setAttribute("fill", this.#settings.CHART_MAIN_AXIS_COLOR);
+
+      wrapper.appendChild(symbol);
     }
 
     this.#root.appendChild(wrapper)

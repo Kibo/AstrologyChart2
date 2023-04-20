@@ -29,11 +29,3 @@ export const RADIX_SIGNS_FONT_SIZE = 27
 * @default 24
 */
 export const RADIX_AXIS_FONT_SIZE = 32
-
-/*
-* Main axis (As, Ds, Mc, Ic)
-* @constant
-* @type {Boolean}
-* @default true
-*/
-export const RADIX_IS_MAIN_AXIS = true
