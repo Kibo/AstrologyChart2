@@ -41,12 +41,7 @@ class Universe {
     this.#radix = new RadixChart(this)
     this.#transit = new TransitChart(this.#radix)
 
-    if( typeof window.FontFace === "function"){
-      this.#loadFont( new FontFace('Astronomicon', 'url(../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf)') )
-    }else{
-      console.error("FontFace is not a function.")
-      console.error("@see https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API")
-    }
+    this.#loadFont("Astronomicon", '../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf')
 
     return this
   }
@@ -89,8 +84,23 @@ class Universe {
 
   /*
   * Load fond to DOM
+  *
+  * @param {String} family
+  * @param {String} source
+  * @param {Object}
+  *
+  * @see https://developer.mozilla.org/en-US/docs/Web/API/FontFace/FontFace
   */
-  async #loadFont( font ){
+  async #loadFont( family, source, descriptors ){
+
+    if (!('FontFace' in window)) {
+      console.error("Ooops, FontFace is not a function.")
+      console.error("@see https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API")
+      return
+    }
+
+    const font = new FontFace(family, `url(${source})`, descriptors)
+
     try{
       await font.load();
       document.fonts.add(font)
