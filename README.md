@@ -17,13 +17,13 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 
 ### Examples
 - [Radix chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radix.html)
+- [Transit chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/transit.html) TODO
 - [More charts on page](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/charts.html)
 - [Radix collision](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/collision.html)
 - [Radix scaling symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/scaling.html)
 - [Stroke only](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/stroke.html)
-- [Transit chart](#) TODO
-- [Animation](#) TODO
 - [Symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/symbols.html)
+- [Animation](#) TODO
 
 ### How to use
 ```

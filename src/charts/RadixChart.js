@@ -143,7 +143,7 @@ class RadixChart extends Chart {
     this.#drawBackground()
     this.#drawAstrologicalSigns()
     this.#drawRuler()
-    this.#drawMainAxis([{
+    this.#settings.RADIX_IS_MAIN_AXIS && this.#drawMainAxis([{
         name: SVGUtils.SYMBOL_AS,
         angle: data.cusps[0].angle
       },
@@ -445,7 +445,7 @@ class RadixChart extends Chart {
   }
 
   #getRullerCircleRadius(){
-    return  this.getRadius() - (this.getRadius() / RadixChart.INNER_CIRCLE_RADIUS_RATIO + RadixChart.RULER_LENGTH)
+    return  this.getRadius() - ((this.getRadius() / RadixChart.INNER_CIRCLE_RADIUS_RATIO) + RadixChart.RULER_LENGTH)
   }
 }
 
