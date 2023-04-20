@@ -13,7 +13,7 @@ class TransitChart extends Chart {
   #radix
   #settings
   #root
-    
+
   #centerX
   #centerY
   #radius
@@ -34,7 +34,6 @@ class TransitChart extends Chart {
     this.#centerX = this.#settings.CHART_VIEWBOX_WIDTH / 2
     this.#centerY = this.#settings.CHART_VIEWBOX_HEIGHT / 2
     this.#radius = Math.min(this.#centerX, this.#centerY) - this.#settings.CHART_PADDING
-    this.#radix = radix
 
     this.#root = SVGUtils.SVGGroup()
     this.#root.setAttribute("id", `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.TRANSIT_ID}`)
@@ -93,7 +92,6 @@ class TransitChart extends Chart {
     //
     // this.#root.appendChild(wrapper)
   }
-
 }
 
 export {

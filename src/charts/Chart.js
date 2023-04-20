@@ -86,6 +86,21 @@ class Chart {
   }
 
   /**
+  * Removes the content of an element
+  *
+  * @warning - It removes Event Listeners too.
+  * @warning - You will (probably) get memory leak if you delete elements that have attached listeners
+  */
+  cleanUp( elementID ){
+    let elm = document.getElementById(elementID)
+    if(!elm){
+      return
+    }
+
+    elm.innerHTML = ""
+  }
+
+  /**
    * @abstract
    */
   setData(data) {

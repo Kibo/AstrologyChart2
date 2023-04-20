@@ -1,5 +1,39 @@
 import Chart from '../src/charts/Chart.js'
-import * as defaultSettings from '../src/settings/DefaultSettings.js';
+import defaultSettings from '../src/settings/DefaultSettings.js';
+
+test('Chart.cleanUp', () => {
+  document.body.innerHTML = `
+    <div id="paper">
+      <div class="wrapper1">
+        <div class="wrapper11"></div>
+        <div class="wrapper12"></div>
+      </div>
+      <div class="wrapper2"></div>
+    </div>
+  `;
+
+  let chart = new Chart()
+
+  expect(document.getElementById('paper')).toBeDefined()
+  expect(document.getElementById('wrapper1')).toBeDefined()
+  expect(document.getElementById('wrapper2')).toBeDefined()
+  expect(document.getElementById('wrapper11')).toBeDefined()
+  expect(document.getElementById('wrapper12')).toBeDefined()
+
+  chart.cleanUp('wrapper1')
+  expect(document.getElementById('paper')).toBeDefined()
+  expect(document.getElementById('wrapper1')).toBeDefined()
+  expect(document.getElementById('wrapper2')).toBeDefined()
+  expect(document.getElementById('wrapper11')).toBeNull()
+  expect(document.getElementById('wrapper12')).toBeNull()
+
+  chart.cleanUp('paper')
+  expect(document.getElementById('paper')).toBeDefined()
+  expect(document.getElementById('wrapper1')).toBeNull()
+  expect(document.getElementById('wrapper2')).toBeNull()
+  expect(document.getElementById('wrapper11')).toBeNull()
+  expect(document.getElementById('wrapper12')).toBeNull()
+})
 
 test('Chart.validateData', () => {
 
