@@ -46,6 +46,11 @@ class RadixChart extends Chart {
   #centerY
   #radius
 
+  /*
+  * @see Chart.cleanUp()
+  */
+  #beforeCleanUpHook
+
   /**
    * @constructs
    * @param {Universe} Universe
@@ -134,7 +139,7 @@ class RadixChart extends Chart {
    * @param {Object} data
    */
   #draw(data) {
-    this.cleanUp(this.#root.getAttribute('id'))
+    this.cleanUp(this.#root.getAttribute('id'), this.#beforeCleanUpHook)
     this.#drawBackground()
     this.#drawAstrologicalSigns()
     this.#drawRuler()
@@ -312,7 +317,7 @@ class RadixChart extends Chart {
       }
       symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("font-size", this.#settings.RADIX_AXIS_FONT_SIZE);
-      symbol.setAttribute("fill", this.#settings.CHART_SIGNS_COLOR);
+      symbol.setAttribute("fill", this.#settings.CHART_MAIN_AXIS_COLOR);
 
       wrapper.appendChild(symbol);
     }

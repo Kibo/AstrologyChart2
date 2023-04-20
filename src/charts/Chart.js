@@ -88,15 +88,19 @@ class Chart {
   /**
   * Removes the content of an element
   *
+  * @param {String} elementID
+  * @param {Function} [beforeHook]
+    *
   * @warning - It removes Event Listeners too.
   * @warning - You will (probably) get memory leak if you delete elements that have attached listeners
   */
-  cleanUp( elementID ){
+  cleanUp( elementID , beforeHook){
     let elm = document.getElementById(elementID)
     if(!elm){
       return
     }
 
+    (typeof beforeHook === 'function') && beforeHook()
     elm.innerHTML = ""
   }
 
