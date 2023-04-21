@@ -254,7 +254,7 @@ class RadixChart extends Chart {
       wrapper.appendChild(rulerLine);
 
       // symbol
-      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, this.#settings.POINT_PROPERTIES_SHOW)
+      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, Utils.DEG_0, this.#settings.POINT_PROPERTIES_SHOW)
       symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("text-anchor", "middle") // start, middle, end
       symbol.setAttribute("dominant-baseline", "middle")

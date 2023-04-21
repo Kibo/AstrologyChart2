@@ -70,11 +70,12 @@ class Point {
    *
    * @param {Number} xPos
    * @param {Number} yPos
+   * @param {Number} [angleShift]
    * @param {Boolean} [isProperties] - angleInSign, dignities, retrograde
    *
    * @return {SVGElement}
    */
-  getSymbol(xPos, yPos, isProperties = true) {
+  getSymbol(xPos, yPos, angleShift = 0, isProperties = true) {
     const wrapper = SVGUtils.SVGGroup()
 
     const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos)
@@ -87,7 +88,6 @@ class Point {
     const chartCenterX = this.#settings.CHART_VIEWBOX_WIDTH / 2
     const chartCenterY = this.#settings.CHART_VIEWBOX_HEIGHT / 2
     const angleFromSymbolToCenter = Utils.positionToAngle(xPos, yPos, chartCenterX, chartCenterY)
-    let STEP = 0.9
 
     angleInSign.call(this)
     this.getDignity() && dignities.call(this)
@@ -98,8 +98,7 @@ class Point {
      *  Angle in sign
      */
     function angleInSign() {
-      const angleInSignRadius = 2 * STEP * this.#settings.POINT_COLLISION_RADIUS
-      const angleInSignPosition = Utils.positionOnCircle(xPos, yPos, angleInSignRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
+      const angleInSignPosition = Utils.positionOnCircle(xPos, yPos, 2 * this.#settings.POINT_COLLISION_RADIUS, Utils.degreeToRadian(-angleFromSymbolToCenter, angleShift))
       // It is possible to rotate the text, when uncomment a line bellow.
       //textWrapper.setAttribute("transform", `rotate(${angleFromSymbolToCenter},${textPosition.x},${textPosition.y})`)
 
@@ -120,13 +119,12 @@ class Point {
      *  Dignities
      */
     function dignities() {
-      const dignitiesRadius = 3 * STEP * this.#settings.POINT_COLLISION_RADIUS
-      const dignitiesPosition = Utils.positionOnCircle(xPos, yPos, dignitiesRadius, Utils.degreeToRadian(-angleFromSymbolToCenter))
+      const dignitiesPosition = Utils.positionOnCircle(xPos, yPos, 3 * this.#settings.POINT_COLLISION_RADIUS, Utils.degreeToRadian(-angleFromSymbolToCenter, angleShift))
       const dignitiesText = SVGUtils.SVGText(dignitiesPosition.x, dignitiesPosition.y, this.getDignity())
       dignitiesText.setAttribute("font-family", "sans-serif");
       dignitiesText.setAttribute("text-anchor", "middle") // start, middle, end
       dignitiesText.setAttribute("dominant-baseline", "text-bottom")
-      dignitiesText.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE/1.2);
+      dignitiesText.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE / 1.2);
       dignitiesText.setAttribute("fill", this.#settings.POINT_PROPERTIES_COLOR);
       wrapper.appendChild(dignitiesText)
     }
@@ -137,7 +135,9 @@ class Point {
    *
    * @return {Number}
    */
-  getHouseNumber() {}
+  getHouseNumber() {
+    throw new Error("Not implemented yet.")
+  }
 
   /**
    * Get sign number
@@ -356,24 +356,24 @@ class Point {
         return ""
         break;
 
-        case SVGUtils.SYMBOL_PLUTO:
-          if (this.getSignNumber() == SCORPIO) {
-            return RULERSHIP_SYMBOL //======>
-          }
+      case SVGUtils.SYMBOL_PLUTO:
+        if (this.getSignNumber() == SCORPIO) {
+          return RULERSHIP_SYMBOL //======>
+        }
 
-          if (this.getSignNumber() == TAURUS) {
-            return DETRIMENT_SYMBOL //======>
-          }
+        if (this.getSignNumber() == TAURUS) {
+          return DETRIMENT_SYMBOL //======>
+        }
 
-          if (this.getSignNumber() == LIBRA) {
-            return FALL_SYMBOL //======>
-          }
+        if (this.getSignNumber() == LIBRA) {
+          return FALL_SYMBOL //======>
+        }
 
-          if (this.getSignNumber() == ARIES ){
-            return EXALTATION_SYMBOL //======>
-          }
-          return ""
-          break;
+        if (this.getSignNumber() == ARIES) {
+          return EXALTATION_SYMBOL //======>
+        }
+        return ""
+        break;
 
       default:
         return ""

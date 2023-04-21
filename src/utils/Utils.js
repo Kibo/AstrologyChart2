@@ -15,6 +15,7 @@ class Utils {
 
   static DEG_360 = 360
   static DEG_180 = 180
+  static DEG_0 = 0
 
   /**
    * Generate random ID
