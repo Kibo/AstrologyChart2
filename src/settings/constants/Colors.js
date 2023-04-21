@@ -23,12 +23,12 @@ export const CHART_CIRCLE_COLOR = "#333";
 export const CHART_LINE_COLOR = "#666";
 
 /*
-* Default color of text in charts
+* Default color of text in charts - cusps number
 * @constant
 * @type {String}
 * @default #333
 */
-export const CHART_TEXT_COLOR = "#999";
+export const CHART_TEXT_COLOR = "#bbb";
 
 /*
 * Default color of mqin axis - As, Ds, Mc, Ic

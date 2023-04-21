@@ -2,6 +2,7 @@ import RadixChart from '../charts/RadixChart.js';
 import SVGUtils from '../utils/SVGUtils.js';
 import Chart from './Chart.js'
 import Utils from '../utils/Utils.js';
+import Point from '../points/Point.js'
 
 /**
  * @class
@@ -90,37 +91,13 @@ class TransitChart extends Chart {
   #draw(data) {
 
     // radix reDraw
-    this.#radix.setNumberOfLevels(this.#numberOfLevels)
     this.cleanUp(this.#root.getAttribute('id'), this.#beforeCleanUpHook)
+    this.#radix.setNumberOfLevels(this.#numberOfLevels)
 
-    this.#drawBackground()
     this.#drawRuler()
     this.#drawCusps(data)
-
+    this.#drawPoints(data)
     this.#drawBorders()
-  }
-
-  #drawBackground() {
-    const MASK_ID = `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.TRANSIT_ID}-background-mask-1`
-
-    const wrapper = SVGUtils.SVGGroup()
-
-    const mask = SVGUtils.SVGMask(MASK_ID)
-    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
-    outerCircle.setAttribute('fill', "white")
-    mask.appendChild(outerCircle)
-
-    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius() )
-    innerCircle.setAttribute('fill', "black")
-    mask.appendChild(innerCircle)
-    wrapper.appendChild(mask)
-
-    const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
-    circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.CHART_BACKGROUND_COLOR);
-    circle.setAttribute("mask", this.#settings.CHART_STROKE_ONLY ? "none" : `url(#${MASK_ID})`);
-    wrapper.appendChild(circle)
-
-    this.#root.appendChild(wrapper)
   }
 
   #drawRuler() {
@@ -153,16 +130,66 @@ class TransitChart extends Chart {
    * Draw points
    * @param {Object} data - chart data
    */
+  #drawPoints(data) {
+    const points = data.points
+    const cusps = data.cusps
+
+    const wrapper = SVGUtils.SVGGroup()
+
+    const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.POINT_COLLISION_RADIUS, this.#getPointCircleRadius())
+    for (const pointData of points) {
+      const point = new Point(pointData, cusps, this.#settings)
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getRullerCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 4), Utils.degreeToRadian(point.getAngle(), this.#radix.getAscendantShift()))
+      const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getPointCircleRadius(), Utils.degreeToRadian(positions[point.getName()], this.#radix.getAscendantShift()))
+
+      // ruler mark
+      const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getRullerCircleRadius(), Utils.degreeToRadian(point.getAngle(), this.#radix.getAscendantShift()))
+      const rulerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, rulerLineEndPosition.x, rulerLineEndPosition.y)
+      rulerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+      rulerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE);
+      wrapper.appendChild(rulerLine);
+
+      // symbol
+      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, this.#settings.POINT_PROPERTIES_SHOW)
+      symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
+      symbol.setAttribute("text-anchor", "middle") // start, middle, end
+      symbol.setAttribute("dominant-baseline", "middle")
+      symbol.setAttribute("font-size", this.#settings.RADIX_POINTS_FONT_SIZE)
+      symbol.setAttribute("fill", this.#settings.CHART_POINTS_COLOR)
+      wrapper.appendChild(symbol);
+
+      // pointer
+      //if (positions[point.getName()] != pointData.position) {
+      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getPointCircleRadius(), Utils.degreeToRadian(positions[point.getName()], this.#radix.getAscendantShift()))
+      const pointerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, (pointPosition.x + pointerLineEndPosition.x) / 2, (pointPosition.y + pointerLineEndPosition.y) / 2)
+      pointerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
+      pointerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE / 2);
+      wrapper.appendChild(pointerLine);
+    }
+
+    this.#root.appendChild(wrapper)
+  }
+
+  /*
+   * Draw points
+   * @param {Object} data - chart data
+   */
   #drawCusps(data) {
     const points = data.points
     const cusps = data.cusps
+
+    const pointsPositions = points.map(point => {
+      return point.angle
+    })
 
     const wrapper = SVGUtils.SVGGroup()
 
     const textRadius = this.getRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 2)
 
     for (let i = 0; i < cusps.length; i++) {
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
+      const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS / 2)
+
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, isLineInCollisionWithPoint ? this.getRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 6) : this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
       const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
 
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPos.x, endPos.y)

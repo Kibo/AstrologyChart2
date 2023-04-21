@@ -80,7 +80,7 @@ class Point {
     const symbol = SVGUtils.SVGSymbol(this.#name, xPos, yPos)
     wrapper.appendChild(symbol)
 
-    if (this.#settings.POINT_PROPERTIES_SHOW == false) {
+    if (isProperties == false) {
       return wrapper //======>
     }
 
@@ -90,7 +90,6 @@ class Point {
     let STEP = 0.9
 
     angleInSign.call(this)
-    //this.#isRetrograde && retrogradeSymbol.call(this)
     this.getDignity() && dignities.call(this)
 
     return wrapper //======>
@@ -130,7 +129,7 @@ class Point {
       dignitiesText.setAttribute("font-size", this.#settings.POINT_PROPERTIES_FONT_SIZE/1.2);
       dignitiesText.setAttribute("fill", this.#settings.POINT_PROPERTIES_COLOR);
       wrapper.appendChild(dignitiesText)
-    }    
+    }
   }
 
   /**

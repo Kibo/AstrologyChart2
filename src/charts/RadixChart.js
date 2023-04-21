@@ -82,7 +82,7 @@ class RadixChart extends Chart {
    */
   setNumberOfLevels(levels) {
     this.#numberOfLevels = Math.max(24, levels)
-    if(this.#data){
+    if (this.#data) {
       this.#draw(this.#data)
     }
 
@@ -139,7 +139,7 @@ class RadixChart extends Chart {
     const wrapper = SVGUtils.SVGGroup()
 
     const mask = SVGUtils.SVGMask(MASK_ID)
-    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getOuterCircleRadius())
+    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
     outerCircle.setAttribute('fill', "white")
     mask.appendChild(outerCircle)
 
@@ -148,7 +148,7 @@ class RadixChart extends Chart {
     mask.appendChild(innerCircle)
     wrapper.appendChild(mask)
 
-    const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getOuterCircleRadius())
+    const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
     circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.CHART_BACKGROUND_COLOR);
     circle.setAttribute("mask", this.#settings.CHART_STROKE_ONLY ? "none" : `url(#${MASK_ID})`);
     wrapper.appendChild(circle)
@@ -254,7 +254,7 @@ class RadixChart extends Chart {
       wrapper.appendChild(rulerLine);
 
       // symbol
-      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y)
+      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, this.#settings.POINT_PROPERTIES_SHOW)
       symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("text-anchor", "middle") // start, middle, end
       symbol.setAttribute("dominant-baseline", "middle")
@@ -293,13 +293,13 @@ class RadixChart extends Chart {
     const textRadius = this.#getCenterCircleRadius() + ((this.#getInnerCircleRadius() - this.#getCenterCircleRadius()) / 10)
 
     for (let i = 0; i < cusps.length; i++) {
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.getAscendantShift()))
-      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getRullerCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.getAscendantShift()))
 
       const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS / 2)
-      const endPosX = isLineInCollisionWithPoint ? (startPos.x + endPos.x) / 2 : endPos.x
-      const endPosY = isLineInCollisionWithPoint ? (startPos.y + endPos.y) / 2 : endPos.y
-      const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPosX, endPosY)
+
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.getAscendantShift()))
+      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, isLineInCollisionWithPoint ? this.#getCenterCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 6) : this.#getRullerCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.getAscendantShift()))
+
+      const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPos.x, endPos.y)
       line.setAttribute("stroke", mainAxisIndexes.includes(i) ? this.#settings.CHART_MAIN_AXIS_COLOR : this.#settings.CHART_LINE_COLOR)
       line.setAttribute("stroke-width", mainAxisIndexes.includes(i) ? this.#settings.CHART_MAIN_STROKE : this.#settings.CHART_STROKE)
       wrapper.appendChild(line);
@@ -441,7 +441,7 @@ class RadixChart extends Chart {
   }
 
   #getCenterCircleRadius() {
-    return 10 * (this.getRadius() / this.#numberOfLevels)
+    return 12 * (this.getRadius() / this.#numberOfLevels)
   }
 
 }
