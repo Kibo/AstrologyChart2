@@ -3,7 +3,7 @@ A JavaScript library with clean API and zero dependencies **for generating astro
 
 It does not calculate any positions of the planets in Universe.
 
-**Version**: 0.4.0 (in progress)
+**Version**: 0.5.0 (in progress)
 
 - Pure Javascript implementation without dependencies
 - OOP style
@@ -17,12 +17,13 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 
 ### Examples
 - [Radix chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radix.html)
-- [Transit chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/transit.html) TODO
+- [Transit chart](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/transit.html)
 - [More charts on page](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/charts.html)
 - [Radix collision](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/collision.html)
 - [Radix scaling symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/scaling.html)
 - [Stroke only](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/stroke.html)
 - [Symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/symbols.html)
+- [Aspects](#) TODO
 - [Animation](#) TODO
 
 ### How to use
