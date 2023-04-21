@@ -10,9 +10,9 @@ export const RADIX_ID = "radix"
 * Font size - points (planets)
 * @constant
 * @type {Number}
-* @default 32
+* @default 27
 */
-export const RADIX_POINTS_FONT_SIZE = 32
+export const RADIX_POINTS_FONT_SIZE = 27
 
 /*
 * Font size - signs

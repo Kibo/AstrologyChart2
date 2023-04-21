@@ -109,7 +109,7 @@ class TransitChart extends Chart {
     let startAngle = this.#radix.getAscendantShift()
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
       let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getRullerCircleRadius(), Utils.degreeToRadian(startAngle))
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, (i % 2) ? this.#getCenterCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 2) : this.#getCenterCircleRadius(), Utils.degreeToRadian(startAngle))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, (i % 2) ? this.getRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 2) : this.getRadius(), Utils.degreeToRadian(startAngle))
       const line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -139,7 +139,7 @@ class TransitChart extends Chart {
     const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.POINT_COLLISION_RADIUS, this.#getPointCircleRadius())
     for (const pointData of points) {
       const point = new Point(pointData, cusps, this.#settings)
-      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getRullerCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 4), Utils.degreeToRadian(point.getAngle(), this.#radix.getAscendantShift()))
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getRullerCircleRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 4), Utils.degreeToRadian(point.getAngle(), this.#radix.getAscendantShift()))
       const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getPointCircleRadius(), Utils.degreeToRadian(positions[point.getName()], this.#radix.getAscendantShift()))
 
       // ruler mark
@@ -150,7 +150,7 @@ class TransitChart extends Chart {
       wrapper.appendChild(rulerLine);
 
       // symbol
-      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, Utils.DEG_180, this.#settings.POINT_PROPERTIES_SHOW)
+      const symbol = point.getSymbol(symbolPosition.x, symbolPosition.y, Utils.DEG_0, this.#settings.POINT_PROPERTIES_SHOW)
       symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
       symbol.setAttribute("text-anchor", "middle") // start, middle, end
       symbol.setAttribute("dominant-baseline", "middle")
@@ -184,13 +184,13 @@ class TransitChart extends Chart {
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const textRadius = this.getRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 2)
+    const textRadius = this.#getCenterCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 6)
 
     for (let i = 0; i < cusps.length; i++) {
       const isLineInCollisionWithPoint = Utils.isCollision(cusps[i].angle, pointsPositions, this.#settings.POINT_COLLISION_RADIUS / 2)
 
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, isLineInCollisionWithPoint ? this.getRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 6) : this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
-      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
+      const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, isLineInCollisionWithPoint ? this.#getCenterCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 6) : this.#getRullerCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
 
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPos.x, endPos.y)
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR)
@@ -226,11 +226,11 @@ class TransitChart extends Chart {
   }
 
   #getPointCircleRadius() {
-    return 27 * (this.getRadius() / this.#numberOfLevels)
+    return 29 * (this.getRadius() / this.#numberOfLevels)
   }
 
   #getRullerCircleRadius() {
-    return 25 * (this.getRadius() / this.#numberOfLevels)
+    return 31 * (this.getRadius() / this.#numberOfLevels)
   }
 
   #getCenterCircleRadius() {
