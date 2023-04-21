@@ -13,29 +13,10 @@ import Point from '../points/Point.js'
 class RadixChart extends Chart {
 
   /*
-   * Inner circle radius ratio
-   * @constant
-   * @type {Number}
-   * @default 8
+   * Levels determine the width of individual parts of the chart.
+   * It can be changed dynamically by public setter.
    */
-  static INNER_CIRCLE_RADIUS_RATIO = 8;
-
-  /*
-   * Outer circle radius ratio
-   * @constant
-   * @type {Number}
-   * @default 2
-   */
-  static OUTER_CIRCLE_RADIUS_RATIO = 2;
-
-
-  /*
-   * The length of the pointers in the ruler
-   * @constant
-   * @type {Number}
-   * @default 10
-   */
-  static RULER_LENGTH = 10
+  #numberOfLevels = 24
 
   #universe
   #settings
@@ -47,8 +28,8 @@ class RadixChart extends Chart {
   #radius
 
   /*
-  * @see Chart.cleanUp()
-  */
+   * @see Chart.cleanUp()
+   */
   #beforeCleanUpHook
 
   /**
@@ -94,13 +75,16 @@ class RadixChart extends Chart {
   }
 
   /**
-   * Set radius
+   * Set number Of Levels.
+   * Levels determine the width of individual parts of the chart.
    *
    * @param {Number}
    */
-  setRadius(radius) {
-    this.#radius = radius
-    this.#draw(this.#data)
+  setNumberOfLevels(levels) {
+    this.#numberOfLevels = Math.max(24, levels)
+    if(this.#data){
+      this.#draw(this.#data)
+    }
 
     return this
   }
@@ -155,7 +139,7 @@ class RadixChart extends Chart {
     const wrapper = SVGUtils.SVGGroup()
 
     const mask = SVGUtils.SVGMask(MASK_ID)
-    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
+    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getOuterCircleRadius())
     outerCircle.setAttribute('fill', "white")
     mask.appendChild(outerCircle)
 
@@ -164,7 +148,7 @@ class RadixChart extends Chart {
     mask.appendChild(innerCircle)
     wrapper.appendChild(mask)
 
-    const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
+    const circle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getOuterCircleRadius())
     circle.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : this.#settings.CHART_BACKGROUND_COLOR);
     circle.setAttribute("mask", this.#settings.CHART_STROKE_ONLY ? "none" : `url(#${MASK_ID})`);
     wrapper.appendChild(circle)
@@ -179,7 +163,7 @@ class RadixChart extends Chart {
     const SYMBOL_SIGNS = [SVGUtils.SYMBOL_ARIES, SVGUtils.SYMBOL_TAURUS, SVGUtils.SYMBOL_GEMINI, SVGUtils.SYMBOL_CANCER, SVGUtils.SYMBOL_LEO, SVGUtils.SYMBOL_VIRGO, SVGUtils.SYMBOL_LIBRA, SVGUtils.SYMBOL_SCORPIO, SVGUtils.SYMBOL_SAGITTARIUS, SVGUtils.SYMBOL_CAPRICORN, SVGUtils.SYMBOL_AQUARIUS, SVGUtils.SYMBOL_PISCES]
 
     const makeSymbol = (symbolIndex, angleInDegree) => {
-      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius() - (this.getRadius() / RadixChart.INNER_CIRCLE_RADIUS_RATIO) / 2, Utils.degreeToRadian(angleInDegree + STEP / 2, this.getAscendantShift()))
+      let position = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getOuterCircleRadius() - ((this.#getOuterCircleRadius() - this.#getInnerCircleRadius()) / 2), Utils.degreeToRadian(angleInDegree + STEP / 2, this.getAscendantShift()))
 
       let symbol = SVGUtils.SVGSymbol(SYMBOL_SIGNS[symbolIndex], position.x, position.y)
       symbol.setAttribute("font-family", this.#settings.CHART_FONT_FAMILY);
@@ -193,7 +177,7 @@ class RadixChart extends Chart {
     const makeSegment = (symbolIndex, angleFromInDegree, angleToInDegree) => {
       let a1 = Utils.degreeToRadian(angleFromInDegree, this.getAscendantShift())
       let a2 = Utils.degreeToRadian(angleToInDegree, this.getAscendantShift())
-      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.getRadius(), a1, a2, this.#getInnerCircleRadius());
+      let segment = SVGUtils.SVGSegment(this.#centerX, this.#centerY, this.#getOuterCircleRadius(), a1, a2, this.#getInnerCircleRadius());
       segment.setAttribute("fill", this.#settings.CHART_STROKE_ONLY ? "none" : COLORS_SIGNS[symbolIndex]);
       segment.setAttribute("stroke", this.#settings.CHART_STROKE_ONLY ? this.#settings.CIRCLE_COLOR : "none");
       segment.setAttribute("stroke-width", this.#settings.CHART_STROKE_ONLY ? this.#settings.CHART_STROKE : 0);
@@ -229,7 +213,7 @@ class RadixChart extends Chart {
     let startAngle = this.getAscendantShift()
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
       let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getRullerCircleRadius(), Utils.degreeToRadian(startAngle))
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getRullerCircleRadius() + RadixChart.RULER_LENGTH / (i % 2 + 1), Utils.degreeToRadian(startAngle))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, (i % 2) ? this.#getInnerCircleRadius() - ((this.#getInnerCircleRadius() - this.#getRullerCircleRadius()) / 2) : this.#getInnerCircleRadius(), Utils.degreeToRadian(startAngle))
       const line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -253,15 +237,14 @@ class RadixChart extends Chart {
   #drawPoints(data) {
     const points = data.points
     const cusps = data.cusps
-    const POINT_RADIUS = this.#getInnerCircleRadius() - (4 * RadixChart.RULER_LENGTH)
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.POINT_COLLISION_RADIUS, POINT_RADIUS)
+    const positions = Utils.calculatePositionWithoutOverlapping(points, this.#settings.POINT_COLLISION_RADIUS, this.#getPointCircleRadius())
     for (const pointData of points) {
       const point = new Point(pointData, cusps, this.#settings)
-      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getInnerCircleRadius() - 1.5 * RadixChart.RULER_LENGTH, Utils.degreeToRadian(point.getAngle(), this.getAscendantShift()))
-      const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.getAscendantShift()))
+      const pointPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getRullerCircleRadius() - ((this.#getInnerCircleRadius() - this.#getRullerCircleRadius()) / 4), Utils.degreeToRadian(point.getAngle(), this.getAscendantShift()))
+      const symbolPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getPointCircleRadius(), Utils.degreeToRadian(positions[point.getName()], this.getAscendantShift()))
 
       // ruler mark
       const rulerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getRullerCircleRadius(), Utils.degreeToRadian(point.getAngle(), this.getAscendantShift()))
@@ -281,7 +264,7 @@ class RadixChart extends Chart {
 
       // pointer
       //if (positions[point.getName()] != pointData.position) {
-      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, POINT_RADIUS, Utils.degreeToRadian(positions[point.getName()], this.getAscendantShift()))
+      const pointerLineEndPosition = Utils.positionOnCircle(this.#centerX, this.#centerX, this.#getPointCircleRadius(), Utils.degreeToRadian(positions[point.getName()], this.getAscendantShift()))
       const pointerLine = SVGUtils.SVGLine(pointPosition.x, pointPosition.y, (pointPosition.x + pointerLineEndPosition.x) / 2, (pointPosition.y + pointerLineEndPosition.y) / 2)
       pointerLine.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       pointerLine.setAttribute("stroke-width", this.#settings.CHART_STROKE / 2);
@@ -299,7 +282,7 @@ class RadixChart extends Chart {
     const points = data.points
     const cusps = data.cusps
 
-    const mainAxisIndexes = [0,3,6,9] //As, Ic, Ds, Mc
+    const mainAxisIndexes = [0, 3, 6, 9] //As, Ic, Ds, Mc
 
     const pointsPositions = points.map(point => {
       return point.angle
@@ -307,7 +290,7 @@ class RadixChart extends Chart {
 
     const wrapper = SVGUtils.SVGGroup()
 
-    const textRadius = this.getRadius() / RadixChart.OUTER_CIRCLE_RADIUS_RATIO + 1.8 * RadixChart.RULER_LENGTH
+    const textRadius = this.#getCenterCircleRadius() + ((this.#getInnerCircleRadius() - this.#getCenterCircleRadius()) / 10)
 
     for (let i = 0; i < cusps.length; i++) {
       const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.getAscendantShift()))
@@ -423,15 +406,15 @@ class RadixChart extends Chart {
   #drawBorders() {
     const wrapper = SVGUtils.SVGGroup()
 
+    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getOuterCircleRadius())
+    outerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
+    outerCircle.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
+    wrapper.appendChild(outerCircle)
+
     const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getInnerCircleRadius())
     innerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
     innerCircle.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
     wrapper.appendChild(innerCircle)
-
-    const outerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.getRadius())
-    outerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
-    outerCircle.setAttribute("stroke-width", this.#settings.CHART_MAIN_STROKE);
-    wrapper.appendChild(outerCircle)
 
     const centerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius())
     centerCircle.setAttribute("stroke", this.#settings.CHART_CIRCLE_COLOR);
@@ -441,17 +424,26 @@ class RadixChart extends Chart {
     this.#root.appendChild(wrapper)
   }
 
-  #getInnerCircleRadius(){
-    return this.getRadius() - (this.getRadius() / RadixChart.INNER_CIRCLE_RADIUS_RATIO)
+  #getOuterCircleRadius() {
+    return 24 * (this.getRadius() / this.#numberOfLevels)
   }
 
-  #getCenterCircleRadius(){
-    return this.getRadius() / RadixChart.OUTER_CIRCLE_RADIUS_RATIO
+  #getInnerCircleRadius() {
+    return 21 * (this.getRadius() / this.#numberOfLevels)
   }
 
-  #getRullerCircleRadius(){
-    return  this.getRadius() - ((this.getRadius() / RadixChart.INNER_CIRCLE_RADIUS_RATIO) + RadixChart.RULER_LENGTH)
+  #getRullerCircleRadius() {
+    return 20 * (this.getRadius() / this.#numberOfLevels)
   }
+
+  #getPointCircleRadius() {
+    return 18 * (this.getRadius() / this.#numberOfLevels)
+  }
+
+  #getCenterCircleRadius() {
+    return 10 * (this.getRadius() / this.#numberOfLevels)
+  }
+
 }
 
 export {

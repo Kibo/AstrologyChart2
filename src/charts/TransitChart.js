@@ -11,6 +11,12 @@ import Utils from '../utils/Utils.js';
  */
 class TransitChart extends Chart {
 
+  /*
+   * Levels determine the width of individual parts of the chart.
+   * It can be changed dynamically by public setter.
+   */
+  #numberOfLevels = 32
+
   #radix
   #settings
   #root
@@ -84,12 +90,13 @@ class TransitChart extends Chart {
   #draw(data) {
 
     // radix reDraw
-    this.#radix.setRadius(this.#getInnerCircleRadius())
-
+    this.#radix.setNumberOfLevels(this.#numberOfLevels)
     this.cleanUp(this.#root.getAttribute('id'), this.#beforeCleanUpHook)
+
     this.#drawBackground()
-    this.#drawCusps(data)
     this.#drawRuler()
+    this.#drawCusps(data)
+
     this.#drawBorders()
   }
 
@@ -103,7 +110,7 @@ class TransitChart extends Chart {
     outerCircle.setAttribute('fill', "white")
     mask.appendChild(outerCircle)
 
-    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getInnerCircleRadius())
+    const innerCircle = SVGUtils.SVGCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius() )
     innerCircle.setAttribute('fill', "black")
     mask.appendChild(innerCircle)
     wrapper.appendChild(mask)
@@ -125,7 +132,7 @@ class TransitChart extends Chart {
     let startAngle = this.#radix.getAscendantShift()
     for (let i = 0; i < NUMBER_OF_DIVIDERS; i++) {
       let startPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getRullerCircleRadius(), Utils.degreeToRadian(startAngle))
-      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getRullerCircleRadius() - RadixChart.RULER_LENGTH / (i % 2 + 1), Utils.degreeToRadian(startAngle))
+      let endPoint = Utils.positionOnCircle(this.#centerX, this.#centerY, (i % 2) ? this.#getCenterCircleRadius() + ((this.#getRullerCircleRadius() - this.#getCenterCircleRadius()) / 2) : this.#getCenterCircleRadius(), Utils.degreeToRadian(startAngle))
       const line = SVGUtils.SVGLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
       line.setAttribute("stroke", this.#settings.CHART_LINE_COLOR);
       line.setAttribute("stroke-width", this.#settings.CHART_STROKE);
@@ -155,7 +162,7 @@ class TransitChart extends Chart {
     const textRadius = this.getRadius() - ((this.getRadius() - this.#getRullerCircleRadius()) / 2)
 
     for (let i = 0; i < cusps.length; i++) {
-      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getInnerCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
+      const startPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.#getCenterCircleRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
       const endPos = Utils.positionOnCircle(this.#centerX, this.#centerY, this.getRadius(), Utils.degreeToRadian(cusps[i].angle, this.#radix.getAscendantShift()))
 
       const line = SVGUtils.SVGLine(startPos.x, startPos.y, endPos.x, endPos.y)
@@ -191,13 +198,18 @@ class TransitChart extends Chart {
     this.#root.appendChild(wrapper)
   }
 
-  #getInnerCircleRadius() {
-    return this.getRadius() - ((this.getRadius() / RadixChart.INNER_CIRCLE_RADIUS_RATIO))
+  #getPointCircleRadius() {
+    return 27 * (this.getRadius() / this.#numberOfLevels)
   }
 
   #getRullerCircleRadius() {
-    return this.#getInnerCircleRadius() + RadixChart.RULER_LENGTH
+    return 25 * (this.getRadius() / this.#numberOfLevels)
   }
+
+  #getCenterCircleRadius() {
+    return 24 * (this.getRadius() / this.#numberOfLevels)
+  }
+
 }
 
 export {
