@@ -183,21 +183,20 @@ class Utils {
    * @return {Number} orb
    */
   static orb(fromAngle, toAngle, aspectAngle) {
-    let orb, difference
-
-    difference = Math.abs(fromAngle - toAngle)
+    let orb
+    let sign = fromAngle > toAngle ? 1 : -1
+    let difference = Math.abs(fromAngle - toAngle)
 
     if (difference > Utils.DEG_180) {
       difference = Utils.DEG_360 - difference;
-      orb = difference - aspectAngle
+      orb = (difference - aspectAngle) * -1
 
     } else {
-      orb = (difference - aspectAngle) * (fromAngle > toAngle ? -1 : 1)
+      orb = (difference - aspectAngle) * sign
     }
-    
+
     return Number(Number(orb).toFixed(2))
   }
-
 }
 
 export {

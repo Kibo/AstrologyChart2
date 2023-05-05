@@ -79,25 +79,28 @@ test('Utils.orb', () => {
   expect( Utils.orb(0, 10, 10) ).toBe(0)
   expect( Utils.orb(0, 60, 60) ).toBe(0)
 
-  expect( Utils.orb(10, 12, 0) ).toBe(2)
-  expect( Utils.orb(12, 10, 0) ).toBe(-2)
+  expect( Utils.orb(10, 12, 0) ).toBe(-2)
+  expect( Utils.orb(12, 10, 0) ).toBe(2)
 
-  expect( Utils.orb(10, 45, 45) ).toBe(-10)
-  expect( Utils.orb(45, 10, 45) ).toBe(10)
+  expect( Utils.orb(10, 45, 45) ).toBe(10)
+  expect( Utils.orb(45, 10, 45) ).toBe(-10)
 
-  expect( Utils.orb(0, 46, 45) ).toBe(1)
-  expect( Utils.orb(46, 0, 45) ).toBe(-1)
+  expect( Utils.orb(0, 46, 45) ).toBe(-1)
+  expect( Utils.orb(46, 0, 45) ).toBe(1)
 
   expect( Utils.orb(350, 20, 30) ).toBe(0)
   expect( Utils.orb(20, 350, 30) ).toBe(0)
 
-  expect( Utils.orb(350, 21, 30) ).toBe(1)
-  expect( Utils.orb(351, 20, 30) ).toBe(-1)
+  expect( Utils.orb(350, 21, 30) ).toBe(-1)
+  expect( Utils.orb(351, 20, 30) ).toBe(1)
 
-  expect( Utils.orb(1, 180, 180) ).toBe(-1)
-  expect( Utils.orb(180, 1, 180) ).toBe(1)
+  expect( Utils.orb(1, 180, 180) ).toBe(1)
+  expect( Utils.orb(180, 1, 180) ).toBe(-1)
 
-  expect( Utils.orb(359, 180, 180) ).toBe(1)
-  expect( Utils.orb(180, 359, 180) ).toBe(-1)
+  expect( Utils.orb(359, 180, 180) ).toBe(-1)
+  expect( Utils.orb(180, 359, 180) ).toBe(1)
+
+  expect( Utils.orb(0.55, 180, 180) ).toBe(0.55)
+  expect( Utils.orb(180, 0.55, 180) ).toBe(-0.55)
 
 })
