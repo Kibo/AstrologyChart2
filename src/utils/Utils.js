@@ -71,15 +71,15 @@ class Utils {
   }
 
   /**
-  * Calculates the angle between the line (2 points) and the x-axis.
-  *
-  * @param {Number} x1
-  * @param {Number} y1
-  * @param {Number} x2
-  * @param {Number} y2
-  *
-  * @return {Number} - degree
-  */
+   * Calculates the angle between the line (2 points) and the x-axis.
+   *
+   * @param {Number} x1
+   * @param {Number} y1
+   * @param {Number} x2
+   * @param {Number} y2
+   *
+   * @return {Number} - degree
+   */
   static positionToAngle(x1, y1, x2, y2) {
     const dx = x2 - x1;
     const dy = y2 - y1;
@@ -171,6 +171,33 @@ class Utils {
 
     return pointInCollision === undefined ? false : true
   }
+
+
+  /**
+   * Calculates the orbit of two angles on a circle
+   *
+   * @param {Number} fromAngle - angle in degree, point on the circle
+   * @param {Number} toAngle - angle in degree, point on the circle
+   * @param {Number} aspectAngle - 60,90,120, ...
+   *
+   * @return {Number} orb
+   */
+  static orb(fromAngle, toAngle, aspectAngle) {
+    let orb, difference
+
+    difference = Math.abs(fromAngle - toAngle)
+
+    if (difference > Utils.DEG_180) {
+      difference = Utils.DEG_360 - difference;
+      orb = difference - aspectAngle
+
+    } else {
+      orb = (difference - aspectAngle) * (fromAngle > toAngle ? -1 : 1)
+    }
+    
+    return Number(Number(orb).toFixed(2))
+  }
+
 }
 
 export {
