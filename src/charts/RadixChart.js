@@ -3,6 +3,7 @@ import SVGUtils from '../utils/SVGUtils.js';
 import Utils from '../utils/Utils.js';
 import Chart from './Chart.js'
 import Point from '../points/Point.js'
+import DefaultSettings from '../settings/DefaultSettings.js';
 
 /**
  * @class
@@ -75,7 +76,18 @@ class RadixChart extends Chart {
   }
 
   /**
-   * Set number Of Levels.
+   * Get data
+   * @return {Object}
+   */
+  getData(){
+    return {
+      "points":[...this.#data.points],
+      "cusps":[...this.#data.cusps]
+    }
+  }
+
+  /**
+   * Set number of Levels.
    * Levels determine the width of individual parts of the chart.
    *
    * @param {Number}
@@ -114,6 +126,29 @@ class RadixChart extends Chart {
    */
   getAscendantShift() {
     return (this.#data?.cusps[0]?.angle ?? 0) + Utils.DEG_180
+  }
+
+  /**
+   * Get aspects
+   *
+   * @param {Array<Object>} [fromPoints] - [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
+   * @param {Array<Object>} [toPoints] - [{name:"AS", angle:0}, {name:"IC", angle:90}]
+   * @param {Array<Object>} [aspects] - [{name:"Opposition", angle:180, orb:2}, {name:"Trine", angle:120, orb:2}]
+   *
+   * @return {Array<Object>}
+   */
+  getAspects(fromPoints, toPoints, aspects){
+    if(!this.#data){
+      return
+    }
+
+    fromPoints = fromPoints ?? this.#data.points
+    toPoints = toPoints ?? [...this.#data.points, {name:"AS", angle:0}, {name:"IC", angle:this.#data.cusps.at(3)}, {name:"DS", angle:180}, {name:"MC", angle:this.#data.cusps.at(9)}]
+    aspects = aspects ?? DefaultSettings.DEFAULT_ASPECTS
+
+    const listOfAspects = super.getAspects(fromPoints, toPoints, aspects)
+
+    return listOfAspects.filter( aspect => aspect.from.name != aspect.to.name)
   }
 
   // ## PRIVATE ##############################

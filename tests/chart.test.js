@@ -139,3 +139,16 @@ test('Chart.validateData', () => {
   status = chart.validateData( data )
   expect(status.isValid).toBeTruthy()
 });
+
+test('Chart.getAspects', () => {
+
+  const chart = new Chart()
+
+  const ASPECT = [{name:"Conjunction", angle:0, orb:2}, {name:"Opposition", angle:180, orb:2}, {name:"Trine", angle:120, orb:2}]
+  const FROM_POINTS = [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
+  const TO_POINTS = [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
+
+  const aspects = chart.getAspects(FROM_POINTS, TO_POINTS, ASPECT)
+    
+  expect(aspects.length).toBe(7)
+})

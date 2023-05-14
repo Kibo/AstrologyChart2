@@ -3,6 +3,7 @@ import SVGUtils from '../utils/SVGUtils.js';
 import Chart from './Chart.js'
 import Utils from '../utils/Utils.js';
 import Point from '../points/Point.js'
+import DefaultSettings from '../settings/DefaultSettings.js';
 
 /**
  * @class
@@ -70,8 +71,20 @@ class TransitChart extends Chart {
 
     this.#data = data
     this.#draw(data)
+
+    return this
   }
 
+  /**
+   * Get data
+   * @return {Object}
+   */
+  getData(){
+    return {
+      "points":[...this.#data.points],
+      "cusps":[...this.#data.cusps]
+    }
+  }
 
   /**
    * Get radius
@@ -80,6 +93,27 @@ class TransitChart extends Chart {
    */
   getRadius() {
     return this.#radius
+  }
+
+  /**
+   * Get aspects
+   *
+   * @param {Array<Object>} [fromPoints] - [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
+   * @param {Array<Object>} [toPoints] - [{name:"AS", angle:0}, {name:"IC", angle:90}]
+   * @param {Array<Object>} [aspects] - [{name:"Opposition", angle:180, orb:2}, {name:"Trine", angle:120, orb:2}]
+   *
+   * @return {Array<Object>}
+   */
+  getAspects(fromPoints, toPoints, aspects){
+    if(!this.#data){
+      return
+    }
+
+    fromPoints = fromPoints ?? this.#data.points
+    toPoints = toPoints ?? [...this.#radix.getData().points, {name:"AS", angle:0}, {name:"IC", angle:this.#radix.getData().cusps.at(3)}, {name:"DS", angle:180}, {name:"MC", angle:this.#radix.getData().cusps.at(9)}]
+    aspects = aspects ?? DefaultSettings.DEFAULT_ASPECTS
+
+    return super.getAspects(fromPoints, toPoints, aspects)
   }
 
   // ## PRIVATE ##############################

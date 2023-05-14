@@ -1,3 +1,5 @@
+import Utils from '../utils/Utils.js';
+
 /**
  * @class
  * @classdesc An abstract class for all type of Chart
@@ -105,6 +107,31 @@ class Chart {
   }
 
   /**
+   * Get aspects
+   *
+   * @param {Array<Object>} fromPoints - [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
+   * @param {Array<Object>} toPoints - [{name:"AS", angle:0}, {name:"IC", angle:90}]
+   * @param {Array<Object>} aspects - [{name:"Opposition", angle:180, orb:2}, {name:"Trine", angle:120, orb:2}]
+   *
+   * @return {Array<Object>}
+   */
+  getAspects(fromPoints, toPoints, aspects){
+    const aspectList = []
+    for (const fromP of fromPoints){
+      for (const toP of toPoints){
+        for (const aspect of aspects){
+          const orb = Utils.orb(fromP.angle, toP.angle, aspect.angle)
+          if( Math.abs( orb ) <=  aspect.orb ){
+            aspectList.push( { aspect:aspect, from:fromP, to:toP, precision:orb } )
+          }
+        }
+      }
+    }
+
+    return aspectList
+  }
+
+  /**
    * @abstract
    */
   setData(data) {
@@ -122,13 +149,6 @@ class Chart {
    * @abstract
    */
   getPoint(name) {
-    throw new Error("Must be implemented by subclass.");
-  }
-
-  /**
-   * @abstract
-   */
-  getAspects() {
     throw new Error("Must be implemented by subclass.");
   }
 

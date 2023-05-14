@@ -172,7 +172,6 @@ class Utils {
     return pointInCollision === undefined ? false : true
   }
 
-
   /**
    * Calculates the orbit of two angles on a circle
    *
