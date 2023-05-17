@@ -2,6 +2,7 @@ import RadixChart from '../charts/RadixChart.js';
 import SVGUtils from '../utils/SVGUtils.js';
 import Chart from './Chart.js'
 import Utils from '../utils/Utils.js';
+import AspectUtils from '../utils/AspectUtils.js';
 import Point from '../points/Point.js'
 import DefaultSettings from '../settings/DefaultSettings.js';
 
@@ -29,7 +30,7 @@ class TransitChart extends Chart {
   #radius
 
   /*
-   * @see Chart.cleanUp()
+   * @see Utils.cleanUp()
    */
   #beforeCleanUpHook
 
@@ -113,7 +114,28 @@ class TransitChart extends Chart {
     toPoints = toPoints ?? [...this.#radix.getData().points, {name:"AS", angle:0}, {name:"IC", angle:this.#radix.getData().cusps.at(3)}, {name:"DS", angle:180}, {name:"MC", angle:this.#radix.getData().cusps.at(9)}]
     aspects = aspects ?? DefaultSettings.DEFAULT_ASPECTS
 
-    return super.getAspects(fromPoints, toPoints, aspects)
+    return AspectUtils.getAspects(fromPoints, toPoints, aspects)
+  }
+
+  /**
+   * Draw aspects
+   *
+   * @param {Array<Object>} [fromPoints] - [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
+   * @param {Array<Object>} [toPoints] - [{name:"AS", angle:0}, {name:"IC", angle:90}]
+   * @param {Array<Object>} [aspects] - [{name:"Opposition", angle:180, orb:2}, {name:"Trine", angle:120, orb:2}]
+   *
+   * @return {Array<Object>}
+   */
+  drawAspects( fromPoints, toPoints, aspects ){
+    const aspectsWrapper = this.#radix.getUniverse().getAspectsElement()
+    Utils.cleanUp(aspectsWrapper.getAttribute("id"), this.#beforeCleanUpHook)
+
+    const aspectsList = this.getAspects(fromPoints, toPoints, aspects)
+      .filter( aspect =>  aspect.aspect.name != 'Conjunction')
+    
+    aspectsWrapper.appendChild( AspectUtils.drawAspects(this.#radix.getCenterCircleRadius(), this.#radix.getAscendantShift(), this.#settings, aspectsList))
+
+    return this
   }
 
   // ## PRIVATE ##############################
@@ -125,13 +147,14 @@ class TransitChart extends Chart {
   #draw(data) {
 
     // radix reDraw
-    this.cleanUp(this.#root.getAttribute('id'), this.#beforeCleanUpHook)
+    Utils.cleanUp(this.#root.getAttribute('id'), this.#beforeCleanUpHook)
     this.#radix.setNumberOfLevels(this.#numberOfLevels)
 
     this.#drawRuler()
     this.#drawCusps(data)
     this.#drawPoints(data)
     this.#drawBorders()
+    this.#settings.DRAW_ASPECTS && this.drawAspects()
   }
 
   #drawRuler() {

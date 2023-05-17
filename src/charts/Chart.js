@@ -86,51 +86,7 @@ class Chart {
       message: ""
     }
   }
-
-  /**
-  * Removes the content of an element
-  *
-  * @param {String} elementID
-  * @param {Function} [beforeHook]
-    *
-  * @warning - It removes Event Listeners too.
-  * @warning - You will (probably) get memory leak if you delete elements that have attached listeners
-  */
-  cleanUp( elementID , beforeHook){
-    let elm = document.getElementById(elementID)
-    if(!elm){
-      return
-    }
-
-    (typeof beforeHook === 'function') && beforeHook()
-    elm.innerHTML = ""
-  }
-
-  /**
-   * Get aspects
-   *
-   * @param {Array<Object>} fromPoints - [{name:"Moon", angle:0}, {name:"Sun", angle:179}, {name:"Mercury", angle:121}]
-   * @param {Array<Object>} toPoints - [{name:"AS", angle:0}, {name:"IC", angle:90}]
-   * @param {Array<Object>} aspects - [{name:"Opposition", angle:180, orb:2}, {name:"Trine", angle:120, orb:2}]
-   *
-   * @return {Array<Object>}
-   */
-  getAspects(fromPoints, toPoints, aspects){
-    const aspectList = []
-    for (const fromP of fromPoints){
-      for (const toP of toPoints){
-        for (const aspect of aspects){
-          const orb = Utils.orb(fromP.angle, toP.angle, aspect.angle)
-          if( Math.abs( orb ) <=  aspect.orb ){
-            aspectList.push( { aspect:aspect, from:fromP, to:toP, precision:orb } )
-          }
-        }
-      }
-    }
-
-    return aspectList
-  }
-
+  
   /**
    * @abstract
    */

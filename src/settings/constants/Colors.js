@@ -165,3 +165,20 @@ export const COLOR_PISCES = "#27AE60";
 * @default #333
 */
 export const CIRCLE_COLOR = "#333";
+
+/*
+* Color of aspects
+* @constant
+* @type {Object}
+*/
+export const ASPECT_COLORS = {
+  Conjunction:"#333",
+  Opposition:"#1B4F72",
+  Square:"#641E16",
+  Trine:"#0B5345",
+  Sextile:"#333",
+  Quincunx:"#333",
+  Semisextile:"#333",
+  Quintile:"#333",
+  Trioctile:"#333"
+}

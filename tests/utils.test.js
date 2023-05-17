@@ -73,34 +73,34 @@ test('Utils.positionToAngle', () => {
   expect( Utils.positionToAngle(0, 0, -1, 0) ).toBe(180)
 });
 
-test('Utils.orb', () => {
-  expect( Utils.orb(0, 0, 0) ).toBe(0)
+test('Utils.cleanUp', () => {
+  document.body.innerHTML = `
+    <div id="paper">
+      <div class="wrapper1">
+        <div class="wrapper11"></div>
+        <div class="wrapper12"></div>
+      </div>
+      <div class="wrapper2"></div>
+    </div>
+  `;
+  
+  expect(document.getElementById('paper')).toBeDefined()
+  expect(document.getElementById('wrapper1')).toBeDefined()
+  expect(document.getElementById('wrapper2')).toBeDefined()
+  expect(document.getElementById('wrapper11')).toBeDefined()
+  expect(document.getElementById('wrapper12')).toBeDefined()
 
-  expect( Utils.orb(0, 10, 10) ).toBe(0)
-  expect( Utils.orb(0, 60, 60) ).toBe(0)
+  Utils.cleanUp('wrapper1')
+  expect(document.getElementById('paper')).toBeDefined()
+  expect(document.getElementById('wrapper1')).toBeDefined()
+  expect(document.getElementById('wrapper2')).toBeDefined()
+  expect(document.getElementById('wrapper11')).toBeNull()
+  expect(document.getElementById('wrapper12')).toBeNull()
 
-  expect( Utils.orb(10, 12, 0) ).toBe(-2)
-  expect( Utils.orb(12, 10, 0) ).toBe(2)
-
-  expect( Utils.orb(10, 45, 45) ).toBe(10)
-  expect( Utils.orb(45, 10, 45) ).toBe(-10)
-
-  expect( Utils.orb(0, 46, 45) ).toBe(-1)
-  expect( Utils.orb(46, 0, 45) ).toBe(1)
-
-  expect( Utils.orb(350, 20, 30) ).toBe(0)
-  expect( Utils.orb(20, 350, 30) ).toBe(0)
-
-  expect( Utils.orb(350, 21, 30) ).toBe(-1)
-  expect( Utils.orb(351, 20, 30) ).toBe(1)
-
-  expect( Utils.orb(1, 180, 180) ).toBe(1)
-  expect( Utils.orb(180, 1, 180) ).toBe(-1)
-
-  expect( Utils.orb(359, 180, 180) ).toBe(-1)
-  expect( Utils.orb(180, 359, 180) ).toBe(1)
-
-  expect( Utils.orb(0.55, 180, 180) ).toBe(0.55)
-  expect( Utils.orb(180, 0.55, 180) ).toBe(-0.55)
-
+  Utils.cleanUp('paper')
+  expect(document.getElementById('paper')).toBeDefined()
+  expect(document.getElementById('wrapper1')).toBeNull()
+  expect(document.getElementById('wrapper2')).toBeNull()
+  expect(document.getElementById('wrapper11')).toBeNull()
+  expect(document.getElementById('wrapper12')).toBeNull()
 })

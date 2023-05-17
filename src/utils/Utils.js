@@ -172,29 +172,26 @@ class Utils {
     return pointInCollision === undefined ? false : true
   }
 
+  
+
   /**
-   * Calculates the orbit of two angles on a circle
-   *
-   * @param {Number} fromAngle - angle in degree, point on the circle
-   * @param {Number} toAngle - angle in degree, point on the circle
-   * @param {Number} aspectAngle - 60,90,120, ...
-   *
-   * @return {Number} orb
-   */
-  static orb(fromAngle, toAngle, aspectAngle) {
-    let orb
-    let sign = fromAngle > toAngle ? 1 : -1
-    let difference = Math.abs(fromAngle - toAngle)
-
-    if (difference > Utils.DEG_180) {
-      difference = Utils.DEG_360 - difference;
-      orb = (difference - aspectAngle) * -1
-
-    } else {
-      orb = (difference - aspectAngle) * sign
+  * Removes the content of an element
+  *
+  * @param {String} elementID
+  * @param {Function} [beforeHook]
+    *
+  * @warning - It removes Event Listeners too.
+  * @warning - You will (probably) get memory leak if you delete elements that have attached listeners
+  */
+  static cleanUp( elementID, beforeHook){
+    let elm = document.getElementById(elementID)
+    if(!elm){
+      return
     }
 
-    return Number(Number(orb).toFixed(2))
+    (typeof beforeHook === 'function') && beforeHook()
+
+    elm.innerHTML = ""
   }
 }
 

@@ -3,7 +3,7 @@ A JavaScript library with clean API and zero dependencies **for generating astro
 
 It does not calculate any positions of the planets in Universe.
 
-**Version**: 0.5.0 (in progress)
+**Version**: 0.7.0 (in progress)
 
 - Pure Javascript implementation without dependencies
 - OOP style
@@ -23,7 +23,8 @@ Please use [Discussions](https://github.com/Kibo/AstrologyChart2/discussions) fo
 - [Radix scaling symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/scaling.html)
 - [Stroke only](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/stroke.html)
 - [Symbols](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/symbols.html)
-- [Aspects](#) TODO
+- [Aspects Radix](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/radixAspects.html)
+- [Aspects Transit](https://htmlpreview.github.io/?https://github.com/Kibo/AstrologyChart2/blob/master/examples/transitAspects.html)
 - [Animation](#) TODO
 
 ### How to use

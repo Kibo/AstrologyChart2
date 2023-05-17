@@ -16,6 +16,7 @@ class Universe {
   #settings
   #radix
   #transit
+  #aspectsWrapper
 
   /**
    * @constructs
@@ -37,6 +38,11 @@ class Universe {
     });
     this.#SVGDocument = SVGUtils.SVGDocument(this.#settings.CHART_VIEWBOX_WIDTH, this.#settings.CHART_VIEWBOX_HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
+
+    // create wrapper for aspects
+    this.#aspectsWrapper = SVGUtils.SVGGroup()
+    this.#aspectsWrapper.setAttribute("id", `${this.#settings.HTML_ELEMENT_ID}-${this.#settings.ASPECTS_ID}`)
+    this.#SVGDocument.appendChild(this.#aspectsWrapper)
 
     this.#radix = new RadixChart(this)
     this.#transit = new TransitChart(this.#radix)
@@ -78,6 +84,14 @@ class Universe {
    */
   getSVGDocument() {
     return this.#SVGDocument
+  }
+
+  /**
+   * Get empty aspects wrapper element
+   * @return {SVGGroupElement}
+   */
+  getAspectsElement() {
+    return this.#aspectsWrapper
   }
 
   // ## PRIVATE ##############################

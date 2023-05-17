@@ -9,11 +9,22 @@
         width:800px;
         height:800px;
       }
+      .alert{
+        padding:1em;
+        background-color: green;
+        text-align: center;
+        color:white;
+      }
     </style>
   </head>
   <body>
-    <div id="paper"></div>
+    <div id="aspects-table" class="alert">
+      <p>Aspects can be called explicitly by method <i>drawAspects()</i></p>
+      <p><code>const settings = {DRAW_ASPECTS:false}</code></p>
+    </div>
 
+    <div id="paper"></div>
+    
     <script src="../dist/astrochart2.js"></script>
     <script>
       // fetch from server
@@ -22,8 +33,20 @@
       	"cusps":[{angle:0}, {angle:30}, {angle:60}, {angle:90}, {angle:120}, {angle:150}, {angle:180}, {angle:210}, {angle:240}, {angle:270}, {angle:300}, {angle:330}]
       }
 
-      const radix = new astrology.Universe('paper').radix().setData( data )
-      console.log(radix.getAspects())
+      const radix = new astrology.Universe('paper', {DRAW_ASPECTS:false}).radix().setData( data )
+      radix.drawAspects()
+
+      printAspects( "aspects-table", radix.getAspects() )
+
+      function printAspects( elm, aspects ){
+        const table = document.getElementById(elm)
+        for(const [idx, asp] of aspects.entries()){
+          const p = document.createElement("div");
+          p.innerHTML = `${idx+1} | ${asp.aspect.name} | ${asp.from.name} | ${asp.to.name} | ${asp.precision}`
+          table.appendChild(p)
+        }
+      }
+
     </script>
   </body>
 </html>

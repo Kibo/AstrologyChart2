@@ -45,6 +45,16 @@ class SVGUtils {
 
   static SYMBOL_RETROGRADE = "Retrograde"
 
+  static SYMBOL_CONJUNCTION = "Conjunction";
+  static SYMBOL_OPPOSITION = "Opposition";
+  static SYMBOL_SQUARE = "Square";
+  static SYMBOL_TRINE = "Trine";
+  static SYMBOL_SEXTILE = "Sextile";
+  static SYMBOL_QUINCUNX = "Quincunx";
+  static SYMBOL_SEMISEXTILE = "Semisextile";
+  static SYMBOL_OCTILE = "Octile";
+  static SYMBOL_TRIOCTILE = "Trioctile";
+
   // Astronomicon font codes
   static SYMBOL_ARIES_CODE = "A";
   static SYMBOL_TAURUS_CODE = "B";
@@ -81,6 +91,16 @@ class SVGUtils {
   static SYMBOL_IC_CODE = "e";
 
   static SYMBOL_RETROGRADE_CODE = "M"
+
+  static SYMBOL_CONJUNCTION_CODE = "!";
+  static SYMBOL_OPPOSITION_CODE = '"';
+  static SYMBOL_SQUARE_CODE = "#";
+  static SYMBOL_TRINE_CODE = "$";
+  static SYMBOL_SEXTILE_CODE = "%";
+  static SYMBOL_QUINCUNX_CODE = "&";
+  static SYMBOL_SEMISEXTILE_CODE = "''";
+  static SYMBOL_OCTILE_CODE = "(";
+  static SYMBOL_TRIOCTILE_CODE = ")";
 
   constructor() {
     if (this instanceof SVGUtils) {
@@ -334,6 +354,34 @@ class SVGUtils {
         return retrogradeSymbol(xPos, yPos)
         break;
 
+      case SVGUtils.SYMBOL_CONJUNCTION:
+        return conjunctionSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_OPPOSITION:
+        return oppositionSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_SQUARE:
+        return squareSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_TRINE:
+        return trineSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_SEXTILE:
+        return sextileSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_QUINCUNX:
+        return quincunxSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_SEMISEXTILE:
+        return semisextileSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_OCTILE:
+        return quintileSymbol(xPos, yPos)
+        break;
+      case SVGUtils.SYMBOL_TRIOCTILE:
+        return trioctileSymbol(xPos, yPos)
+        break;
+
       default:
         const unknownSymbol = SVGUtils.SVGCircle(xPos, yPos, 8)
         unknownSymbol.setAttribute("stroke", "#333")
@@ -344,7 +392,7 @@ class SVGUtils {
      * Ascendant symbol
      */
     function asSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_AS_CODE )
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_AS_CODE)
     }
 
     /*
@@ -372,7 +420,7 @@ class SVGUtils {
      * Aries symbol
      */
     function ariesSymbol(xPos, yPos) {
-      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_ARIES_CODE )
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_ARIES_CODE)
     }
 
     /*
@@ -557,8 +605,74 @@ class SVGUtils {
       return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SNODE_CODE)
     }
 
-    function retrogradeSymbol(xPos, yPos){
+    /*
+     * Retrograde symbol
+     */
+    function retrogradeSymbol(xPos, yPos) {
       return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_RETROGRADE_CODE)
+    }
+
+    /*
+     * Conjunction symbol
+     */
+    function conjunctionSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_CONJUNCTION_CODE)
+    }
+
+    /*
+     * Opposition symbol
+     */
+    function oppositionSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_OPPOSITION_CODE)
+    }
+
+    /*
+     * Squaresymbol
+     */
+    function squareSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SQUARE_CODE)
+    }
+
+    /*
+     * Trine symbol
+     */
+    function trineSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_TRINE_CODE)
+    }
+
+    /*
+     * Sextile symbol
+     */
+    function sextileSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SEXTILE_CODE)
+    }
+
+    /*
+     * Quincunx symbol
+     */
+    function quincunxSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_QUINCUNX_CODE)
+    }
+
+    /*
+     * Semisextile symbol
+     */
+    function semisextileSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_SEMISEXTILE_CODE)
+    }
+
+    /*
+     * Quintile symbol
+     */
+    function quintileSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_OCTILE_CODE)
+    }
+
+    /*
+     * Trioctile symbol
+     */
+    function trioctileSymbol(xPos, yPos) {
+      return SVGUtils.SVGText(xPos, yPos, SVGUtils.SYMBOL_TRIOCTILE_CODE)
     }
   }
 }

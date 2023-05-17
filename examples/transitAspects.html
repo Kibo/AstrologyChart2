@@ -9,9 +9,20 @@
         width:800px;
         height:800px;
       }
+      .alert{
+        padding:1em;
+        background-color: green;
+        text-align: center;
+        color:white;
+      }
     </style>
   </head>
   <body>
+    <div id="aspects-table" class="alert">
+      <p>Aspects can be called explicitly by method <i>drawAspects()</i></p>
+      <p><code>const settings = {DRAW_ASPECTS:false}</code></p>
+    </div>
+
     <div id="paper"></div>
 
     <script src="../dist/astrochart2.js"></script>
@@ -30,8 +41,17 @@
     const universe = new astrology.Universe('paper')
     const radix = universe.radix().setData( radixData )
     const transit = universe.transit().setData( transitData )
+    transit.drawAspects()
+    printAspects( "aspects-table", transit.getAspects() )
 
-    console.log( transit.getAspects() )
+    function printAspects( elm, aspects ){
+      const table = document.getElementById(elm)
+      for(const [idx, asp] of aspects.entries()){
+        const p = document.createElement("div");
+        p.innerHTML = `${idx+1} | ${asp.aspect.name} | ${asp.from.name} | ${asp.to.name} | ${asp.precision}`
+        table.appendChild(p)
+      }
+    }
 
     </script>
   </body>
