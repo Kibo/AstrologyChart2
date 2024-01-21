@@ -186,6 +186,7 @@ class RadixChart extends Chart {
     toPoints = toPoints ?? [...this.#data.points, {name:"AS", angle:0}, {name:"IC", angle:this.#data.cusps.at(3)}, {name:"DS", angle:this.#data.cusps.at(6)}, {name:"MC", angle:this.#data.cusps.at(9)}]
     aspects = aspects ?? DefaultSettings.DEFAULT_ASPECTS
 
+
     return AspectUtils.getAspects(fromPoints, toPoints, aspects).filter( aspect => aspect.from.name != aspect.to.name)
   }
 
